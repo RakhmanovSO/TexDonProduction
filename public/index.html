@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="TexDon" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <base href="/TexDonProduction/public/" >
+
+    <link rel="stylesheet" href="css/myCSS.css">
+
+
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+
+    <link href="../node_modules/angular-loading-bar/src/loading-bar.css" />
+
+    <script src="../node_modules/jquery/dist/jquery.js" ></script>
+
+    <script src="../node_modules/popper.js/dist/popper.js" ></script>
+
+
+    <script src="../node_modules/angular/angular.js" ></script>
+    <script src="../node_modules/angular-route/angular-route.js" ></script>
+    <script src="../node_modules/@uirouter/angularjs/release/angular-ui-router.js" ></script>
+    <script src="../node_modules/angular-local-storage/dist/angular-local-storage.js" ></script>
+    <script src="../node_modules/angular-loading-bar/src/loading-bar.js" ></script>
+
+    <script src="js/index.js" ></script>
+
+    <script src="js/carouselNews.js"></script>
+
+
+    <title>TexDon</title>
+
+</head>
+
+
+<body  ng-controller="MainController">
+
+
+<div id="content" class="snap-content" style="">
+
+
+    <div ui-view="header" ></div>
+
+    <section class="container" ui-view="content"> </section>
+
+    <footer ui-view="footer" class="footerMenu clearfix hidden-sm hidden-xs "></footer>
+
+
+</div>
+
+</body>
+
+</html>
+
+<!-- http://localhost:5012/TexDonProduction/public/home -->

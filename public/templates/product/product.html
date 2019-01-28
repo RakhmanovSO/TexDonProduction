@@ -1,0 +1,32 @@
+<h3 id="{{products[0].subcategoryID}}" ng-bind="products[0].subcategoryTitle"></h3>
+
+<div class="container-fluid">
+
+    <div class="row justify-content-center">
+
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3" ng-repeat="pr in  products" >
+
+            <a class="btn" ui-sref="product({id: pr.productID})" id="{{pr.productID}}" >
+                <img ng-src="{{pr.imagePath1}}" alt="{{pr.productTitle}}" class="img-fluid" style="width:200px; height:200px" >
+                <h6 ng-bind="pr.productTitle"></h6>
+            </a>
+
+            <a  class="btn btn-success col-12" ui-sref=" ">Подробнее</a>
+            <a style="margin-top: 2px" ng-if="pr.isInCart === false" class="btn btn-success col-12" ui-sref=" ">В корзину</a>
+            <a style="margin-top: 2px" ng-if="pr.isInCart === true" class="btn btn-success col-12" ui-sref=" ">Добавлен!</a>
+
+
+            <!--<div class="container-fluid">-->
+
+                <!--<div class="row">-->
+
+                    <!---->
+                <!--</div>-->
+
+            <!--</div>-->
+
+        </div>
+
+    </div>
+
+</div>

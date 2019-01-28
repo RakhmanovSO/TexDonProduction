@@ -1,0 +1,31 @@
+#searchInput {
+  width: 422px;
+
+}
+
+
+#siteLogo{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#content{
+  margin-top: 60px;
+  margin-left: 60px;
+  margin-right: 10px;
+  margin-bottom: 100px;
+}
+
+
+#buttonProduct{
+  margin-top: 60px;
+  margin-left: 200px;
+}
+
+
+#footer{
+  margin-top: 300px;
+  margin-left: 200px;
+  margin-right: 10px;
+
+}
