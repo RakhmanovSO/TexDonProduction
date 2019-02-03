@@ -11,9 +11,12 @@
 
     <link href="../node_modules/angular-loading-bar/src/loading-bar.css" />
 
-    <script src="../node_modules/jquery/dist/jquery.js" ></script>
 
-    <script src="../node_modules/popper.js/dist/popper.js" ></script>
+    <script defer src="../node_modules/jquery/dist/jquery.js" ></script>
+
+    <script defer src="../node_modules/popper.js/dist/popper.js" ></script>
+
+    <script defer src="../node_modules/bootstrap/dist/js/bootstrap.js" ></script>
 
 
     <script src="../node_modules/angular/angular.js" ></script>
@@ -22,27 +25,30 @@
     <script src="../node_modules/angular-local-storage/dist/angular-local-storage.js" ></script>
     <script src="../node_modules/angular-loading-bar/src/loading-bar.js" ></script>
 
+
     <script src="js/index.js" ></script>
 
-    <script src="js/carouselNews.js"></script>
 
+
+
+    <script defer src="js/carouselBootstrapScript.js" ></script>
 
     <title>TexDon</title>
 
 </head>
 
 
-<body  ng-controller="MainController">
+<body  class="bg-light"  ng-controller="MainController">
 
 
-<div id="content" class="snap-content" style="">
+<div id="content" class="bg-light" style="">
 
 
-    <div ui-view="header" ></div>
+    <div ui-view="header"> </div>
 
     <section class="container" ui-view="content"> </section>
 
-    <footer ui-view="footer" class="footerMenu clearfix hidden-sm hidden-xs "></footer>
+    <footer ui-view="footer" class="footerMenu clearfix hidden-sm hidden-xs "> </footer>
 
 
 </div>

@@ -1,53 +1,125 @@
 <header>
 
-    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-        <a id="siteLogo" class="navbar-brand mr-auto mr-lg-0" ng-href="http://localhost:5012/TexDonProduction/public">TexDon.com </a>
-        <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+            <a id="siteLogo" class="navbar-brand mr-auto mr-lg-0" ng-href="http://localhost:5012/TexDonProduction/public"><span class="logo">TexDon</span></a>
+            <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div id="menu1" class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
-            <ul class="navbar-nav mr-auto">
+            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+                <ul id="menu" class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" ng-href="http://localhost:5012/TexDonProduction/public">Главная <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" ui-sref="home">Главная <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item ">
                     <a class="nav-link" ui-sref="category">Каталог товаров</a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="#">Новости и Акции</a>
+                    <a class="nav-link" ui-sref="news">Новости и Акции</a>
                 </li>
 
                 <li class="nav-item ">
-                    <a class="nav-link" href="#">Контакты</a>
+                    <a class="nav-link" ui-sref="contacts">Контакты</a>
                 </li>
+
+                    <li class="nav-item ">
+                        <a id="cart2" class="nav-link" ui-sref="cart">Корзина
+                            <span class="badge badge-pill badge-warning align-text-bottom">3</span>
+                        </a>
+
+                    </li>
+
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input id="searchInput" class="form-control mr-sm-2" type="text" placeholder="Введите название товара и нажмите кнопку Поиск" aria-label="Search">
+                <input id="searchInput" class="form-control mr-sm-2" type="text" placeholder="Введите название товара и нажмите Поиск" aria-label="Search">
                 <button class="btn btn-success my-2 my-sm-0" type="submit">Поиск</button>
             </form>
         </div>
     </nav>
 
 
-    <div  class="nav-scroller bg-white shadow-sm">
-        <nav id="menu2" class="nav nav-underline">
 
-            <a class="nav-link active" href="#">Условия Оплаты и Доставки</a>
+<nav>
 
-            <a class="nav-link active" href="#"> Корзина
-                <span class="badge badge-pill bg-light align-text-bottom">+3</span>
-            </a>
+    <div class="d-flex justify-content-center bd-highlight mb-3" style=" margin-top: 60px;">
 
-            <a class="nav-link active" href="https://vk"><i class="fa fa-vk"></i> <span class="hidden-xs hidden-sm hidden-md">Мы ВКонтакте</span></a>
+        <div class="p-2 bd-highlight">
 
-            <a class="nav-link active" href="https://facebook"><i class="fa fa-vk"></i> <span class="hidden-xs hidden-sm hidden-md">Наш Facebook</span></a>
-
-        </nav>
+    <div >
+        <a id="cart" ui-sref="cart" data-loading-text="Загрузка..." >
+            <img style="width:80px; height:80px;" alt="Корзина" ng-src="http://localhost:5012/TexDon/assets/images/othersImages/cart.png" >
+            <span style="width:38px; height:37px; font-size: 17pt; font-weight:bold;" class="badge badge-pill badge-warning align-text-bottom">3</span>
+        </a>
     </div>
 
 
+        </div>
+    </div>
 
+</nav>
+
+
+
+        <div class="d-flex justify-content-center bd-highlight mb-3" style=" margin-top: 25px;">
+
+            <div class="p-2 bd-highlight">
+
+                <!--  ng-repeat=" single in  news"   ??? -->
+
+
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="3000">
+
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>   <!--  active  ??? -->
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+
+        <div class="carousel-inner">
+
+            <div class="carousel-item active">  <!--  active  ??? -->
+
+                <a class="btn" ui-sref="moreAboutNews({id: newsSingle[0].newsID})" id="{{newsSingle[0].newsID}}" >
+
+                <img class="d-block w-100" ng-src="{{ newsSingle[0].imagePath1}}" alt="newsSingle.titleNews"  >
+
+                </a>
+
+            </div>
+
+            <div class="carousel-item ">
+
+                <a class="btn" ui-sref="moreAboutNews({id:newsSingle[1].newsID})" id="{{newsSingle[1].newsID}}" >
+
+                <img class="d-block w-100" ng-src="{{ newsSingle[1].imagePath1}}" alt="newsSingle.titleNews"  >
+                </a>
+            </div>
+
+            <div class="carousel-item ">
+
+                <a class="btn" ui-sref="moreAboutNews({id: newsSingle[2].newsID})" id="{{newsSingle[2].newsID}}" >
+                <img class="d-block w-100" ng-src="{{newsSingle[2].imagePath1}}" alt="newsSingle.titleNews"  >
+                </a>
+            </div>
+
+
+        </div>
+
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true" style=" height: 50px; width: 50px;" ></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true" style=" height: 50px; width: 50px;" ></span>
+            <span class="sr-only">Next</span>
+        </a>
+
+    </div>
+
+
+    </div>
+
+        </div>
 
 
 </header>
