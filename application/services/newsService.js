@@ -31,4 +31,26 @@ export  default  class NewsService {
     }//getNews
 
 
+
+    async getAllNewsListMenu (){
+
+        try {
+
+            let response = await  this._$http.get(
+                `${this._PARAMS.SERVER_URL}${this._PARAMS.GET_ALL_NEWS_MENU_URL}`
+            );
+
+            return response.data.data;
+
+        }// try
+        catch (ex) {
+
+            console.log("Exception", ex);
+            return null;
+
+        }//catch
+
+    }//getAllNewsListMenu
+
+
 }//NewsService

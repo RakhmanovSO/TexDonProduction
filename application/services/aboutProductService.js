@@ -1,6 +1,6 @@
 "use strict";
 
-export  default  class CategoryService {
+export  default  class  AboutProductService {
 
 
     constructor ($http, PARAMS){
@@ -8,17 +8,17 @@ export  default  class CategoryService {
         this._$http = $http;
         this._PARAMS = PARAMS;
 
-    }//constructor categoryService
+    }//constructor
 
-    async getCategories (){
+    async getProductByID (productID){
 
         try {
 
             let response = await  this._$http.get(
-                `${this._PARAMS.SERVER_URL}${this._PARAMS.GET_ALL_CATEGORIES_URL}`
+                `${this._PARAMS.SERVER_URL}${this._PARAMS.GET_MORE_ABOUT_PRODUCT_URL}&productID=${productID}`
             );
 
-            return response.data.data;
+            return response.data;
 
         }// try
         catch (ex) {
@@ -28,7 +28,7 @@ export  default  class CategoryService {
 
         }//catch
 
-    }//getCategories
+    }//getProductByID
 
 
-}//CategoryService
+}//aboutProductService

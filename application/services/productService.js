@@ -10,6 +10,7 @@ export  default  class ProductService {
 
     }//constructor ProductService
 
+
     async getProductsBySubcategoryId (subcategoryID){
 
         try {
@@ -20,6 +21,8 @@ export  default  class ProductService {
 
             return response.data.data;
 
+           // return response.data;
+
         }// try
         catch (ex) {
 
@@ -29,6 +32,8 @@ export  default  class ProductService {
         }//catch
 
     }//getProductsBySubcategoryId
+
+
 
 
 }//ProductService
