@@ -123,9 +123,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
 // ===================== FILTERS ===================== //
 
 
@@ -213,7 +210,9 @@ let app = angular.module('TexDon', [
     'TexDon.directives',
     'TexDon.constants',
     'ngRoute',
-    'ui.router'
+    'ui.router',
+    'ngAnimate',
+    'ui.bootstrap'
 ]);
 
 
@@ -246,6 +245,9 @@ app.config([
                     'controller': ['$scope', 'NewsService', 'news' , function( $scope , NewsService , news){
 
                         $scope.newsSingle = news;
+                        $scope.newsSingle[0].active = true;
+
+                        $scope.myInterval = 1500;
 
                         console.log($scope.newsSingle)
 
@@ -254,10 +256,10 @@ app.config([
                 },
                 "content": {
                     'templateUrl':"templates/home.html",
-                            'controller': ['$scope',  'FirmInfoService',  'firmInfo' , function( $scope , FirmInfoService,  firmInfo){
+                            'controller': ['$scope' , '$sce' ,  'FirmInfoService',  'firmInfo' , function( $scope , $sce , FirmInfoService,  firmInfo){
 
 
-                            $scope.firmInfo = firmInfo;
+                            $scope.firmInfo = $sce.trustAsHtml(firmInfo.data.text);
                             console.log($scope.firmInfo)
 
 
@@ -554,7 +556,7 @@ app.config([
                     "templateUrl":"templates/moreAboutProduct/moreAboutProduct.html",
                     'controller': ['$scope', 'localStorageService', 'AboutProductService','moreAboutProduct', function ($scope, localStorageService, AboutProductService, moreAboutProduct) {
 
-                        $scope.singleProduct = moreAboutProduct;
+                        $scope.singleProduct = moreAboutProduct.data;
 
                         console.log($scope.singleProduct)
 

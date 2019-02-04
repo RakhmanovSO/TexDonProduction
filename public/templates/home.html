@@ -6,7 +6,7 @@
     <img class="img-responsive center-block"  ng-src="{{firmInfo.data.imagePath1}}" >
 
 
-    <p id="firmInfoText" class="img-responsive center-block" ng-bind="firmInfo.data.text"></p>
+    <p id="firmInfoText" class="img-responsive center-block" ng-bind-html="firmInfo"></p>
 
 
     <a id="buttonProduct" class="center-block" ui-sref="category" >

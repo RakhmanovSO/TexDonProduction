@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-center bd-highlight mb-3" >
 
         <div class="p-2 bd-highlight">
-            <h5 style="text-align: center; font-size: 14pt; font-weight:bold; margin-top: 30px;" ng-bind="singleProduct.data.productTitle"></h5>
+            <h5 style="text-align: center; font-size: 14pt; font-weight:bold; margin-top: 30px;" ng-bind="singleProduct.product.productTitle"></h5>
         </div>
 
     </div>
@@ -15,7 +15,7 @@
     <div class="d-flex justify-content-center bd-highlight mb-3" >
 
         <div class="p-2 bd-highlight">
-            <h5 style="text-align: center; font-size: 16pt; font-weight:bold" ng-bind="singleProduct.data.productPrice +'  руб.'"></h5>
+            <h5 style="text-align: center; font-size: 16pt; font-weight:bold" ng-bind="singleProduct.product.productPrice +'  руб.'"></h5>
         </div>
 
     </div>
@@ -47,7 +47,7 @@
     </div>
 
 
-        <p ng-bind="singleProduct.data.productDescription"></p>
+        <p ng-bind="singleProduct.product.productDescription"></p>
 
 
 
@@ -64,19 +64,19 @@
         </ol>
 
         <div class="carousel-inner" >
-            <div class="carousel-item active" ng-repeat="  ">
+            <div class="carousel-item active" ng-repeat="item in singleProduct.images">
 
-                <img class="d-block w-100" ng-src="{{ }}" alt=" "   >
+                <img class="d-block w-100" ng-src="{{ item.productImagePath }}" alt="..."   >
 
             </div>
 
                             <!-- not active -->
 
-            <div class="carousel-item " ng-repeat="  ">
+            <!--<div class="carousel-item " ng-repeat="  ">-->
 
-                <img class="d-block w-100" ng-src="{{ }}" alt=" "  >
+                <!--<img class="d-block w-100" ng-src="{{ }}" alt=" "  >-->
 
-            </div>
+            <!--</div>-->
 
 
         </div>
@@ -107,7 +107,7 @@
 
                 <tbody>
 
-                <tr ng-repeat="" >
+                <tr >
 
                     <td> </td>
                     <td> </td>

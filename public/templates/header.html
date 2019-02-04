@@ -64,62 +64,89 @@
 
             <div class="p-2 bd-highlight">
 
+                <div id="slides_control">
+
+                    <!--<carousel interval="myInterval">-->
+                        <!--<slide ng-repeat="slide in newsSingle" active="slide.active">-->
+                            <!--<img ng-src="{{slide.imagePath1}}">-->
+                            <!--<div class="carousel-caption">-->
+                                <!--<h4>Slide {{$index+1}}</h4>-->
+                            <!--</div>-->
+                        <!--</slide>-->
+                    <!--</carousel>-->
+
+                </div>
+
+
                 <!--  ng-repeat=" single in  news"   ??? -->
 
 
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="3000">
+    <!--<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="3000">-->
 
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>   <!--  active  ??? -->
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
+        <!--<ol class="carousel-indicators">-->
+            <!--<li ng-repeat="item in newsSingle" data-target="#carouselExampleIndicators" data-slide-to="{{$index}}" ng-class="($index == 0) ? 'active' : ''"></li>-->
+        <!--</ol>-->
 
-        <div class="carousel-inner">
+        <!--<div class="carousel-inner">-->
 
-            <div class="carousel-item active">  <!--  active  ??? -->
+            <!--<div ng-repeat="item in newsSingle" class="carousel-item" ng-class="($index == 0) ? 'active' : ''" >-->
 
-                <a class="btn" ui-sref="moreAboutNews({id: newsSingle[0].newsID})" id="{{newsSingle[0].newsID}}" >
+                <!--<a class="btn" ui-sref="moreAboutNews({id: newsSingle[0].newsID})" id="{{item.newsID}}" >-->
 
-                <img class="d-block w-100" ng-src="{{ newsSingle[0].imagePath1}}" alt="newsSingle.titleNews"  >
+                    <!--<img class="d-block w-100" ng-src="{{ item.imagePath1}}" alt="{{item.titleNews}}"  >-->
 
-                </a>
+                <!--</a>-->
+                <!--<div ng-if="$index === newsSingle.length - 1 " >-->
+                    <!--<script>-->
+                        <!--$('#carouselExampleIndicators').carousel('cycle');-->
+                    <!--</script>-->
+                <!--</div>-->
+            <!--</div>-->
 
-            </div>
+            <!--&lt;!&ndash;<div class="carousel-item active">  &lt;!&ndash;  active  ??? &ndash;&gt;&ndash;&gt;-->
 
-            <div class="carousel-item ">
+                <!--&lt;!&ndash;<a class="btn" ui-sref="moreAboutNews({id: newsSingle[0].newsID})" id="{{newsSingle[0].newsID}}" >&ndash;&gt;-->
 
-                <a class="btn" ui-sref="moreAboutNews({id:newsSingle[1].newsID})" id="{{newsSingle[1].newsID}}" >
+                    <!--&lt;!&ndash;<img class="d-block w-100" ng-src="{{ newsSingle[0].imagePath1}}" alt="newsSingle.titleNews"  >&ndash;&gt;-->
 
-                <img class="d-block w-100" ng-src="{{ newsSingle[1].imagePath1}}" alt="newsSingle.titleNews"  >
-                </a>
-            </div>
+                <!--&lt;!&ndash;</a>&ndash;&gt;-->
 
-            <div class="carousel-item ">
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-                <a class="btn" ui-sref="moreAboutNews({id: newsSingle[2].newsID})" id="{{newsSingle[2].newsID}}" >
-                <img class="d-block w-100" ng-src="{{newsSingle[2].imagePath1}}" alt="newsSingle.titleNews"  >
-                </a>
-            </div>
+            <!--&lt;!&ndash;<div class="carousel-item ">&ndash;&gt;-->
+
+                <!--&lt;!&ndash;<a class="btn" ui-sref="moreAboutNews({id:newsSingle[1].newsID})" id="{{newsSingle[1].newsID}}" >&ndash;&gt;-->
+
+                <!--&lt;!&ndash;<img class="d-block w-100" ng-src="{{ newsSingle[1].imagePath1}}" alt="newsSingle.titleNews"  >&ndash;&gt;-->
+                <!--&lt;!&ndash;</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+            <!--&lt;!&ndash;<div class="carousel-item ">&ndash;&gt;-->
+
+                <!--&lt;!&ndash;<a class="btn" ui-sref="moreAboutNews({id: newsSingle[2].newsID})" id="{{newsSingle[2].newsID}}" >&ndash;&gt;-->
+                <!--&lt;!&ndash;<img class="d-block w-100" ng-src="{{newsSingle[2].imagePath1}}" alt="newsSingle.titleNews"  >&ndash;&gt;-->
+                <!--&lt;!&ndash;</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
 
-        </div>
+        <!--</div>-->
 
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true" style=" height: 50px; width: 50px;" ></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true" style=" height: 50px; width: 50px;" ></span>
-            <span class="sr-only">Next</span>
-        </a>
+        <!--<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">-->
+            <!--<span class="carousel-control-prev-icon" aria-hidden="true" style=" height: 50px; width: 50px;" ></span>-->
+            <!--<span class="sr-only">Previous</span>-->
+        <!--</a>-->
+        <!--<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">-->
+            <!--<span class="carousel-control-next-icon" aria-hidden="true" style=" height: 50px; width: 50px;" ></span>-->
+            <!--<span class="sr-only">Next</span>-->
+        <!--</a>-->
+
+    <!--</div>-->
+
 
     </div>
 
-
-    </div>
-
         </div>
+
 
 
 </header>
