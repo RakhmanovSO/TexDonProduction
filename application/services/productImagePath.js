@@ -1,6 +1,6 @@
 "use strict";
 
-export  default  class ProductService {
+export  default  class ProductImagePath {
 
 
     constructor ($http, PARAMS){
@@ -11,17 +11,17 @@ export  default  class ProductService {
     }//constructor ProductService
 
 
-    async getProductsBySubcategoryId (subcategoryID){
+    async getProductsImagesPath (productID){
 
         try {
 
             let response = await  this._$http.get(
-                `${this._PARAMS.SERVER_URL}${this._PARAMS.GET_PRODUCTS_BY_SUBCATEGORY_ID_URL}&subcategoryID=${subcategoryID}`
+                `${this._PARAMS.SERVER_URL}${this._PARAMS}&productID=${productID}`
             );
 
             return response.data;
 
-           // return response.data;
+            // return response.data;
 
         }// try
         catch (ex) {
@@ -31,9 +31,9 @@ export  default  class ProductService {
 
         }//catch
 
-    }//getProductsBySubcategoryId
+    }//getProductsImagesPath
 
 
 
 
-}//ProductService
+}//ProductImagePath
