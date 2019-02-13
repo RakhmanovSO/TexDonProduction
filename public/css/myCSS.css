@@ -21,6 +21,39 @@ a {
 }
 
 
+body{
+background: #b3b3b3 ;
+
+}
+
+main{
+  background: #b3b3b3 ;
+}
+
+.sl_slide{
+
+  position: relative;
+
+}
+
+.sl_text{
+  position: absolute;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  padding: 20px 0;
+}
+
+.sl_zag, .sl_date{
+
+  margin: 0;
+  padding: 0 10px;
+
+}
+
 /*
 .carousel-control-next-icon, .carousel-control-prev-icon {
 

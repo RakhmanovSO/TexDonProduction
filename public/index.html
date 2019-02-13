@@ -2,21 +2,35 @@
 <html ng-app="TexDon" lang="en">
 <head>
     <meta charset="UTF-8">
+
     <base href="/TexDonProduction/public/" >
 
     <link rel="stylesheet" href="css/myCSS.css">
 
-
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../node_modules/angular-loading-bar/src/loading-bar.css" />
 
-    <link href="../node_modules/angular-loading-bar/src/loading-bar.css" />
 
 
-    <script defer src="../node_modules/jquery/dist/jquery.js" ></script>
+    <link rel="stylesheet" type="text/css" href="../node_modules/owl_carousel_2/OwlCarousel2-2.3.4/dist/assets/owl.carousel.css"/>
+    <link rel="stylesheet" type="text/css" href="../node_modules/owl_carousel_2/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css"/>
 
-    <script defer src="../node_modules/popper.js/dist/popper.js" ></script>
 
-    <script defer src="../node_modules/bootstrap/dist/js/bootstrap.js" ></script>
+
+    <!-- slick     http://kenwheeler.github.io/slick/
+    <link rel="stylesheet" type="text/css" href="../node_modules/slick/slick.css"/>
+
+    <link rel="stylesheet" type="text/css" href="../node_modules/slick/slick-theme.css"/>
+   -->
+
+
+    <script defer src="../node_modules/jquery/dist/jquery.js" type="text/javascript"></script>
+
+    <script defer src="../node_modules/popper.js/dist/popper.js" type="text/javascript"></script>
+
+    <script defer src="../node_modules/bootstrap/dist/js/bootstrap.js" type="text/javascript"></script>
+
+
 
 
     <script src="../node_modules/angular/angular.js" ></script>
@@ -29,32 +43,43 @@
     <script src="js/index.js" ></script>
 
 
+    <!-- slick     http://kenwheeler.github.io/slick/
+        <script defer src="../node_modules/slick/slick.min.js"></script>
+    -->
 
 
-    <script defer src="js/carouselBootstrapScript.js" ></script>
+    <!-- 1. https://owlcarousel2.github.io/OwlCarousel2/docs/started-installation.html    2. https://www.npmjs.com/package/owl.carousel2  -->
+    <script defer src="../node_modules/owl_carousel_2/OwlCarousel2-2.3.4/dist/owl.carousel.js" type="text/javascript"></script>
+
+
+    <script defer src="js/carouselImgScript.js" type="text/javascript" ></script>
+
+
 
     <title>TexDon</title>
 
-</head>
 
 
-<body  class="bg-light"  ng-controller="MainController">
+    </head>
 
 
-<div id="content" class="bg-light" style="">
+    <body  class="bg-light"  ng-controller="MainController">
 
 
-    <div ui-view="header"> </div>
-
-    <section class="container" ui-view="content"> </section>
-
-    <footer ui-view="footer" class="footerMenu clearfix hidden-sm hidden-xs "> </footer>
+    <div id="content" class="bg-light" style="">
 
 
-</div>
+        <div ui-view="header"> </div>
 
-</body>
+        <section class="container" ui-view="content"> </section>
 
-</html>
+        <footer ui-view="footer" class="footerMenu clearfix hidden-sm hidden-xs "> </footer>
 
-<!-- http://localhost:5012/TexDonProduction/public/home -->
+
+    </div>
+
+    </body>
+
+    </html>
+
+    <!-- http://localhost:5012/TexDonProduction/public/home -->

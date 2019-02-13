@@ -5,33 +5,35 @@
     <div class="d-flex justify-content-center bd-highlight mb-3" >
 
         <div class="p-2 bd-highlight">
-            <p style="font-size: 17pt; font-weight:bold; margin-top: 30px; margin-bottom: 40px;" id="{{products[0].subcategoryID}}" ng-bind="products[0].subcategoryTitle" ></p>
+            <p style="font-size: 17pt; font-weight:bold; margin-top: 30px; margin-bottom: 40px;" id="{{ products.product[0].subcategoryID}}" ng-bind=" products.product[0].subcategoryTitle" ></p>
         </div>
 
     </div>
 
 
+        <div class="row justify-content-center">
 
-    <div class="row justify-content-center">
-
-        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3" ng-repeat="pr in  products" >
-
-
-            <a class="btn" ui-sref="moreAboutProduct({id: pr.productID})" id="{{ pr.productID }}" >
-                <img ng-src="{{pr.productImagePath}}" alt="{{pr.productTitle}}" class="img-fluid" style="width:200px; height:200px" >
-                <h6 ng-bind="pr.productTitle"></h6>
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3" ng-repeat="pr in  products.product" >
 
 
-            <p style="text-align: center; font-size: 16pt; font-weight:bold" ng-bind="pr.productPrice +' руб.'"> </p>
-            </a>
-           <!-- <a  class="btn btn-primary col-12" ui-sref="product({id: pr.productID})" id="{{ pr.productID }}">Подробнее</a> -->
+                <a class="btn" ui-sref="moreAboutProduct({id: pr.productID})" id="{{ pr.productID }}" >
+                    <img ng-src="{{products.images[0].data[0].produsctImagePath}}" alt="{{pr.productTitle}}" class="img-fluid" style="width:200px; height:200px" >
+                     <h6 ng-bind="pr.productTitle"></h6>
 
-            <a style="margin-top: 2px" ng-if="pr.isInCart === false" class="btn btn-success col-12" ui-sref=" ">В корзину</a>
-            <a style="margin-top: 2px" ng-if="pr.isInCart === true" class="btn btn-success col-12" ui-sref=" ">Товар в корзине!</a>
 
+                 <p style="text-align: center; font-size: 16pt; font-weight:bold" ng-bind="pr.productPrice +' руб.'"> </p>
+                 </a>
+
+                <a style="margin-top: 2px" ng-if="pr.isInCart === false" class="btn btn-success col-12" ui-sref=" ">В корзину</a>
+                <a style="margin-top: 2px" ng-if="pr.isInCart === true" class="btn btn-success col-12" ui-sref=" ">Товар в корзине!</a>
+
+
+            </div>
 
         </div>
 
-    </div>
 
-</div>
+
+
+
+    </div>

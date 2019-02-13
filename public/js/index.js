@@ -254,10 +254,10 @@ app.config([
                 },
                 "content": {
                     'templateUrl':"templates/home.html",
-                            'controller': ['$scope',  'FirmInfoService',  'firmInfo' , function( $scope , FirmInfoService,  firmInfo){
+                            'controller': ['$scope', '$sce', 'FirmInfoService',  'firmInfo' , function( $scope , $sce , FirmInfoService,  firmInfo){
 
 
-                            $scope.firmInfo = firmInfo;
+                            $scope.firmInfo = $sce.trustAsHtml(firmInfo.data.text);
                             console.log($scope.firmInfo)
 
 
@@ -473,7 +473,7 @@ app.config([
                     "templateUrl":"templates/product/product.html",
                     'controller': ['$scope', 'localStorageService', 'ProductService','product', function ($scope, localStorageService , ProductService, product) {
 
-                        $scope.products = product;
+                        $scope.products = product.data;
 
                         console.log($scope.products);
 
@@ -492,7 +492,7 @@ app.config([
 
                         if( cart ){
 
-                            $scope.products.forEach( function ( product ) {
+                            $scope.products.product.forEach( function ( product ) {
 
                                 let p = cart.find( pr => +pr.productID  === +product.productID );
 
@@ -554,7 +554,7 @@ app.config([
                     "templateUrl":"templates/moreAboutProduct/moreAboutProduct.html",
                     'controller': ['$scope', 'localStorageService', 'AboutProductService','moreAboutProduct', function ($scope, localStorageService, AboutProductService, moreAboutProduct) {
 
-                        $scope.singleProduct = moreAboutProduct;
+                        $scope.singleProduct = moreAboutProduct.data;
 
                         console.log($scope.singleProduct)
 
@@ -1097,7 +1097,7 @@ class ProductService {
                 `${this._PARAMS.SERVER_URL}${this._PARAMS.GET_PRODUCTS_BY_SUBCATEGORY_ID_URL}&subcategoryID=${subcategoryID}`
             );
 
-            return response.data.data;
+            return response.data;
 
            // return response.data;
 

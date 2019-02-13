@@ -3,14 +3,14 @@
 <div id="content" class="center-block">
 
 
-    <img class="img-responsive center-block"  ng-src="{{firmInfo.data.imagePath1}}" >
+    <img class="img-responsive center-block"  ng-src="http://localhost:5012/TexDon/assets/images/infoFirm/Log_Title_TexDon.png" >
 
 
-    <p id="firmInfoText" class="img-responsive center-block" ng-bind="firmInfo.data.text"></p>
+    <p id="firmInfoText" class="img-responsive center-block" ng-bind-html="firmInfo"></p>
 
 
-    <a id="buttonProduct" class="center-block" ui-sref="category" >
-        <img class="img-responsive center-block"  alt="Перейти в каталог товаров" ng-src="http://localhost:5012/TexDon/assets/images/othersImages/01final.png" >
+    <a id="buttonProduct" class="img-responsive center-block"  ui-sref="category" >
+        <img class="img-responsive center-block"   alt="Перейти в каталог товаров" ng-src="http://localhost:5012/TexDon/assets/images/othersImages/01final.png" >
     </a>
 
 
