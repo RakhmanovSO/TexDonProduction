@@ -30,16 +30,17 @@
                     </li>
 
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input id="searchInput" class="form-control mr-sm-2" type="text" placeholder="Введите название товара и нажмите Поиск" aria-label="Search">
-                <button class="btn btn-success my-2 my-sm-0" type="submit">Поиск</button>
+            <form name="searchForm" class="form-inline my-2 my-lg-0">
+                <input name="search" ng-model="search.name"  class="form-control mr-sm-2" type="text" placeholder="Введите название товара и нажмите Поиск" aria-label="Поиск">
+                <button class="btn btn-success my-2 my-sm-0" type="submit"  ng-click="search(searchForm.$valid)" >Поиск</button>
+                <!-- ui-sref="search({ productTitle: productTitle })" -->
             </form>
         </div>
     </nav>
 
 
 
-<nav>
+<div>
 
     <div class="d-flex justify-content-center bd-highlight mb-3" style=" margin-top: 60px;">
 
@@ -56,27 +57,22 @@
         </div>
     </div>
 
-</nav>
+</div>
 
 
-<!--
-    <ng-owl-carousel class="owl-theme" owl-items="items" owl-properties="properties" owl-ready="ready($api)">
-        <div class="item"><h4>Free Item</h4></div>
-        <div class="item" data-ng-repeat="item in newsSingle">
-            <img ng-src="{{ item.imagePath1 }}">
+        <div class="owl-carousel owl-theme" data-ng-repeat="item in newsSingle">
+            <div>
+                <a ui-sref="moreAboutNews({id: item.newsID})" id="{{ item.newsID }}">
+                    <img ng-src="{{ item.imagePath1 }}" alt="{{single.titleNews}}" >
+                </a>
+            </div>
         </div>
-    </ng-owl-carousel>
 
--->
+
 
     <!--
-        <nav>
-
             <div class="d-flex justify-content-center bd-highlight mb-3" style=" margin-top: 60px;">
-
                 <div class="p-2 bd-highlight">
-
-
                     <div class="sl" data-ng-repeat="item in newsSingle">
                         <div class="sl_slide">
                            <a ui-sref="moreAboutNews({id: item.newsID})" id="{{ item.newsID }}">
@@ -88,28 +84,8 @@
                             </a>
                         </div>
                     </div>
-
-
                 </div>
-
             </div>
-
-        </nav>
     -->
 
-
-
-
-            <div class="owl-carousel owl-theme" data-ng-repeat="item in newsSingle">
-                <div class="item">
-                    <a ui-sref="moreAboutNews({id: item.newsID})" id="{{ item.newsID }}">
-                        <img ng-src="{{ item.imagePath1 }}" alt="{{single.titleNews}}" class="sl_img">
-                    </a>
-                </div>
-            </div>
-
-
-
-
-
-    </header>
+</header>
