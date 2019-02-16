@@ -1,12 +1,10 @@
 #searchInput {
   width: 415px;
-
 }
 
 #siteLogo{
   margin-left: 10px;
 }
-
 
 .logo{
 
@@ -20,20 +18,17 @@ a {
   text-decoration: none; /* Отменяем подчеркивание у ссылки */
 }
 
-
 body{
-background: #b3b3b3 ;
+background: #FE5B00 ;
 
 }
 
 main{
-  background: #b3b3b3 ;
+  background: #FE5B00 ;
 }
 
 .sl_slide{
-
   position: relative;
-
 }
 
 .sl_text{
@@ -48,21 +43,16 @@ main{
 }
 
 .sl_zag, .sl_date{
-
   margin: 0;
   padding: 0 10px;
-
 }
 
 /*
 .carousel-control-next-icon, .carousel-control-prev-icon {
-
   height: 90px;
   width: 90px;
-
 }
 */
-
 
 .center-block {
   display: block;
@@ -70,11 +60,9 @@ main{
   margin-right: auto;
 }
 
-
 #menu{
   margin-left: 20px;
 }
-
 
 #content{
   /* margin-top: 60px;
@@ -90,12 +78,8 @@ main{
 
 
 #buttonProduct{
-
   margin-top: 40px;
-
 }
-
-
 
 
 table {
@@ -105,15 +89,11 @@ table {
 }
 
 table td {
-
   padding-top: 10px;
   padding-left: 20px;
-
   margin: 0px;
 
 }
-
-
 
 
 #footer{
