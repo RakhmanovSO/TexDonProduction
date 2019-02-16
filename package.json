@@ -1,7 +1,9 @@
 {
   "name": "TexDonProduction",
   "version": "1.0.0",
-  "dependencies": "",
+  "dependencies": {
+    "owl.carousel": "^2.3.4"
+  },
   "main": "webpack.config.js",
   "devDependencies": {
     "@uirouter/angularjs": "^1.0.18",
