@@ -104,7 +104,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_aboutProductService__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./services/aboutProductService */ "./application/services/aboutProductService.js");
 /* harmony import */ var _services_aboutNewsService__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./services/aboutNewsService */ "./application/services/aboutNewsService.js");
 /* harmony import */ var _services_contactsService__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./services/contactsService */ "./application/services/contactsService.js");
-/* harmony import */ var _services_cartService__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./services/cartService */ "./application/services/cartService.js");
+/* harmony import */ var _services_searchService__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./services/searchService */ "./application/services/searchService.js");
+/* harmony import */ var _services_cartService__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./services/cartService */ "./application/services/cartService.js");
+/* harmony import */ var _filters_productFilter__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./filters/productFilter */ "./application/filters/productFilter.js");
 
 
 // =================== CONTROLLERS =================== //
@@ -126,7 +128,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 // ===================== FILTERS ===================== //
+
 
 
 // =================== DERECTIVES =================== //
@@ -149,6 +154,7 @@ angular.module('TexDon.controllers').controller('MainController' , [
     'AboutNewsService',
     'СontactsService',
     'CartService',
+    'SearchService',
     _controllers_MainController__WEBPACK_IMPORTED_MODULE_0__["default"] ]);
 
 
@@ -176,14 +182,20 @@ angular.module( 'TexDon.services')
 angular.module( 'TexDon.services')
     .service('AboutNewsService',['$http', 'PARAMS', _services_aboutNewsService__WEBPACK_IMPORTED_MODULE_7__["default"]]);
 
-
 angular.module( 'TexDon.services')
     .service('СontactsService',['$http', 'PARAMS', _services_contactsService__WEBPACK_IMPORTED_MODULE_8__["default"]]);
 
 angular.module( 'TexDon.services')
-    .service('CartService',['$http', 'PARAMS', _services_cartService__WEBPACK_IMPORTED_MODULE_9__["default"]]);
+    .service('SearchService',['$http', 'PARAMS', _services_searchService__WEBPACK_IMPORTED_MODULE_9__["default"]]);
 
 
+angular.module( 'TexDon.services')
+    .service('CartService',['$http', 'PARAMS', _services_cartService__WEBPACK_IMPORTED_MODULE_10__["default"]]);
+
+/*
+angular.module( 'TexDon.filrers')
+    .filter('ProductFilter', ProductFilter);
+*/
 
 
 
@@ -200,8 +212,12 @@ angular.module('TexDon.services')
         GET_PRODUCTS_BY_SUBCATEGORY_ID_URL:`ctrl=ProductApi&act=GetProductsList`,
         GET_FIRM_INFO_URL:`ctrl=InfoFirmApi&act=GetFirmInfo`,
         GET_MORE_ABOUT_PRODUCT_URL:`ctrl=ProductApi&act=GetAboutProduct`,
+        SEARCH_PRODUCTS_URL:`ctrl=SearchApi&act=GetSearchProduct`,
 
 });
+
+
+
 
 
 let app = angular.module('TexDon', [
@@ -243,11 +259,22 @@ app.config([
                 "header": {
                     "templateUrl":"templates/header.html",
 
-                    'controller': ['$scope', 'NewsService', 'news' , function( $scope , NewsService , news){
+                    'controller': ['$scope', 'NewsService',  'SearchService', 'news' , function( $scope , NewsService , SearchService, news, search){
 
                         $scope.newsSingle = news;
 
                         console.log($scope.newsSingle)
+
+
+                        $scope.search = async function(valid) {
+
+                                let moreProducts = await SearchService.getSearchProductByText(valid);
+
+                                moreProducts.forEach( p =>{
+                                    $scope.products.push( p );  /*   $scope.products ????   ProductService   */
+                                });
+                        };
+
 
                     } ],
 
@@ -256,10 +283,8 @@ app.config([
                     'templateUrl':"templates/home.html",
                             'controller': ['$scope', '$sce', 'FirmInfoService',  'firmInfo' , function( $scope , $sce , FirmInfoService,  firmInfo){
 
-
                             $scope.firmInfo = $sce.trustAsHtml(firmInfo.data.text);
                             console.log($scope.firmInfo)
-
 
                     } ],
                 },
@@ -274,6 +299,11 @@ app.config([
                 'news': [ 'NewsService' , '$stateParams' , function( NewsService , $stateParams){
                     return NewsService.getNews();
                 } ],
+
+                'search': [ 'SearchService' , '$stateParams' , function( SearchService , $stateParams){
+                    return SearchService.getSearchProductByText($stateParams.productTitle);
+                } ],
+
                 'firmInfo': [ 'FirmInfoService' , '$stateParams' , function( FirmInfoService, $stateParams){
                     return FirmInfoService.getFirmInfo();
                 } ]
@@ -471,13 +501,28 @@ app.config([
                 },
                 "content": {
                     "templateUrl":"templates/product/product.html",
-                    'controller': ['$scope', 'localStorageService', 'ProductService','product', function ($scope, localStorageService , ProductService, product) {
+                    'controller': ['$scope', 'localStorageService', 'ProductService', 'product', '$stateParams', function ($scope, localStorageService , ProductService, product, $stateParams) {
+
+                        $scope.limit = 3;
+                        $scope.offset = 0;
 
                         $scope.products = product.data;
 
                         console.log($scope.products);
 
 
+                        $scope.getMoreProducts = async function () {
+
+                            $scope.offset +=  $scope.limit;
+                            let moreProducts = await  ProductService.getProductsBySubcategoryId($stateParams.id, $scope.limit , $scope.offset);
+
+                            moreProducts.forEach( p =>{
+                                $scope.products.push( p );
+                            });
+
+
+                        };
+                        
                         localStorageService.set('cart' , [
                             {
                                 productID: 1,
@@ -526,7 +571,7 @@ app.config([
 
 
                 'product':['ProductService', '$stateParams' , function (ProductService, $stateParams) {
-                    return ProductService.getProductsBySubcategoryId($stateParams.id);
+                    return ProductService.getProductsBySubcategoryId($stateParams.id, 3 , 0);
                 }]
             }
 
@@ -712,6 +757,43 @@ __webpack_require__.r(__webpack_exports__);
      }//constructor
 
 }//MainController
+
+/***/ }),
+
+/***/ "./application/filters/productFilter.js":
+/*!**********************************************!*\
+  !*** ./application/filters/productFilter.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ProductFilter; });
+
+
+class ProductFilter {
+
+
+
+    async  productByFilter ( ) {
+
+        return function ( products , age , brandProduct ) {
+
+            let resultProducts = products.filter( (product)=>{
+
+
+                return product.age > age || product.brandProduct.indexOf(brandProduct) !== -1;
+
+            } );
+
+
+            return resultProducts;
+        };
+    };
+
+
+}// ProductFilter
 
 /***/ }),
 
@@ -1089,12 +1171,12 @@ class ProductService {
     }//constructor ProductService
 
 
-    async getProductsBySubcategoryId (subcategoryID){
+    async getProductsBySubcategoryId (subcategoryID, limit , offset){
 
         try {
 
             let response = await  this._$http.get(
-                `${this._PARAMS.SERVER_URL}${this._PARAMS.GET_PRODUCTS_BY_SUBCATEGORY_ID_URL}&subcategoryID=${subcategoryID}`
+                `${this._PARAMS.SERVER_URL}${this._PARAMS.GET_PRODUCTS_BY_SUBCATEGORY_ID_URL}&subcategoryID=${subcategoryID}&limit=${limit}&offset=${offset}`
             );
 
             return response.data;
@@ -1115,6 +1197,53 @@ class ProductService {
 
 
 }//ProductService
+
+/***/ }),
+
+/***/ "./application/services/searchService.js":
+/*!***********************************************!*\
+  !*** ./application/services/searchService.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SearchService; });
+
+
+class  SearchService {
+
+
+    constructor ($http, PARAMS){
+
+        this._$http = $http;
+        this._PARAMS = PARAMS;
+
+    }//constructor
+
+
+    async getSearchProductByText (productTitle){
+
+        try {
+
+            let response = await  this._$http.get(
+                `${this._PARAMS.SERVER_URL}${this._PARAMS.SEARCH_PRODUCTS_URL}&productTitle=${productTitle}`
+            );
+
+            return response.data;
+
+        }// try
+        catch (ex) {
+
+            console.log("Exception", ex);
+            return null;
+
+        }//catch
+
+    }//getSearchProductByText
+
+ }
 
 /***/ }),
 
