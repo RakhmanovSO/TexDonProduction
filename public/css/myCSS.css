@@ -19,8 +19,12 @@ a {
 }
 
 body{
-background: #FE5B00 ;
+background: #FE5B00 !important;
 
+}
+
+#content{
+    background: #FE5B00 !important;
 }
 
 main{

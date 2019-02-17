@@ -2,11 +2,11 @@
 
         <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
             <a id="siteLogo" class="navbar-brand mr-auto mr-lg-0" ng-href="http://localhost:5012/TexDonProduction/public"><span class="logo">TexDon</span></a>
-            <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+            <button ng-click="isActive = !isActive" class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault" >
                 <ul id="menu" class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" ui-sref="home">Главная <span class="sr-only">(current)</span></a>
@@ -36,6 +36,9 @@
                 <!-- ui-sref="search({ productTitle: productTitle })" -->
             </form>
         </div>
+
+
+
     </nav>
 
 

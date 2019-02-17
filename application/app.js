@@ -88,7 +88,8 @@ angular.module( 'TexDon.filrers')
     .filter('ProductFilter', ProductFilter);
 */
 
-
+angular.module('TexDon.controllers')
+    .controller('MainController' , [ '$scope' , 'NewsService' , MainController ]);
 
 angular.module('TexDon.services')
     .constant('PARAMS', {
@@ -147,29 +148,6 @@ app.config([
 
             'url': '/home',
             'views':{
-                "header": {
-                    "templateUrl":"templates/header.html",
-
-                    'controller': ['$scope', 'NewsService',  'SearchService', 'news' , function( $scope , NewsService , SearchService, news, search){
-
-                        $scope.newsSingle = news;
-
-                        console.log($scope.newsSingle)
-
-
-                        $scope.search = async function(valid) {
-
-                                let moreProducts = await SearchService.getSearchProductByText(valid);
-
-                                moreProducts.forEach( p =>{
-                                    $scope.products.push( p );  /*   $scope.products ????   ProductService   */
-                                });
-                        };
-
-
-                    } ],
-
-                },
                 "content": {
                     'templateUrl':"templates/home.html",
                             'controller': ['$scope', '$sce', 'FirmInfoService',  'firmInfo' , function( $scope , $sce , FirmInfoService,  firmInfo){
@@ -178,21 +156,13 @@ app.config([
                             console.log($scope.firmInfo)
 
                     } ],
-                },
-                "footer": {
-                    'templateUrl':"templates/footer.html",
                 }
-
             },
 
             'resolve': {
 
                 'news': [ 'NewsService' , '$stateParams' , function( NewsService , $stateParams){
                     return NewsService.getNews();
-                } ],
-
-                'search': [ 'SearchService' , '$stateParams' , function( SearchService , $stateParams){
-                    return SearchService.getSearchProductByText($stateParams.productTitle);
                 } ],
 
                 'firmInfo': [ 'FirmInfoService' , '$stateParams' , function( FirmInfoService, $stateParams){
@@ -378,26 +348,15 @@ app.config([
 
             'url': '/product/:id',
             'views':{
-                "header": {
-                    'templateUrl':"templates/header.html",
-
-                    'controller': ['$scope', 'NewsService', 'news' , function( $scope , NewsService , news){
-
-                        $scope.newsSingle = news;
-
-                        console.log($scope.newsSingle)
-
-                    } ],
-
-                },
                 "content": {
+
                     "templateUrl":"templates/product/product.html",
                     'controller': ['$scope', 'localStorageService', 'ProductService', 'product', '$stateParams', function ($scope, localStorageService , ProductService, product, $stateParams) {
 
                         $scope.limit = 3;
                         $scope.offset = 0;
 
-                        $scope.products = product.data;
+                        $scope.products = product.data.products;
 
                         console.log($scope.products);
 
@@ -413,45 +372,34 @@ app.config([
 
 
                         };
-                        
-                        localStorageService.set('cart' , [
-                            {
-                                productID: 1,
-                                amount: 2
-                            }
-                        ]);
 
-
-                        let cart = localStorageService.get('cart');
-
-                        console.log('cart' , cart);
-
-                        if( cart ){
-
-                            $scope.products.product.forEach( function ( product ) {
-
-                                let p = cart.find( pr => +pr.productID  === +product.productID );
-
-                                if( p ){
-
-                                    product.isInCart = true;
-
-                                }//if
-                                else{
-
-                                    product.isInCart = false;
-
-                                }//else
-
-                            } );
-
-
-                        }//if
+                        // let cart = localStorageService.get('cart');
+                        //
+                        // console.log('cart' , cart);
+                        //
+                        // if( cart ){
+                        //
+                        //     $scope.products.product.forEach( function ( product ) {
+                        //
+                        //         let p = cart.find( pr => +pr.productID  === +product.productID );
+                        //
+                        //         if( p ){
+                        //
+                        //             product.isInCart = true;
+                        //
+                        //         }//if
+                        //         else{
+                        //
+                        //             product.isInCart = false;
+                        //
+                        //         }//else
+                        //
+                        //     } );
+                        //
+                        //
+                        // }//if
 
                     }],
-                },
-                "footer": {
-                    'templateUrl':"templates/footer.html",
                 }
             },
             'resolve':{
