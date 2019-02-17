@@ -94,8 +94,8 @@
 
                     </ul>
                     <form name="searchForm" class="form-inline my-2 my-lg-0">
-                        <input name="search" ng-model="search.name"  class="form-control mr-sm-2" type="text" placeholder="Введите название товара и нажмите Поиск" aria-label="Поиск">
-                        <button class="btn btn-success my-2 my-sm-0">Поиск</button>
+                        <input name="search" ng-model="searchString"  class="form-control mr-sm-2" type="text" placeholder="Введите название товара и нажмите Поиск" aria-label="Поиск">
+                        <button ng-click="MakeSearch()" class="btn btn-success my-2 my-sm-0">Поиск</button>
                         <!-- ui-sref="search({ productTitle: productTitle })" -->
                     </form>
                 </div>

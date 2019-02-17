@@ -3,9 +3,16 @@
  export default class  MainController{
 
 
-     constructor( $scope , NewsService){
+     constructor( $scope , NewsService , $state){
 
-         console.log($scope);
+         $scope.MakeSearch = ()=>{
+
+             console.log($scope.searchString);
+             $state.go('search');
+
+         };
+
+         $scope.searchString = '';
 
          this._$scope = $scope;
          this._$scope.isActive = false;
