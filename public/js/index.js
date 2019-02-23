@@ -96,20 +96,24 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _controllers_MainController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./controllers/MainController */ "./application/controllers/MainController.js");
-/* harmony import */ var _services_categoryService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services/categoryService */ "./application/services/categoryService.js");
-/* harmony import */ var _services_subcategoryService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services/subcategoryService */ "./application/services/subcategoryService.js");
-/* harmony import */ var _services_productService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./services/productService */ "./application/services/productService.js");
-/* harmony import */ var _services_newsService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./services/newsService */ "./application/services/newsService.js");
-/* harmony import */ var _services_firmInfoService__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./services/firmInfoService */ "./application/services/firmInfoService.js");
-/* harmony import */ var _services_aboutProductService__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./services/aboutProductService */ "./application/services/aboutProductService.js");
-/* harmony import */ var _services_aboutNewsService__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./services/aboutNewsService */ "./application/services/aboutNewsService.js");
-/* harmony import */ var _services_contactsService__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./services/contactsService */ "./application/services/contactsService.js");
-/* harmony import */ var _services_searchService__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./services/searchService */ "./application/services/searchService.js");
-/* harmony import */ var _services_cartService__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./services/cartService */ "./application/services/cartService.js");
-/* harmony import */ var _filters_productFilter__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./filters/productFilter */ "./application/filters/productFilter.js");
+/* harmony import */ var _controllers_CartController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./controllers/CartController */ "./application/controllers/CartController.js");
+/* harmony import */ var _services_categoryService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services/categoryService */ "./application/services/categoryService.js");
+/* harmony import */ var _services_subcategoryService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./services/subcategoryService */ "./application/services/subcategoryService.js");
+/* harmony import */ var _services_productService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./services/productService */ "./application/services/productService.js");
+/* harmony import */ var _services_newsService__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./services/newsService */ "./application/services/newsService.js");
+/* harmony import */ var _services_firmInfoService__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./services/firmInfoService */ "./application/services/firmInfoService.js");
+/* harmony import */ var _services_aboutProductService__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./services/aboutProductService */ "./application/services/aboutProductService.js");
+/* harmony import */ var _services_aboutNewsService__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./services/aboutNewsService */ "./application/services/aboutNewsService.js");
+/* harmony import */ var _services_contactsService__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./services/contactsService */ "./application/services/contactsService.js");
+/* harmony import */ var _services_searchService__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./services/searchService */ "./application/services/searchService.js");
+/* harmony import */ var _services_cartService__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./services/cartService */ "./application/services/cartService.js");
+/* harmony import */ var _filters_productFilter__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./filters/productFilter */ "./application/filters/productFilter.js");
 
 
 // =================== CONTROLLERS =================== //
+
+
+
 
 
 
@@ -143,7 +147,7 @@ angular.module( 'TexDon.services' , []);
 angular.module( 'TexDon.directives' , []);
 angular.module('TexDon.constants' , []);
 
-angular.module('TexDon.controllers').controller('MainController' , [
+angular.module('TexDon.controllers').controller('MainController' ,_controllers_CartController__WEBPACK_IMPORTED_MODULE_1__["default"], [
     '$scope' ,
     'CategoryService',
     'SubcategoryService',
@@ -155,50 +159,59 @@ angular.module('TexDon.controllers').controller('MainController' , [
     'СontactsService',
     'CartService',
     'SearchService',
-    _controllers_MainController__WEBPACK_IMPORTED_MODULE_0__["default"] ]);
+    _controllers_MainController__WEBPACK_IMPORTED_MODULE_0__["default"], _controllers_CartController__WEBPACK_IMPORTED_MODULE_1__["default"] ]);
 
 
 angular.module( 'TexDon.services')
-    .service('CategoryService',['$http', 'PARAMS', _services_categoryService__WEBPACK_IMPORTED_MODULE_1__["default"]]);
+    .service('CategoryService',['$http', 'PARAMS', _services_categoryService__WEBPACK_IMPORTED_MODULE_2__["default"]]);
 
 angular.module( 'TexDon.services')
-    .service('SubcategoryService',['$http', 'PARAMS', _services_subcategoryService__WEBPACK_IMPORTED_MODULE_2__["default"]]);
+    .service('SubcategoryService',['$http', 'PARAMS', _services_subcategoryService__WEBPACK_IMPORTED_MODULE_3__["default"]]);
 
 angular.module( 'TexDon.services')
-    .service('ProductService',['$http', 'PARAMS', _services_productService__WEBPACK_IMPORTED_MODULE_3__["default"]]);
+    .service('ProductService',['$http', 'PARAMS', _services_productService__WEBPACK_IMPORTED_MODULE_4__["default"]]);
 
 angular.module( 'TexDon.services')
-    .service('NewsService',['$http', 'PARAMS', _services_newsService__WEBPACK_IMPORTED_MODULE_4__["default"]]);
-
-
-angular.module( 'TexDon.services')
-    .service('FirmInfoService',['$http', 'PARAMS', _services_firmInfoService__WEBPACK_IMPORTED_MODULE_5__["default"]]);
+    .service('NewsService',['$http', 'PARAMS', _services_newsService__WEBPACK_IMPORTED_MODULE_5__["default"]]);
 
 
 angular.module( 'TexDon.services')
-    .service('AboutProductService',['$http', 'PARAMS', _services_aboutProductService__WEBPACK_IMPORTED_MODULE_6__["default"]]);
+    .service('FirmInfoService',['$http', 'PARAMS', _services_firmInfoService__WEBPACK_IMPORTED_MODULE_6__["default"]]);
 
 
 angular.module( 'TexDon.services')
-    .service('AboutNewsService',['$http', 'PARAMS', _services_aboutNewsService__WEBPACK_IMPORTED_MODULE_7__["default"]]);
-
-angular.module( 'TexDon.services')
-    .service('СontactsService',['$http', 'PARAMS', _services_contactsService__WEBPACK_IMPORTED_MODULE_8__["default"]]);
-
-angular.module( 'TexDon.services')
-    .service('SearchService',['$http', 'PARAMS', _services_searchService__WEBPACK_IMPORTED_MODULE_9__["default"]]);
+    .service('AboutProductService',['$http', 'PARAMS', _services_aboutProductService__WEBPACK_IMPORTED_MODULE_7__["default"]]);
 
 
 angular.module( 'TexDon.services')
-    .service('CartService',['$http', 'PARAMS', _services_cartService__WEBPACK_IMPORTED_MODULE_10__["default"]]);
+    .service('AboutNewsService',['$http', 'PARAMS', _services_aboutNewsService__WEBPACK_IMPORTED_MODULE_8__["default"]]);
+
+angular.module( 'TexDon.services')
+    .service('СontactsService',['$http', 'PARAMS', _services_contactsService__WEBPACK_IMPORTED_MODULE_9__["default"]]);
+
+
+angular.module( 'TexDon.services')
+    .service('CartService',['$http', 'PARAMS', _services_cartService__WEBPACK_IMPORTED_MODULE_11__["default"]]);
+
+
+angular.module( 'TexDon.services')
+    .service('SearchService',['$http', 'PARAMS', _services_searchService__WEBPACK_IMPORTED_MODULE_10__["default"]]);
+
+
+angular.module('TexDon.controllers')
+    .controller('MainController' , [ '$scope' , 'NewsService' , 'CartService', _controllers_MainController__WEBPACK_IMPORTED_MODULE_0__["default"] ]);
+
+
+angular.module('TexDon.controllers')
+    .controller('CartController' , [ '$scope' , 'NewsService' , 'CartService', _controllers_CartController__WEBPACK_IMPORTED_MODULE_1__["default"] ]);
+
 
 /*
 angular.module( 'TexDon.filrers')
     .filter('ProductFilter', ProductFilter);
 */
 
-angular.module('TexDon.controllers')
-    .controller('MainController' , [ '$scope' , 'NewsService' , _controllers_MainController__WEBPACK_IMPORTED_MODULE_0__["default"] ]);
+
 
 angular.module('TexDon.services')
     .constant('PARAMS', {
@@ -215,9 +228,9 @@ angular.module('TexDon.services')
         GET_MORE_ABOUT_PRODUCT_URL:`ctrl=ProductApi&act=GetAboutProduct`,
         SEARCH_PRODUCTS_URL:`ctrl=SearchApi&act=GetSearchProduct`,
 
+        POST_REGISTRATION_NEW_ORDER_URL:`ctrl=OrderApi&act=AddOrder`,
+
 });
-
-
 
 
 
@@ -276,28 +289,51 @@ app.config([
 
                 'firmInfo': [ 'FirmInfoService' , '$stateParams' , function( FirmInfoService, $stateParams){
                     return FirmInfoService.getFirmInfo();
+
+                } ],
+                'search': [ 'SearchService' , '$stateParams' , function( SearchService , $stateParams){
+                    return SearchService.getSearchProductByText($stateParams.searchString);
                 } ]
             }
 
         }); // stateProvider.state('home')
 
 
+        $stateProvider.state('search' , {
+
+            'url': '/search/:searchString',
+            'views':{
+                "content": {
+                    "templateUrl":"templates/search/search.html",
+                    'controller': ['$scope', '$state', 'SearchService','search', function ($scope,  $state, SearchService, search, ) {
+
+                        $scope.productsList = search.data.products;
+
+                        console.log($scope.productsList)
+                    }],
+                    'params' : {
+                        'searchString': 'some default'
+                    }
+                },
+
+            },
+            'resolve':{
+                'news':['NewsService', '$stateParams' , function (NewsService, $stateParams) {
+                    return NewsService.getAllNewsListMenu();
+                }],
+
+                'search': [ 'SearchService' , '$stateParams' , function( SearchService , $stateParams){
+                    return SearchService.getSearchProductByText($stateParams.searchString);
+                } ],
+            }
+
+        });//stateProvider.state('search')
+
 
         $stateProvider.state('news' , {
 
             'url': '/news',
             'views':{
-                "header": {
-                    'templateUrl':"templates/header.html",
-                    'controller': ['$scope', 'NewsService', 'news' , function( $scope , NewsService , news){
-
-                        $scope.newsSingle = news;
-
-                        console.log($scope.newsSingle)
-
-                    } ],
-
-                },
                 "content": {
                     "templateUrl":"templates/news/news.html",
                     'controller': ['$scope', 'NewsService','news', function ($scope, NewsService, news) {
@@ -329,17 +365,7 @@ app.config([
 
             'url': '/contacts',
             'views':{
-                "header": {
-                    'templateUrl':"templates/header.html",
-                    'controller': ['$scope', 'NewsService', 'news' , function( $scope , NewsService , news){
 
-                        $scope.newsSingle = news;
-
-                        console.log($scope.newsSingle)
-
-                    } ],
-
-                },
                 "content": {
                     "templateUrl":"templates/contacts/contacts.html",
                     'controller': ['$scope', 'СontactsService','contacts', function ($scope, СontactsService, contacts) {
@@ -371,18 +397,6 @@ app.config([
 
             'url': '/category',
             'views':{
-                "header": {
-                    'templateUrl':"templates/header.html",
-
-                    'controller': ['$scope', 'NewsService', 'news' , function( $scope , NewsService , news){
-
-                        $scope.newsSingle = news;
-
-                        console.log($scope.newsSingle)
-
-                    } ],
-
-                },
                 "content": {
                     "templateUrl":"templates/category/category.html",
                     'controller': ['$scope', 'CategoryService','category', function ($scope, CategoryService, category) {
@@ -397,7 +411,6 @@ app.config([
                 }
             },
             'resolve':{
-
                 'news': [ 'NewsService' , '$stateParams' , function( NewsService , $stateParams){
                     return NewsService.getNews();
                 } ],
@@ -414,18 +427,6 @@ app.config([
 
             'url': '/subcategory/:id',
             'views':{
-                "header": {
-                    'templateUrl':"templates/header.html",
-
-                    'controller': ['$scope', 'NewsService', 'news' , function( $scope , NewsService , news){
-
-                        $scope.newsSingle = news;
-
-                        console.log($scope.newsSingle)
-
-                    } ],
-
-                },
                 "content": {
                     "templateUrl":"templates/subcategory/subcategory.html",
                     'controller': ['$scope', 'SubcategoryService','subcategory', function ($scope, SubcategoryService, subcategory) {
@@ -462,7 +463,7 @@ app.config([
                     "templateUrl":"templates/product/product.html",
                     'controller': ['$scope', 'localStorageService', 'ProductService', 'product', '$stateParams', function ($scope, localStorageService , ProductService, product, $stateParams) {
 
-                        $scope.limit = 3;
+                        $scope.limit = 4;
                         $scope.offset = 0;
 
                         $scope.products = product.data.products;
@@ -473,40 +474,53 @@ app.config([
                         $scope.getMoreProducts = async function () {
 
                             $scope.offset +=  $scope.limit;
-                            let moreProducts = await  ProductService.getProductsBySubcategoryId($stateParams.id, $scope.limit , $scope.offset);
+                            let moreProducts = await ProductService.getProductsBySubcategoryId($stateParams.id, $scope.limit , $scope.offset);
 
-                            moreProducts.forEach( p =>{
+                            moreProducts.forEach( (p) => {
                                 $scope.products.push( p );
-                            });
+                            } );
 
 
                         };
 
-                        // let cart = localStorageService.get('cart');
-                        //
-                        // console.log('cart' , cart);
-                        //
-                        // if( cart ){
-                        //
-                        //     $scope.products.product.forEach( function ( product ) {
-                        //
-                        //         let p = cart.find( pr => +pr.productID  === +product.productID );
-                        //
-                        //         if( p ){
-                        //
-                        //             product.isInCart = true;
-                        //
-                        //         }//if
-                        //         else{
-                        //
-                        //             product.isInCart = false;
-                        //
-                        //         }//else
-                        //
-                        //     } );
-                        //
-                        //
-                        // }//if
+
+                        /*
+                        localStorageService.set('cart' , [
+                            {
+                                productID: 1,
+                                amount: 2
+                            }
+                        ]);
+                        */
+
+                       // localStorageService.remove('cart');
+
+
+                        let cart = localStorageService.get('cart');
+
+                        console.log('cart' , cart);
+
+                         if( cart ){
+
+                           $scope.products.forEach( function ( product ) {
+
+                                let p = cart.find( pr => +pr.productID  === +product.productID );
+
+                                 if( p ){
+
+                                     product.isInCart = true;
+
+                                 }//if
+                                 else{
+
+                                     product.isInCart = false;
+
+                                 }//else
+
+                             } );
+
+
+                         }//if
 
                     }],
                 }
@@ -519,7 +533,7 @@ app.config([
 
 
                 'product':['ProductService', '$stateParams' , function (ProductService, $stateParams) {
-                    return ProductService.getProductsBySubcategoryId($stateParams.id, 3 , 0);
+                    return ProductService.getProductsBySubcategoryId($stateParams.id, 4 , 0);
                 }]
             }
 
@@ -531,18 +545,6 @@ app.config([
 
             'url': '/moreAboutProduct/:id',
             'views':{
-                "header": {
-                    'templateUrl':"templates/header.html",
-
-                    'controller': ['$scope', 'NewsService', 'news' , function( $scope , NewsService , news){
-
-                        $scope.newsSingle = news;
-
-                        console.log($scope.newsSingle)
-
-                    } ],
-
-                },
                 "content": {
                     "templateUrl":"templates/moreAboutProduct/moreAboutProduct.html",
                     'controller': ['$scope', 'localStorageService', 'AboutProductService','moreAboutProduct', function ($scope, localStorageService, AboutProductService, moreAboutProduct) {
@@ -579,18 +581,6 @@ app.config([
 
             'url': '/moreAboutNews/:id',
             'views':{
-                "header": {
-                    'templateUrl':"templates/header.html",
-
-                    'controller': ['$scope', 'NewsService', 'news' , function( $scope , NewsService , news){
-
-                        $scope.newsSingle = news;
-
-                        console.log($scope.newsSingle)
-
-                    } ],
-
-                },
                 "content": {
                     "templateUrl":"templates/moreAboutNews/moreAboutNews.html",
                     'controller': ['$scope',  'AboutNewsService','moreAboutNews', function ($scope, AboutNewsService, moreAboutNews) {
@@ -618,24 +608,10 @@ app.config([
         });// stateProvider.state('moreAboutNews')
 
 
-
-
         $stateProvider.state('cart' , {
 
             'url': '/cart',
             'views':{
-                "header": {
-                    'templateUrl':"templates/header.html",
-
-                    'controller': ['$scope', 'NewsService', 'news' , function( $scope , NewsService , news){
-
-                        $scope.newsSingle = news;
-
-                        console.log($scope.newsSingle)
-
-                    } ],
-
-                },
                 "content": {
                     "templateUrl":"templates/cart/cart.html",
                     'controller': ['$scope',  'CartService', 'cart', function ($scope, CartService, cart) {
@@ -643,6 +619,8 @@ app.config([
                         $scope.cart = cart;
 
                         console.log($scope.cart)
+
+                        console.log('localStorageService - cart' , cart);
                     }],
                 },
                 "footer": {
@@ -656,11 +634,11 @@ app.config([
                 } ],
 
                 'cart':['CartService', '$stateParams' , function (CartService, $stateParams) {
-                    return CartService.getCart();
+                    return CartService.registrationNewOrder();
                 }]
             }
 
-        });// stateProvider.state('moreAboutNews')
+        });// stateProvider.state('cart')
 
 
 
@@ -670,16 +648,132 @@ app.config([
     } ] );  // app.config
 
 
-app.run(
-    [
+app.run( [
     '$rootScope', '$state', '$stateParams',
      function ($rootScope, $state, $stateParams) {
-         
-     }   
-]);  // app.run
+
+        // $rootScope.cart = [];
+
+     }
+   ]);  // app.run
 
 
 
+
+/***/ }),
+
+/***/ "./application/controllers/CartController.js":
+/*!***************************************************!*\
+  !*** ./application/controllers/CartController.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CartController; });
+
+
+class  CartController {
+
+
+    constructor( $scope, CartService , SearchService, $state , $stateProvider ) {
+
+
+        $scope.cart = [];
+
+        $scope.totalPrice = 0;
+
+
+        $scope.UpdateCartTotal = function ( ) {
+
+            if ( $scope.cart.length !== 0){
+
+                $scope.totalPrice = $scope.cart.reduce( ( previousValue, productItem) =>{
+                    return previousValue + productItem.productPrice *  productItem.amount;
+                }, 0 );
+
+            }//if
+
+
+        };
+
+
+        $scope.AddProductToCart = function (product) {
+
+            let productExist = $scope.cart.some ( (pr) => {
+
+                return pr.productID === product.productID;
+
+                } );
+
+
+            if (!productExist){
+
+               // $scope.cart.push(product);
+
+                $scope.cart.push({
+                    'productID': product.productID,
+                    'productTitle': product.productTitle,
+                    'productPrice': product.productPrice,
+                    'amount': 1,
+                    'isInCart': true
+
+                });
+
+                $scope.UpdateCartTotal();
+
+                console.log('CART in CartController:', $scope.cart);
+
+            }//if
+
+        };
+
+
+
+        $scope.RemoveProductFromCart = function (index) {
+
+                event.stopPropagation();
+
+            $scope.cart.splice(index , 1);
+
+            $scope.UpdateCartTotal();
+
+        };
+
+
+
+        $scope.ChangeAmount = function (index, flag) {
+
+           let product =  $scope.cart[index];
+
+            if (flag === true) { // добавить (+ 1 ед.)
+
+                product.amount++;
+            }//if
+            else if ($scope.cart[index].amount > 0 ) {  // убрать  (- 1 ед.)
+
+                product.amount--;
+
+                if( product.amount === 0){
+
+                    $scope.RemoveProductFromCart(index);
+                }
+
+            }//else if
+
+            event.stopPropagation();
+
+            $scope.UpdateCartTotal();
+
+        };
+
+
+    }//constructor
+
+
+
+}//  CartController
 
 /***/ }),
 
@@ -697,26 +791,45 @@ __webpack_require__.r(__webpack_exports__);
 
  class  MainController{
 
-
-     constructor( $scope , NewsService){
-
-         $scope.MakeSearch = ()=>{
-
-             console.log($scope.searchString);
-
-         };
-
-         $scope.searchString = '';
+     constructor( $scope, NewsService, SearchService, CartService , $state ,  $stateProvider ){
 
          this._$scope = $scope;
+
          this._$scope.isActive = false;
 
          NewsService.getNews().then( news => {
 
-             console.log('RESPONSE:' , news);
+             console.log('NEWS in MainController :' , news);
+
              $scope.newsList = news;
 
          } );
+
+
+
+         $scope.MakeSearch = function() {
+
+             console.log( 'SearchString in MainController:', $scope.searchString);
+
+             $state.go( 'search', { 'searchString': $scope.searchString } );
+
+         };
+
+// http://qaru.site/questions/55150/how-to-send-and-retrieve-parameters-using-statego-toparams-and-stateparams
+
+             /*
+          SearchService.getSearchProductByText($scope.searchString).then( search => {
+
+              console.log('RESPONSE_Search:' , search );
+
+              $scope.productsList = search.data.products;
+
+          } );
+                 */
+
+         //$scope.searchString = '';
+
+
 
      }//constructor
 
@@ -877,15 +990,18 @@ class CartService {
         this._$http = $http;
         this._PARAMS = PARAMS;
 
-    }//constructor categoryService
+    }//constructor CartService
 
-    async getCart (){
+    async registrationNewOrder (userFirstAndLastName, userEmail, userContactNumberPhone, deliveryAddressOrder, commentToTheOrder){
 
         try {
 
+            let response = await  this._$http.post(
+                `${this._PARAMS.SERVER_URL}${this._PARAMS.POST_REGISTRATION_NEW_ORDER_URL}&userFirstAndLastName=${userFirstAndLastName}&userEmail=${userEmail}&userContactNumberPhone=${userContactNumberPhone}&deliveryAddressOrder=${deliveryAddressOrder}&commentToTheOrder=${commentToTheOrder}`
+            );
 
+            return response.data;
 
-            return null;
 
         }// try
         catch (ex) {
@@ -895,10 +1011,10 @@ class CartService {
 
         }//catch
 
-    }//getCategories
+    }//registrationNewOrder
 
 
-}//CategoryService
+}//CartService
 
 /***/ }),
 
@@ -1145,7 +1261,6 @@ class ProductService {
 
             return response.data;
 
-           // return response.data;
 
         }// try
         catch (ex) {
@@ -1187,12 +1302,12 @@ class  SearchService {
     }//constructor
 
 
-    async getSearchProductByText (productTitle){
+    async getSearchProductByText (searchString){
 
         try {
 
             let response = await  this._$http.get(
-                `${this._PARAMS.SERVER_URL}${this._PARAMS.SEARCH_PRODUCTS_URL}&productTitle=${productTitle}`
+                `${this._PARAMS.SERVER_URL}${this._PARAMS.SEARCH_PRODUCTS_URL}&productTitle=${searchString}`
             );
 
             return response.data;
