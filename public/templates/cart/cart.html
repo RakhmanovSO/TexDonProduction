@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid"  ng-controller="CartController">
 
     <div class="d-flex justify-content-center bd-highlight mb-3" >
 
@@ -8,7 +8,25 @@
     </div>
 
 
+    <div id="EmptyCart" class="EmptyCart" ng-if="cart.length === 0">
 
+        <div class="d-flex justify-content-center bd-highlight mb-3">
+
+            <div class="p-2 bd-highlight">
+
+                    <h3 style="margin-left: 380px;">Корзина пуста !</h3>
+
+                <h4 style="margin-left: 380px;">Добавте товар для оформления заказа ! </h4>
+
+                    <a id="buttonProduct" class="img-responsive center-block"  ui-sref="category" >
+                        <img class="img-responsive center-block"   alt="Перейти в каталог товаров" ng-src="http://localhost:5012/TexDon/assets/images/othersImages/01final.png" >
+                    </a>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="CartTable" class="CartTable" ng-if="cart.length !== 0">
 
     <div class="d-flex justify-content-center bd-highlight mb-3">
 
@@ -16,49 +34,60 @@
 
             <h4>Список товаров находящихся в корзине:</h4>
 
-            <table cellspacing="0" >
 
-                <thead>
+                <table cellspacing="0" >
 
-                <tr align="center" text-align="center">
-                    <th align="center" text-align="center" >Наименование товара</th>
-                    <th align="center" text-align="center">Кол-во</th>
-                    <th align="center" text-align="center" >Цена за 1 ед.</th>
-                    <th align="center" text-align="center">Сумма</th>
-                    <th align="center" text-align="center"> </th>
+                    <thead>
 
-                </tr>
+                    <tr align="center" text-align="center" >
+                        <th align="center" text-align="center" >Наименование товара</th>
+                        <th align="center" text-align="center">Кол-во</th>
+                        <th align="center" text-align="center" >Цена за 1 ед.</th>
+                        <th align="center" text-align="center">Сумма</th>
+                        <th align="center" text-align="center"> </th>
 
-                </thead>
+                    </tr>
 
-                <tbody id="productsTable">
-                <tr>
+                    </thead>
 
-                    <td align="center" text-align="center">  </td>
-                    <td align="center" text-align="center" > </td>
-                    <td align="center" text-align="center" > </td>
-                    <td align="center" text-align="center" > </td>
+                    <tbody id="productsTable">
 
-                    <td align="center" text-align="center" > <div class="btn btn-danger">Х</div> </td>
+                    <tr id="{{ pr.productID }}" ng-repeat="pr in cart track by pr.productID ">
 
+                        <td id="{{ pr.productTitle }}" class="{{ pr.productID }}" align="center" text-align="center"> <p ng-bind-template="pr.productTitle"></p> </td>
 
-                </tr>
+                        <td align="center" text-align="center" >
 
 
-                <tr id="sum">
+                            <span id="amountMinus" class="amountMinus" title="Уменьшить на 1"  style="font-size: 14pt;" ng-click="ChangeAmount($index, false)"> &mdash; </span>
 
-                    <td></td>
-                    <td> <strong>Итого: </strong></td>
-                    <td></td>
-                    <td></td>
-                    <td align="center"> <strong> 0 руб </strong> </td>
+                            <span id="amount" class="amount" style="font-size: 14pt; margin-left: 15px; margin-right: 15px;" ng-bind-template="pr.amount" > </span>
 
-                </tr>
+                            <span id="amountPlus" class="amountPlus" title="Увеличить на 1" style="font-size: 14pt" ng-click="ChangeAmount($index, true)"> &#10010; </span>
 
-                </tbody>
+                        </td>
+                        <td id="{{ pr.productPrice }}" align="center" text-align="center" ><p  ng-bind-template="pr.productPrice +' руб.'"></p> </td>
+
+                        <td align="center" text-align="center" ><p id="total"  ng-bind-template="pr.productPrice +' руб.'"></p> </td>
+
+                        <td align="center" text-align="center" ng-click="RemoveProductFromCart($index)"> <div class="btn btn-danger deleteProduct">Х</div>  </td>
 
 
-            </table>
+                    </tr>
+
+
+                    <tr id="summa">
+                        <td></td>
+                        <td> <strong>Итого: </strong></td>
+                        <td></td>
+                        <td></td>
+                        <td id="totalPrice" class="totalPrice" align="center"  ng-bind-template="{{ totalPrice }} руб."> </td>
+                    </tr>
+
+                    </tbody>
+
+
+                </table>
 
         </div>
     </div>
@@ -119,6 +148,6 @@
     </div>
 
 
+     </div>
 
-
-</div>
+   </div>

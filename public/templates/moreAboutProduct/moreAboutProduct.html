@@ -1,5 +1,5 @@
 
-<div class="container-fluid">
+<div class="container-fluid"  ng-controller="CartController" >
 
 
     <div class="d-flex justify-content-center bd-highlight mb-3" >
@@ -26,11 +26,11 @@
     <div class="d-flex justify-content-center bd-highlight mb-3" >
 
         <div class="p-2 bd-highlight">
-            <a  class="btn btn-success " ui-sref=" ">Добавить в корзину</a>
+            <a  class="btn btn-success " ng-click="AddProductToCart(singleProduct.product)" ng-if="singleProduct.isInCart === false" >Добавить в корзину</a>
         </div>
 
         <div class="p-2 bd-highlight">
-            <a  class="btn btn-success" ui-sref=" ">Товар в корзине!</a>
+            <a  class="btn btn-success"  ng-if="singleProduct.isInCart === true">Товар в корзине!</a>
         </div>
 
 
