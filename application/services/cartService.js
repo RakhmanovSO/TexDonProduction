@@ -8,15 +8,18 @@ export  default  class CartService {
         this._$http = $http;
         this._PARAMS = PARAMS;
 
-    }//constructor categoryService
+    }//constructor CartService
 
-    async getCart (){
+    async registrationNewOrder (userFirstAndLastName, userEmail, userContactNumberPhone, deliveryAddressOrder, commentToTheOrder){
 
         try {
 
+            let response = await  this._$http.post(
+                `${this._PARAMS.SERVER_URL}${this._PARAMS.POST_REGISTRATION_NEW_ORDER_URL}&userFirstAndLastName=${userFirstAndLastName}&userEmail=${userEmail}&userContactNumberPhone=${userContactNumberPhone}&deliveryAddressOrder=${deliveryAddressOrder}&commentToTheOrder=${commentToTheOrder}`
+            );
 
+            return response.data;
 
-            return null;
 
         }// try
         catch (ex) {
@@ -26,7 +29,7 @@ export  default  class CartService {
 
         }//catch
 
-    }//getCategories
+    }//registrationNewOrder
 
 
-}//CategoryService
+}//CartService

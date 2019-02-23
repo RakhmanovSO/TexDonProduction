@@ -3,6 +3,9 @@
 // =================== CONTROLLERS =================== //
 
 import MainController from './controllers/MainController';
+import CartController from './controllers/CartController';
+
+
 
 // ==================== SERVICES ===================== //
 import CategoryService from './services/categoryService';
@@ -34,7 +37,7 @@ angular.module( 'TexDon.services' , []);
 angular.module( 'TexDon.directives' , []);
 angular.module('TexDon.constants' , []);
 
-angular.module('TexDon.controllers').controller('MainController' , [
+angular.module('TexDon.controllers').controller('MainController' ,CartController, [
     '$scope' ,
     'CategoryService',
     'SubcategoryService',
@@ -46,7 +49,7 @@ angular.module('TexDon.controllers').controller('MainController' , [
     'СontactsService',
     'CartService',
     'SearchService',
-    MainController ]);
+    MainController, CartController ]);
 
 
 angular.module( 'TexDon.services')
@@ -76,20 +79,29 @@ angular.module( 'TexDon.services')
 angular.module( 'TexDon.services')
     .service('СontactsService',['$http', 'PARAMS', СontactsService]);
 
+
+angular.module( 'TexDon.services')
+    .service('CartService',['$http', 'PARAMS', CartService]);
+
+
 angular.module( 'TexDon.services')
     .service('SearchService',['$http', 'PARAMS', SearchService]);
 
 
-angular.module( 'TexDon.services')
-    .service('CartService',['$http', 'PARAMS', CartService]);
+angular.module('TexDon.controllers')
+    .controller('MainController' , [ '$scope' , 'NewsService' , 'CartService', MainController ]);
+
+
+angular.module('TexDon.controllers')
+    .controller('CartController' , [ '$scope' , 'NewsService' , 'CartService', CartController ]);
+
 
 /*
 angular.module( 'TexDon.filrers')
     .filter('ProductFilter', ProductFilter);
 */
 
-angular.module('TexDon.controllers')
-    .controller('MainController' , [ '$scope' , 'NewsService' , MainController ]);
+
 
 angular.module('TexDon.services')
     .constant('PARAMS', {
@@ -106,9 +118,9 @@ angular.module('TexDon.services')
         GET_MORE_ABOUT_PRODUCT_URL:`ctrl=ProductApi&act=GetAboutProduct`,
         SEARCH_PRODUCTS_URL:`ctrl=SearchApi&act=GetSearchProduct`,
 
+        POST_REGISTRATION_NEW_ORDER_URL:`ctrl=OrderApi&act=AddOrder`,
+
 });
-
-
 
 
 
@@ -167,28 +179,51 @@ app.config([
 
                 'firmInfo': [ 'FirmInfoService' , '$stateParams' , function( FirmInfoService, $stateParams){
                     return FirmInfoService.getFirmInfo();
+
+                } ],
+                'search': [ 'SearchService' , '$stateParams' , function( SearchService , $stateParams){
+                    return SearchService.getSearchProductByText($stateParams.searchString);
                 } ]
             }
 
         }); // stateProvider.state('home')
 
 
+        $stateProvider.state('search' , {
+
+            'url': '/search/:searchString',
+            'views':{
+                "content": {
+                    "templateUrl":"templates/search/search.html",
+                    'controller': ['$scope', '$state', 'SearchService','search', function ($scope,  $state, SearchService, search, ) {
+
+                        $scope.productsList = search.data.products;
+
+                        console.log($scope.productsList)
+                    }],
+                    'params' : {
+                        'searchString': 'some default'
+                    }
+                },
+
+            },
+            'resolve':{
+                'news':['NewsService', '$stateParams' , function (NewsService, $stateParams) {
+                    return NewsService.getAllNewsListMenu();
+                }],
+
+                'search': [ 'SearchService' , '$stateParams' , function( SearchService , $stateParams){
+                    return SearchService.getSearchProductByText($stateParams.searchString);
+                } ],
+            }
+
+        });//stateProvider.state('search')
+
 
         $stateProvider.state('news' , {
 
             'url': '/news',
             'views':{
-                "header": {
-                    'templateUrl':"templates/header.html",
-                    'controller': ['$scope', 'NewsService', 'news' , function( $scope , NewsService , news){
-
-                        $scope.newsSingle = news;
-
-                        console.log($scope.newsSingle)
-
-                    } ],
-
-                },
                 "content": {
                     "templateUrl":"templates/news/news.html",
                     'controller': ['$scope', 'NewsService','news', function ($scope, NewsService, news) {
@@ -220,17 +255,7 @@ app.config([
 
             'url': '/contacts',
             'views':{
-                "header": {
-                    'templateUrl':"templates/header.html",
-                    'controller': ['$scope', 'NewsService', 'news' , function( $scope , NewsService , news){
 
-                        $scope.newsSingle = news;
-
-                        console.log($scope.newsSingle)
-
-                    } ],
-
-                },
                 "content": {
                     "templateUrl":"templates/contacts/contacts.html",
                     'controller': ['$scope', 'СontactsService','contacts', function ($scope, СontactsService, contacts) {
@@ -262,18 +287,6 @@ app.config([
 
             'url': '/category',
             'views':{
-                "header": {
-                    'templateUrl':"templates/header.html",
-
-                    'controller': ['$scope', 'NewsService', 'news' , function( $scope , NewsService , news){
-
-                        $scope.newsSingle = news;
-
-                        console.log($scope.newsSingle)
-
-                    } ],
-
-                },
                 "content": {
                     "templateUrl":"templates/category/category.html",
                     'controller': ['$scope', 'CategoryService','category', function ($scope, CategoryService, category) {
@@ -288,7 +301,6 @@ app.config([
                 }
             },
             'resolve':{
-
                 'news': [ 'NewsService' , '$stateParams' , function( NewsService , $stateParams){
                     return NewsService.getNews();
                 } ],
@@ -305,18 +317,6 @@ app.config([
 
             'url': '/subcategory/:id',
             'views':{
-                "header": {
-                    'templateUrl':"templates/header.html",
-
-                    'controller': ['$scope', 'NewsService', 'news' , function( $scope , NewsService , news){
-
-                        $scope.newsSingle = news;
-
-                        console.log($scope.newsSingle)
-
-                    } ],
-
-                },
                 "content": {
                     "templateUrl":"templates/subcategory/subcategory.html",
                     'controller': ['$scope', 'SubcategoryService','subcategory', function ($scope, SubcategoryService, subcategory) {
@@ -353,7 +353,7 @@ app.config([
                     "templateUrl":"templates/product/product.html",
                     'controller': ['$scope', 'localStorageService', 'ProductService', 'product', '$stateParams', function ($scope, localStorageService , ProductService, product, $stateParams) {
 
-                        $scope.limit = 3;
+                        $scope.limit = 4;
                         $scope.offset = 0;
 
                         $scope.products = product.data.products;
@@ -364,40 +364,53 @@ app.config([
                         $scope.getMoreProducts = async function () {
 
                             $scope.offset +=  $scope.limit;
-                            let moreProducts = await  ProductService.getProductsBySubcategoryId($stateParams.id, $scope.limit , $scope.offset);
+                            let moreProducts = await ProductService.getProductsBySubcategoryId($stateParams.id, $scope.limit , $scope.offset);
 
-                            moreProducts.forEach( p =>{
+                            moreProducts.forEach( (p) => {
                                 $scope.products.push( p );
-                            });
+                            } );
 
 
                         };
 
-                        // let cart = localStorageService.get('cart');
-                        //
-                        // console.log('cart' , cart);
-                        //
-                        // if( cart ){
-                        //
-                        //     $scope.products.product.forEach( function ( product ) {
-                        //
-                        //         let p = cart.find( pr => +pr.productID  === +product.productID );
-                        //
-                        //         if( p ){
-                        //
-                        //             product.isInCart = true;
-                        //
-                        //         }//if
-                        //         else{
-                        //
-                        //             product.isInCart = false;
-                        //
-                        //         }//else
-                        //
-                        //     } );
-                        //
-                        //
-                        // }//if
+
+                        /*
+                        localStorageService.set('cart' , [
+                            {
+                                productID: 1,
+                                amount: 2
+                            }
+                        ]);
+                        */
+
+                       // localStorageService.remove('cart');
+
+
+                        let cart = localStorageService.get('cart');
+
+                        console.log('cart' , cart);
+
+                         if( cart ){
+
+                           $scope.products.forEach( function ( product ) {
+
+                                let p = cart.find( pr => +pr.productID  === +product.productID );
+
+                                 if( p ){
+
+                                     product.isInCart = true;
+
+                                 }//if
+                                 else{
+
+                                     product.isInCart = false;
+
+                                 }//else
+
+                             } );
+
+
+                         }//if
 
                     }],
                 }
@@ -410,7 +423,7 @@ app.config([
 
 
                 'product':['ProductService', '$stateParams' , function (ProductService, $stateParams) {
-                    return ProductService.getProductsBySubcategoryId($stateParams.id, 3 , 0);
+                    return ProductService.getProductsBySubcategoryId($stateParams.id, 4 , 0);
                 }]
             }
 
@@ -422,18 +435,6 @@ app.config([
 
             'url': '/moreAboutProduct/:id',
             'views':{
-                "header": {
-                    'templateUrl':"templates/header.html",
-
-                    'controller': ['$scope', 'NewsService', 'news' , function( $scope , NewsService , news){
-
-                        $scope.newsSingle = news;
-
-                        console.log($scope.newsSingle)
-
-                    } ],
-
-                },
                 "content": {
                     "templateUrl":"templates/moreAboutProduct/moreAboutProduct.html",
                     'controller': ['$scope', 'localStorageService', 'AboutProductService','moreAboutProduct', function ($scope, localStorageService, AboutProductService, moreAboutProduct) {
@@ -470,18 +471,6 @@ app.config([
 
             'url': '/moreAboutNews/:id',
             'views':{
-                "header": {
-                    'templateUrl':"templates/header.html",
-
-                    'controller': ['$scope', 'NewsService', 'news' , function( $scope , NewsService , news){
-
-                        $scope.newsSingle = news;
-
-                        console.log($scope.newsSingle)
-
-                    } ],
-
-                },
                 "content": {
                     "templateUrl":"templates/moreAboutNews/moreAboutNews.html",
                     'controller': ['$scope',  'AboutNewsService','moreAboutNews', function ($scope, AboutNewsService, moreAboutNews) {
@@ -509,24 +498,10 @@ app.config([
         });// stateProvider.state('moreAboutNews')
 
 
-
-
         $stateProvider.state('cart' , {
 
             'url': '/cart',
             'views':{
-                "header": {
-                    'templateUrl':"templates/header.html",
-
-                    'controller': ['$scope', 'NewsService', 'news' , function( $scope , NewsService , news){
-
-                        $scope.newsSingle = news;
-
-                        console.log($scope.newsSingle)
-
-                    } ],
-
-                },
                 "content": {
                     "templateUrl":"templates/cart/cart.html",
                     'controller': ['$scope',  'CartService', 'cart', function ($scope, CartService, cart) {
@@ -534,6 +509,8 @@ app.config([
                         $scope.cart = cart;
 
                         console.log($scope.cart)
+
+                        console.log('localStorageService - cart' , cart);
                     }],
                 },
                 "footer": {
@@ -547,11 +524,11 @@ app.config([
                 } ],
 
                 'cart':['CartService', '$stateParams' , function (CartService, $stateParams) {
-                    return CartService.getCart();
+                    return CartService.registrationNewOrder();
                 }]
             }
 
-        });// stateProvider.state('moreAboutNews')
+        });// stateProvider.state('cart')
 
 
 
@@ -561,12 +538,13 @@ app.config([
     } ] );  // app.config
 
 
-app.run(
-    [
+app.run( [
     '$rootScope', '$state', '$stateParams',
      function ($rootScope, $state, $stateParams) {
-         
-     }   
-]);  // app.run
+
+        // $rootScope.cart = [];
+
+     }
+   ]);  // app.run
 
 

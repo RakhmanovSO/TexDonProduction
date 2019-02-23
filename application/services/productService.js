@@ -21,7 +21,6 @@ export  default  class ProductService {
 
             return response.data;
 
-           // return response.data;
 
         }// try
         catch (ex) {

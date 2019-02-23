@@ -11,12 +11,12 @@ export  default  class  SearchService {
     }//constructor
 
 
-    async getSearchProductByText (productTitle){
+    async getSearchProductByText (searchString){
 
         try {
 
             let response = await  this._$http.get(
-                `${this._PARAMS.SERVER_URL}${this._PARAMS.SEARCH_PRODUCTS_URL}&productTitle=${productTitle}`
+                `${this._PARAMS.SERVER_URL}${this._PARAMS.SEARCH_PRODUCTS_URL}&productTitle=${searchString}`
             );
 
             return response.data;
