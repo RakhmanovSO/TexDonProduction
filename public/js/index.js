@@ -621,6 +621,13 @@ app.config([
                         console.log($scope.cart)
 
                         console.log('localStorageService - cart' , cart);
+
+                       let orderDetailsNew = cart;
+
+                        console.log('orderDetailsNew' , orderDetailsNew);
+
+                       // ?????? как передать корзину в CartService.registrationNewOrder() и остальные данные из input  по нажатию на кнопку ОФОРМИТЬ ЗАКАЗ
+
                     }],
                 },
                 "footer": {
@@ -679,6 +686,7 @@ class  CartController {
 
     constructor( $scope, CartService , SearchService, $state , $stateProvider ) {
 
+        this._$scope = $scope;
 
         $scope.cart = [];
 
@@ -690,13 +698,13 @@ class  CartController {
             if ( $scope.cart.length !== 0){
 
                 $scope.totalPrice = $scope.cart.reduce( ( previousValue, productItem) =>{
-                    return previousValue + productItem.productPrice *  productItem.amount;
+                    return previousValue + productItem.productPrice *  productItem.amountProduct;
                 }, 0 );
 
             }//if
 
 
-        };
+        };// UpdateCartTotal
 
 
         $scope.AddProductToCart = function (product) {
@@ -716,7 +724,7 @@ class  CartController {
                     'productID': product.productID,
                     'productTitle': product.productTitle,
                     'productPrice': product.productPrice,
-                    'amount': 1,
+                    'amountProduct': 1,
                     'isInCart': true
 
                 });
@@ -727,7 +735,7 @@ class  CartController {
 
             }//if
 
-        };
+        }; // AddProductToCart
 
 
 
@@ -739,7 +747,7 @@ class  CartController {
 
             $scope.UpdateCartTotal();
 
-        };
+        }; // RemoveProductFromCart
 
 
 
@@ -749,13 +757,13 @@ class  CartController {
 
             if (flag === true) { // добавить (+ 1 ед.)
 
-                product.amount++;
+                product.amountProduct++;
             }//if
-            else if ($scope.cart[index].amount > 0 ) {  // убрать  (- 1 ед.)
+            else if ($scope.cart[index].amountProduct > 0 ) {  // убрать  (- 1 ед.)
 
-                product.amount--;
+                product.amountProduct--;
 
-                if( product.amount === 0){
+                if( product.amountProduct === 0){
 
                     $scope.RemoveProductFromCart(index);
                 }
@@ -766,7 +774,7 @@ class  CartController {
 
             $scope.UpdateCartTotal();
 
-        };
+        }; // ChangeAmount
 
 
     }//constructor
@@ -992,12 +1000,17 @@ class CartService {
 
     }//constructor CartService
 
-    async registrationNewOrder (userFirstAndLastName, userEmail, userContactNumberPhone, deliveryAddressOrder, commentToTheOrder){
+    async registrationNewOrder (userFirstAndLastName, userEmail, userContactNumberPhone, deliveryAddressOrder, commentToTheOrder, orderDetailsNew){
 
         try {
 
+            let orderDetails = new FormData();
+
+            orderDetails.append('orderDetails', orderDetailsNew);
+
+
             let response = await  this._$http.post(
-                `${this._PARAMS.SERVER_URL}${this._PARAMS.POST_REGISTRATION_NEW_ORDER_URL}&userFirstAndLastName=${userFirstAndLastName}&userEmail=${userEmail}&userContactNumberPhone=${userContactNumberPhone}&deliveryAddressOrder=${deliveryAddressOrder}&commentToTheOrder=${commentToTheOrder}`
+                `${this._PARAMS.SERVER_URL}${this._PARAMS.POST_REGISTRATION_NEW_ORDER_URL}&userFirstAndLastName=${userFirstAndLastName}&userEmail=${userEmail}&userContactNumberPhone=${userContactNumberPhone}&deliveryAddressOrder=${deliveryAddressOrder}&commentToTheOrder=${commentToTheOrder}&orderDetails=${orderDetails}`
             );
 
             return response.data;
