@@ -5,6 +5,7 @@ export default class  CartController {
 
     constructor( $scope, CartService , SearchService, $state , $stateProvider ) {
 
+        this._$scope = $scope;
 
         $scope.cart = [];
 
@@ -16,13 +17,13 @@ export default class  CartController {
             if ( $scope.cart.length !== 0){
 
                 $scope.totalPrice = $scope.cart.reduce( ( previousValue, productItem) =>{
-                    return previousValue + productItem.productPrice *  productItem.amount;
+                    return previousValue + productItem.productPrice *  productItem.amountProduct;
                 }, 0 );
 
             }//if
 
 
-        };
+        };// UpdateCartTotal
 
 
         $scope.AddProductToCart = function (product) {
@@ -42,7 +43,7 @@ export default class  CartController {
                     'productID': product.productID,
                     'productTitle': product.productTitle,
                     'productPrice': product.productPrice,
-                    'amount': 1,
+                    'amountProduct': 1,
                     'isInCart': true
 
                 });
@@ -53,7 +54,7 @@ export default class  CartController {
 
             }//if
 
-        };
+        }; // AddProductToCart
 
 
 
@@ -65,7 +66,7 @@ export default class  CartController {
 
             $scope.UpdateCartTotal();
 
-        };
+        }; // RemoveProductFromCart
 
 
 
@@ -75,13 +76,13 @@ export default class  CartController {
 
             if (flag === true) { // добавить (+ 1 ед.)
 
-                product.amount++;
+                product.amountProduct++;
             }//if
-            else if ($scope.cart[index].amount > 0 ) {  // убрать  (- 1 ед.)
+            else if ($scope.cart[index].amountProduct > 0 ) {  // убрать  (- 1 ед.)
 
-                product.amount--;
+                product.amountProduct--;
 
-                if( product.amount === 0){
+                if( product.amountProduct === 0){
 
                     $scope.RemoveProductFromCart(index);
                 }
@@ -92,7 +93,7 @@ export default class  CartController {
 
             $scope.UpdateCartTotal();
 
-        };
+        }; // ChangeAmount
 
 
     }//constructor

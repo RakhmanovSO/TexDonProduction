@@ -511,6 +511,13 @@ app.config([
                         console.log($scope.cart)
 
                         console.log('localStorageService - cart' , cart);
+
+                       let orderDetailsNew = cart;
+
+                        console.log('orderDetailsNew' , orderDetailsNew);
+
+                       // ?????? как передать корзину в CartService.registrationNewOrder() и остальные данные из input  по нажатию на кнопку ОФОРМИТЬ ЗАКАЗ
+
                     }],
                 },
                 "footer": {
