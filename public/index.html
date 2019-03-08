@@ -58,11 +58,11 @@
 
                         <li class="myUL_LI" style="padding-left: 240px; padding-top: 10px;">
 
-                            <div id="myCart" class="myCart" ng-controller="CartController">
+                            <div id="myCart" class="myCart" >
 
                                 <a id="cart" style="text-decoration: none;" ui-sref="cart" data-loading-text="Загрузка..." >
                                     <img style="width:80px; height:80px; color: black;" alt="Корзина" ng-src="http://localhost:5012/TexDon/assets/images/othersImages/cart.png" >
-                                    <span style="width:38px; height:37px; font-size: 17pt; font-weight:bold; color: black; margin-top: 10px;" class="badge badge-pill badge-light align-text-bottom">0</span>
+                                    <span style="width:38px; height:37px; font-size: 17pt; font-weight:bold; color: black; margin-top: 10px;" class="badge badge-pill badge-light align-text-bottom" ng-bind="cart.length"></span>
                                 </a>
 
                             </div>

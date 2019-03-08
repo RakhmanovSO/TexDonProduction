@@ -105,10 +105,16 @@
 
                     <div class="p-2 bd-highlight">
 
+                        <a  ng-click="AddProductToCart(pr)"  style="margin-top: 2px;  margin-bottom: 15px; width: 160px;" class="btn btn-success">В корзину</a>
+
+
                         <a  ng-click="AddProductToCart(pr)"  style="margin-top: 2px;  margin-bottom: 15px; width: 160px;" ng-if="pr.isInCart === false" class="btn btn-success">В корзину</a>
                         <a style="margin-top: 2px; margin-bottom: 15px; width: 180px;" ng-if="pr.isInCart === true" class="btn btn-success" ui-sref=" ">Товар в корзине!</a>
 
+
+
                     </div>
+
 
                 </div>
             </div>
