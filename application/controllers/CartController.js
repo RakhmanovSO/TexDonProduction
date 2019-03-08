@@ -3,8 +3,9 @@
 export default class  CartController {
 
 
-    constructor( $scope, CartService , SearchService, $state , $stateProvider ) {
+    constructor( $scope, CartService , SearchService, $state  ) {
 
+        /*
         this._$scope = $scope;
 
         $scope.cart = [];
@@ -95,6 +96,9 @@ export default class  CartController {
 
         }; // ChangeAmount
 
+
+
+*/
 
     }//constructor
 

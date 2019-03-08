@@ -81,7 +81,7 @@ angular.module( 'TexDon.services')
 
 
 angular.module( 'TexDon.services')
-    .service('CartService',['$http', 'PARAMS', CartService]);
+    .service('CartService',['$http', 'PARAMS', 'localStorageService', CartService]);
 
 
 angular.module( 'TexDon.services')
@@ -89,7 +89,7 @@ angular.module( 'TexDon.services')
 
 
 angular.module('TexDon.controllers')
-    .controller('MainController' , [ '$scope' , 'NewsService' , 'CartService', MainController ]);
+    .controller('MainController' , [ '$scope' , 'NewsService' , 'SearchService' , 'CartService' , '$state' , 'localStorageService' , MainController ]);
 
 
 angular.module('TexDon.controllers')
@@ -162,10 +162,15 @@ app.config([
             'views':{
                 "content": {
                     'templateUrl':"templates/home.html",
-                            'controller': ['$scope', '$sce', 'FirmInfoService',  'firmInfo' , function( $scope , $sce , FirmInfoService,  firmInfo){
+                            'controller': ['$scope', '$sce', 'FirmInfoService',  'firmInfo' , 'CartService', function( $scope , $sce , FirmInfoService,  firmInfo, CartService){
+
+                                $scope.cart = CartService.getCart();
+
+                                console.log($scope.cart);
 
                             $scope.firmInfo = $sce.trustAsHtml(firmInfo.data.text);
-                            console.log($scope.firmInfo)
+
+                            console.log($scope.firmInfo);
 
                     } ],
                 }
@@ -195,7 +200,10 @@ app.config([
             'views':{
                 "content": {
                     "templateUrl":"templates/search/search.html",
-                    'controller': ['$scope', '$state', 'SearchService','search', function ($scope,  $state, SearchService, search, ) {
+                    'controller': ['$scope', '$state', 'SearchService','search', 'CartService', function ($scope,  $state, SearchService, search, CartService) {
+
+
+                        $scope.cart = CartService.getCart();
 
                         $scope.productsList = search.data.products;
 
@@ -351,27 +359,48 @@ app.config([
                 "content": {
 
                     "templateUrl":"templates/product/product.html",
-                    'controller': ['$scope', 'localStorageService', 'ProductService', 'product', '$stateParams', function ($scope, localStorageService , ProductService, product, $stateParams) {
+                    'controller': ['$scope', 'localStorageService', 'ProductService', 'product', 'CartService' , '$stateParams', function ($scope, localStorageService , ProductService, product, CartService, $stateParams) {
+
 
                         $scope.limit = 4;
                         $scope.offset = 0;
 
+                        $scope.cart = CartService.getCart();
+
+                        console.log( $scope.cart);
+
+
+
                         $scope.products = product.data.products;
 
                         console.log($scope.products);
-
 
                         $scope.getMoreProducts = async function () {
 
                             $scope.offset +=  $scope.limit;
                             let moreProducts = await ProductService.getProductsBySubcategoryId($stateParams.id, $scope.limit , $scope.offset);
 
-                            moreProducts.forEach( (p) => {
+
+                            moreProducts.data.products.forEach( (p) => {
                                 $scope.products.push( p );
                             } );
 
 
                         };
+
+
+                        $scope.products.forEach( p=>{
+
+                            for(let i=0; i<$scope.cart.length; i++){
+
+                                if(p.productID === $scope.cart[i].productID){
+
+                                    p.isInCart=true;
+                                    p.amountProduct=$scope.cart[i].amountProduct;
+
+                                }//if
+                            }
+                        });
 
 
                         /*
@@ -383,9 +412,8 @@ app.config([
                         ]);
                         */
 
-                       // localStorageService.remove('cart');
-
-
+                       // localStorage.clear();
+                        /*
                         let cart = localStorageService.get('cart');
 
                         console.log('cart' , cart);
@@ -412,6 +440,8 @@ app.config([
 
                          }//if
 
+                        */
+
                     }],
                 }
             },
@@ -437,11 +467,15 @@ app.config([
             'views':{
                 "content": {
                     "templateUrl":"templates/moreAboutProduct/moreAboutProduct.html",
-                    'controller': ['$scope', 'localStorageService', 'AboutProductService','moreAboutProduct', function ($scope, localStorageService, AboutProductService, moreAboutProduct) {
+                    'controller': ['$scope', 'localStorageService', 'AboutProductService','moreAboutProduct', 'CartService', function ($scope, localStorageService, AboutProductService, moreAboutProduct, CartService) {
+
+                        $scope.cart = CartService.getCart();
+
+                        console.log($scope.cart);
 
                         $scope.singleProduct = moreAboutProduct.data;
 
-                        console.log($scope.singleProduct)
+                        console.log($scope.singleProduct);
 
 
                     }],
@@ -473,7 +507,7 @@ app.config([
             'views':{
                 "content": {
                     "templateUrl":"templates/moreAboutNews/moreAboutNews.html",
-                    'controller': ['$scope',  'AboutNewsService','moreAboutNews', function ($scope, AboutNewsService, moreAboutNews) {
+                    'controller': ['$scope',  'AboutNewsService', 'moreAboutNews', function ($scope, AboutNewsService, moreAboutNews) {
 
                         $scope.SingleNews = moreAboutNews;
 
@@ -504,19 +538,40 @@ app.config([
             'views':{
                 "content": {
                     "templateUrl":"templates/cart/cart.html",
-                    'controller': ['$scope',  'CartService', 'cart', function ($scope, CartService, cart) {
+                    'controller': ['$scope',  'CartService', 'localStorageService', function ($scope, CartService, localStorageService) {
 
-                        $scope.cart = cart;
+                        $scope.cart = CartService.getCart();
 
-                        console.log($scope.cart)
 
-                        console.log('localStorageService - cart' , cart);
+                        $scope.Total=CartService.total();
 
-                       let orderDetailsNew = cart;
+                        $scope.$watch( 'cart.length' , function (){
 
-                        console.log('orderDetailsNew' , orderDetailsNew);
+                            $scope.Total = CartService.total();
+
+                        } );
+
+                        console.log('cart' ,  $scope.cart);
+
+
+
+
+                     // let orderDetailsNew = cart;
+
+                       // console.log('orderDetailsNew' , orderDetailsNew);
 
                        // ?????? как передать корзину в CartService.registrationNewOrder() и остальные данные из input  по нажатию на кнопку ОФОРМИТЬ ЗАКАЗ
+
+                        /*
+                        $scope.orderInfo = {
+
+                            userFirstAndLastName: '',
+                            userEmail: '',
+
+                        };
+                        console.log($scope.orderInfo);
+
+                        */
 
                     }],
                 },
@@ -530,9 +585,10 @@ app.config([
                     return NewsService.getNews();
                 } ],
 
-                'cart':['CartService', '$stateParams' , function (CartService, $stateParams) {
-                    return CartService.registrationNewOrder();
+                'cart':['CartService', '$stateParams' , 'localStorageService', function (CartService, $stateParams, localStorageService) {
+                    return CartService.registrationNewOrder($stateParams.userFirstAndLastName, $stateParams.userEmail, $stateParams.userContactNumberPhone, $stateParams.deliveryAddressOrder, $stateParams.commentToTheOrder, localStorageService);
                 }]
+
             }
 
         });// stateProvider.state('cart')
@@ -546,8 +602,8 @@ app.config([
 
 
 app.run( [
-    '$rootScope', '$state', '$stateParams',
-     function ($rootScope, $state, $stateParams) {
+    '$rootScope', '$state', '$stateParams', 'localStorageService',
+     function ($rootScope, $state, $stateParams, localStorageService) {
 
         // $rootScope.cart = [];
 

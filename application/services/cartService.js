@@ -3,38 +3,128 @@
 export  default  class CartService {
 
 
-    constructor ($http, PARAMS){
+    constructor ($http, PARAMS, localStorageService){
+
+
+        if(localStorageService.get('cartProduct')){
+
+            this.cart = localStorageService.get('cartProduct');
+
+        }//if
+        else{
+            this.cart = [];
+        }//else
+
 
         this._$http = $http;
         this._PARAMS = PARAMS;
+        this.localStorageService = localStorageService;
+
 
     }//constructor CartService
 
-    async registrationNewOrder (userFirstAndLastName, userEmail, userContactNumberPhone, deliveryAddressOrder, commentToTheOrder, orderDetailsNew){
-
-        try {
-
-            let orderDetails = new FormData();
-
-            orderDetails.append('orderDetails', orderDetailsNew);
 
 
-            let response = await  this._$http.post(
-                `${this._PARAMS.SERVER_URL}${this._PARAMS.POST_REGISTRATION_NEW_ORDER_URL}&userFirstAndLastName=${userFirstAndLastName}&userEmail=${userEmail}&userContactNumberPhone=${userContactNumberPhone}&deliveryAddressOrder=${deliveryAddressOrder}&commentToTheOrder=${commentToTheOrder}&orderDetails=${orderDetails}`
-            );
-
-            return response.data;
+    getCart(){
+        return this.cart;
+    }//getCart
 
 
-        }// try
-        catch (ex) {
+    addProduct( product ){
 
-            console.log("Exception", ex);
-            return null;
+        this.cart.push( product );
 
-        }//catch
+        this.localStorageService.set( 'cartProduct' , this.cart );
 
-    }//registrationNewOrder
+    }//addProduct
+
+
+    deleteProduct (index){
+
+        this.cart.splice(index , 1);
+
+        this.localStorageService.removeItem(index);
+
+        this.localStorageService.clear(index);
+
+    }//deleteProduct
+
+
+    changeStorageService(cart){
+
+        let cartNew=[];
+
+        for(let i=0; i<cart.length; i++){
+
+            cartNew.push(this._getSimpleProduct(cart[i]));
+
+        }
+
+        this.localStorageService.set( 'cartProduct' , cartNew );
+
+    }//changeStorageService
+
+    _getSimpleProduct(product){
+        return {
+
+            "productID" :    product.productID,
+            "productTitle" : product.productTitle,
+            "productPrice" : product.productPrice,
+            "amountProduct" : product.amountProduct,
+            "isInCart"     :  product.isInCart,
+
+        };
+
+    }// getSimpleProduct
+
+
+    total(){
+
+        let Total={
+            totalAmount: 0,
+            totalPrice:  0
+        };
+
+
+        for(let i=0; i<this.cart.length; i++){
+
+            Total.totalAmount+=+this.cart[i].amountProduct;
+
+            Total.totalPrice+=this.cart[i].amountProduct*this.cart[i].productPrice;
+
+        }
+        return Total;
+
+    } // total
+
+
+
+
+        async registrationNewOrder (userFirstAndLastName, userEmail, userContactNumberPhone, deliveryAddressOrder, commentToTheOrder, localStorageService){
+
+            try {
+
+                let orderDetails = new FormData();
+
+                orderDetails.append('orderDetails', localStorageService.get('cartProduct'));
+
+
+                let response = await  this._$http.post(
+                    `${this._PARAMS.SERVER_URL}${this._PARAMS.POST_REGISTRATION_NEW_ORDER_URL}&userFirstAndLastName=${userFirstAndLastName}&userEmail=${userEmail}&userContactNumberPhone=${userContactNumberPhone}&deliveryAddressOrder=${deliveryAddressOrder}&commentToTheOrder=${commentToTheOrder}&orderDetails=${orderDetails}`
+                );
+
+                return response.data;
+
+
+            }// try
+            catch (ex) {
+
+                console.log("Exception", ex);
+                return null;
+
+            }//catch
+
+        }//registrationNewOrder
 
 
 }//CartService
