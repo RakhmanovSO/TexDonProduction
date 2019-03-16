@@ -92,16 +92,71 @@
          };
 
 
+
+         //// из примера   изменение кол-ва товара в корзине    ////
          $scope.ChangeProductAmount = function (product){
 
              if(product.amount == 0){
                  $scope.RemoveProduct(product);
              }
 
-             $scope.$parent.$parent.Total = CartService.total();
+             $scope.$parent.$parent.Total = CartService.total();   // ????   $scope.$parent.$parent.Total
 
              CartService.changeStorageService($scope.cart);
          };
+
+
+
+
+         /////////////////   изменение кол-ва товара в корзине
+
+         $scope.ChangeAmountProductInCart = function (index, flag) {
+
+             let product =  $scope.cart[index];
+
+             if (flag === true) { // добавить (+ 1 ед.)
+
+                 product.amountProduct++;
+             }//if
+             else if ($scope.cart[index].amountProduct > 0 ) {  // убрать  (- 1 ед.)
+
+                 product.amountProduct--;
+
+                 if( product.amountProduct === 0){
+
+                    // $scope.RemoveProductFromCart(index);
+
+                     $scope.RemoveProduct(product);
+
+                 }
+
+             }//else if
+
+             event.stopPropagation();
+
+             $scope.UpdateCartTotal();
+
+         }; // ChangeAmount
+
+
+
+         $scope.totalPrice = 0;
+
+
+         $scope.UpdateCartTotal = function ( ) {
+
+             if ( $scope.cart.length !== 0){
+
+                 $scope.totalPrice = $scope.cart.reduce( ( previousValue, productItem) =>{
+                     return previousValue + productItem.productPrice *  productItem.amountProduct;
+                 }, 0 );
+
+             }//if
+
+
+         };// UpdateCartTotal
+
+        ////////////////////////////////////////////////////
 
 
 

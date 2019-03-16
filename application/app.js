@@ -172,6 +172,7 @@ app.config([
 
                             console.log($scope.firmInfo);
 
+
                     } ],
                 }
             },
@@ -200,14 +201,41 @@ app.config([
             'views':{
                 "content": {
                     "templateUrl":"templates/search/search.html",
-                    'controller': ['$scope', '$state', 'SearchService','search', 'CartService', function ($scope,  $state, SearchService, search, CartService) {
+                    'controller': ['$scope', '$state', 'SearchService','search', 'localStorageService', 'CartService', function ($scope,  $state, SearchService, search, ocalStorageService, CartService) {
 
 
-                        $scope.cart = CartService.getCart();
+                       let cart = $scope.cart = CartService.getCart();
+
 
                         $scope.productsList = search.data.products;
 
                         console.log($scope.productsList)
+
+
+                        if( cart ){
+
+                            $scope.productsList.forEach( function ( product ) {
+
+                                let p = cart.find( pr => +pr.productID  === +product.productID );
+
+                                if( p ){
+
+                                    product.isInCart = true;
+
+                                }//if
+                                else{
+
+                                    product.isInCart = false;
+
+                                }//else
+
+                            } );
+
+
+                        }//if
+
+
+
                     }],
                     'params' : {
                         'searchString': 'some default'
@@ -365,7 +393,7 @@ app.config([
                         $scope.limit = 4;
                         $scope.offset = 0;
 
-                        $scope.cart = CartService.getCart();
+                        let cart = $scope.cart = CartService.getCart();
 
                         console.log( $scope.cart);
 
@@ -388,7 +416,7 @@ app.config([
 
                         };
 
-
+/*
                         $scope.products.forEach( p=>{
 
                             for(let i=0; i<$scope.cart.length; i++){
@@ -401,6 +429,35 @@ app.config([
                                 }//if
                             }
                         });
+
+                          */
+
+
+                        if( cart ){
+
+                            $scope.products.forEach( function ( product ) {
+
+                                let p = cart.find( pr => +pr.productID  === +product.productID );
+
+                                if( p ){
+
+                                    product.isInCart = true;
+
+                                }//if
+                                else{
+
+                                    product.isInCart = false;
+
+                                }//else
+
+                            } );
+
+
+                        }//if
+
+
+
+
 
 
                         /*
@@ -469,13 +526,40 @@ app.config([
                     "templateUrl":"templates/moreAboutProduct/moreAboutProduct.html",
                     'controller': ['$scope', 'localStorageService', 'AboutProductService','moreAboutProduct', 'CartService', function ($scope, localStorageService, AboutProductService, moreAboutProduct, CartService) {
 
-                        $scope.cart = CartService.getCart();
+                        let cart = $scope.cart = CartService.getCart();
 
                         console.log($scope.cart);
 
                         $scope.singleProduct = moreAboutProduct.data;
 
                         console.log($scope.singleProduct);
+
+
+                        if( cart ){
+
+                                    /*
+
+                          $scope.singleProduct = function ( product ) {
+
+                                let p = cart.find( pr => +pr.productID  === +product.productID );
+
+                                if( p ){
+
+                                    product.isInCart = true;
+
+                                }//if
+                                else{
+
+                                    product.isInCart = false;
+
+                                }//else
+
+                            }
+
+
+                                  */
+                        }//if
+
 
 
                     }],
@@ -574,10 +658,20 @@ app.config([
                         */
 
                     }],
+
+                    'params' : {
+
+                        'userFirstAndLastName': 'some default',
+                        'userEmail': 'some default',
+                        'userContactNumberPhone': 'some default',
+                        'deliveryAddressOrder': 'some default',
+                        'commentToTheOrder': 'some default'
+
+                    }
+
+
+
                 },
-                "footer": {
-                    'templateUrl':"templates/footer.html",
-                }
             },
             'resolve':{
 
