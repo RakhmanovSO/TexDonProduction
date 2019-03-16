@@ -60,11 +60,11 @@
                         <td align="center" text-align="center" >
 
 
-                            <span id="amountMinus" class="amountMinus" title="Уменьшить на 1"  style="font-size: 14pt;" ng-click="ChangeAmount($index, false)"> &mdash; </span>
+                            <span id="amountMinus" class="amountMinus" title="Уменьшить на 1"  style="font-size: 14pt;" ng-click="ChangeAmountProductInCart($index, false)"> &mdash; </span>
 
                             <span id="amount" class="amount" style="font-size: 14pt; margin-left: 15px; margin-right: 15px;" ng-bind="pr.amountProduct" > </span>
 
-                            <span id="amountPlus" class="amountPlus" title="Увеличить на 1" style="font-size: 14pt" ng-click="ChangeAmount($index, true)"> &#10010; </span>
+                            <span id="amountPlus" class="amountPlus" title="Увеличить на 1" style="font-size: 14pt" ng-click="ChangeAmountProductInCart($index, true)"> &#10010; </span>
                         </td>
                         <td id="productPrice" align="center" text-align="center" ><p  ng-bind-template="pr.productPrice +' руб.'"></p> </td>
 
