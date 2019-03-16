@@ -2,7 +2,7 @@
 
  export default class  MainController{
 
-     constructor( $scope, NewsService, SearchService, CartService , $state ,  $stateProvider ){
+     constructor( $scope, NewsService, SearchService, CartService , $state  ){
 
          this._$scope = $scope;
 

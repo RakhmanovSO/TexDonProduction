@@ -56,8 +56,6 @@ export default class  CartController {
 
         }; // AddProductToCart
 
-
-
         $scope.RemoveProductFromCart = function (index) {
 
                 event.stopPropagation();
@@ -67,8 +65,6 @@ export default class  CartController {
             $scope.UpdateCartTotal();
 
         }; // RemoveProductFromCart
-
-
 
         $scope.ChangeAmount = function (index, flag) {
 

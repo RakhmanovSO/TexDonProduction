@@ -89,7 +89,7 @@ angular.module( 'TexDon.services')
 
 
 angular.module('TexDon.controllers')
-    .controller('MainController' , [ '$scope' , 'NewsService' , 'CartService', MainController ]);
+    .controller('MainController' , [ '$scope' , 'NewsService' , 'SearchService' , 'CartService' , '$state', MainController ]);
 
 
 angular.module('TexDon.controllers')
@@ -365,8 +365,9 @@ app.config([
 
                             $scope.offset +=  $scope.limit;
                             let moreProducts = await ProductService.getProductsBySubcategoryId($stateParams.id, $scope.limit , $scope.offset);
+                            console.log(moreProducts);
 
-                            moreProducts.forEach( (p) => {
+                            moreProducts.data.products.forEach( (p) => {
                                 $scope.products.push( p );
                             } );
 
@@ -508,7 +509,18 @@ app.config([
 
                         $scope.cart = cart;
 
-                        console.log($scope.cart)
+                        $scope.userInfo = {
+                            FIO: '',
+                            EMAIL: ''
+                        };
+
+                        $scope.ConfirmOrder = ()=>{
+
+                            console.log($scope.userInfo);
+
+                        }//ConfirmOrder
+
+
 
                         console.log('localStorageService - cart' , cart);
 

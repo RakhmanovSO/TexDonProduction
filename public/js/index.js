@@ -199,7 +199,7 @@ angular.module( 'TexDon.services')
 
 
 angular.module('TexDon.controllers')
-    .controller('MainController' , [ '$scope' , 'NewsService' , 'CartService', _controllers_MainController__WEBPACK_IMPORTED_MODULE_0__["default"] ]);
+    .controller('MainController' , [ '$scope' , 'NewsService' , 'SearchService' , 'CartService' , '$state', _controllers_MainController__WEBPACK_IMPORTED_MODULE_0__["default"] ]);
 
 
 angular.module('TexDon.controllers')
@@ -475,8 +475,9 @@ app.config([
 
                             $scope.offset +=  $scope.limit;
                             let moreProducts = await ProductService.getProductsBySubcategoryId($stateParams.id, $scope.limit , $scope.offset);
+                            console.log(moreProducts);
 
-                            moreProducts.forEach( (p) => {
+                            moreProducts.data.products.forEach( (p) => {
                                 $scope.products.push( p );
                             } );
 
@@ -618,7 +619,18 @@ app.config([
 
                         $scope.cart = cart;
 
-                        console.log($scope.cart)
+                        $scope.userInfo = {
+                            FIO: '',
+                            EMAIL: ''
+                        };
+
+                        $scope.ConfirmOrder = ()=>{
+
+                            console.log($scope.userInfo);
+
+                        }//ConfirmOrder
+
+
 
                         console.log('localStorageService - cart' , cart);
 
@@ -737,8 +749,6 @@ class  CartController {
 
         }; // AddProductToCart
 
-
-
         $scope.RemoveProductFromCart = function (index) {
 
                 event.stopPropagation();
@@ -748,8 +758,6 @@ class  CartController {
             $scope.UpdateCartTotal();
 
         }; // RemoveProductFromCart
-
-
 
         $scope.ChangeAmount = function (index, flag) {
 
@@ -799,7 +807,7 @@ __webpack_require__.r(__webpack_exports__);
 
  class  MainController{
 
-     constructor( $scope, NewsService, SearchService, CartService , $state ,  $stateProvider ){
+     constructor( $scope, NewsService, SearchService, CartService , $state  ){
 
          this._$scope = $scope;
 
@@ -1007,6 +1015,7 @@ class CartService {
             let orderDetails = new FormData();
 
             orderDetails.append('orderDetails', orderDetailsNew);
+            orderDetails.append('cart', localStorageService.get('cart'));
 
 
             let response = await  this._$http.post(

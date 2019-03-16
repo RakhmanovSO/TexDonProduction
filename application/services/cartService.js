@@ -17,6 +17,7 @@ export  default  class CartService {
             let orderDetails = new FormData();
 
             orderDetails.append('orderDetails', orderDetailsNew);
+            orderDetails.append('cart', localStorageService.get('cart'));
 
 
             let response = await  this._$http.post(
