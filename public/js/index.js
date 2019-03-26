@@ -203,7 +203,7 @@ angular.module('TexDon.controllers')
 
 
 angular.module('TexDon.controllers')
-    .controller('CartController' , [ '$scope' , 'NewsService' , 'CartService', _controllers_CartController__WEBPACK_IMPORTED_MODULE_1__["default"] ]);
+    .controller('CartController' , [ '$scope' , 'NewsService' , 'SearchService', 'CartService', '$state' , 'localStorageService' , _controllers_CartController__WEBPACK_IMPORTED_MODULE_1__["default"] ]);
 
 
 /*
@@ -227,8 +227,7 @@ angular.module('TexDon.services')
         GET_FIRM_INFO_URL:`ctrl=InfoFirmApi&act=GetFirmInfo`,
         GET_MORE_ABOUT_PRODUCT_URL:`ctrl=ProductApi&act=GetAboutProduct`,
         SEARCH_PRODUCTS_URL:`ctrl=SearchApi&act=GetSearchProduct`,
-
-        POST_REGISTRATION_NEW_ORDER_URL:`ctrl=OrderApi&act=AddOrder`,
+        POST_REGISTRATION_NEW_ORDER_URL:`ctrl=OrderApi&act=AddOrder&XDEBUG_SESSION_START=13821`,
 
 });
 
@@ -282,6 +281,7 @@ app.config([
 
                             console.log($scope.firmInfo);
 
+
                     } ],
                 }
             },
@@ -310,14 +310,40 @@ app.config([
             'views':{
                 "content": {
                     "templateUrl":"templates/search/search.html",
-                    'controller': ['$scope', '$state', 'SearchService','search', 'CartService', function ($scope,  $state, SearchService, search, CartService) {
+                    'controller': ['$scope', '$state', 'SearchService','search', 'localStorageService', 'CartService', function ($scope,  $state, SearchService, search, localStorageService, CartService) {
 
 
-                        $scope.cart = CartService.getCart();
+                       let cart = $scope.cart = CartService.getCart();
+
 
                         $scope.productsList = search.data.products;
 
-                        console.log($scope.productsList)
+                        console.log($scope.productsList);
+
+                        if( cart ){
+
+                            $scope.productsList.forEach( function ( product ) {
+
+                                let p = cart.find( pr => +pr.productID  === +product.productID );
+
+                                if( p ){
+
+                                    product.isInCart = true;
+
+                                }//if
+                                else{
+
+                                    product.isInCart = false;
+
+                                }//else
+
+                            } );
+
+
+                        }//if
+
+
+
                     }],
                     'params' : {
                         'searchString': 'some default'
@@ -475,7 +501,7 @@ app.config([
                         $scope.limit = 4;
                         $scope.offset = 0;
 
-                        $scope.cart = CartService.getCart();
+                        let cart = $scope.cart = CartService.getCart();
 
                         console.log( $scope.cart);
 
@@ -491,14 +517,30 @@ app.config([
                             let moreProducts = await ProductService.getProductsBySubcategoryId($stateParams.id, $scope.limit , $scope.offset);
 
 
+
                             moreProducts.data.products.forEach( (p) => {
+
+                                let pchek = cart.find( pr => +pr.productID  === +p.productID );
+
+                                if( pchek ){
+
+                                    p.isInCart = true;
+
+                                }//if
+                                else{
+
+                                   p.isInCart = false;
+
+                                }//else
+
                                 $scope.products.push( p );
+
                             } );
 
 
                         };
 
-
+/*
                         $scope.products.forEach( p=>{
 
                             for(let i=0; i<$scope.cart.length; i++){
@@ -511,6 +553,35 @@ app.config([
                                 }//if
                             }
                         });
+
+                          */
+
+
+                        if( cart ){
+
+                            $scope.products.forEach( function ( product ) {
+
+                                let p = cart.find( pr => +pr.productID  === +product.productID );
+
+                                if( p ){
+
+                                    product.isInCart = true;
+
+                                }//if
+                                else{
+
+                                    product.isInCart = false;
+
+                                }//else
+
+                            } );
+
+
+                        }//if
+
+
+
+
 
 
                         /*
@@ -579,13 +650,30 @@ app.config([
                     "templateUrl":"templates/moreAboutProduct/moreAboutProduct.html",
                     'controller': ['$scope', 'localStorageService', 'AboutProductService','moreAboutProduct', 'CartService', function ($scope, localStorageService, AboutProductService, moreAboutProduct, CartService) {
 
-                        $scope.cart = CartService.getCart();
+                        let cart = $scope.cart = CartService.getCart();
 
                         console.log($scope.cart);
 
                         $scope.singleProduct = moreAboutProduct.data;
 
                         console.log($scope.singleProduct);
+
+
+                        if( cart ){
+
+                            let pchek = cart.find( pr => +pr.productID  === +$scope.singleProduct.product.productID );
+
+                            if( pchek ){
+
+                                $scope.singleProduct.isInCart = true;
+
+                            }//if
+                            else{
+
+                                $scope.singleProduct.isInCart = false;
+
+                            }//else
+                        }//if
 
 
                     }],
@@ -648,12 +736,12 @@ app.config([
             'views':{
                 "content": {
                     "templateUrl":"templates/cart/cart.html",
-                    'controller': ['$scope',  'CartService', 'localStorageService', function ($scope, CartService, localStorageService) {
+                    'controller': ['$scope', '$state', 'CartService', 'localStorageService', function ($scope, $state , CartService, localStorageService) {
+
 
                         $scope.cart = CartService.getCart();
 
-
-                        $scope.Total=CartService.total();
+                        $scope.Total = CartService.total();
 
                         $scope.$watch( 'cart.length' , function (){
 
@@ -661,33 +749,116 @@ app.config([
 
                         } );
 
+
                         console.log('cart' ,  $scope.cart);
 
 
+                        $scope.ChangeProductAmount = function  (){
 
+                            $scope.Total = CartService.total();
 
-                     // let orderDetailsNew = cart;
-
-                       // console.log('orderDetailsNew' , orderDetailsNew);
-
-                       // ?????? как передать корзину в CartService.registrationNewOrder() и остальные данные из input  по нажатию на кнопку ОФОРМИТЬ ЗАКАЗ
-
-                        /*
-                        $scope.orderInfo = {
-
-                            userFirstAndLastName: '',
-                            userEmail: '',
+                            CartService.changeStorageService($scope.cart);
 
                         };
-                        console.log($scope.orderInfo);
 
-                        */
+
+                        $scope.regName=true;
+                        $scope.regMail=true;
+                        $scope.regPhone=true;
+                        $scope.regAddress=true;
+                        $scope.regComment=true;
+
+
+                        $scope.RegName = function  (){
+
+                            let regEng =  /^[a-z\s]{2,145}$/i;
+
+                            let regRus =  /^[а-я\s]{2,145}$/i;
+
+
+                            if(regEng.test($scope.userFirstAndLastName) || regRus.test($scope.userFirstAndLastName)) {
+                                $scope.regName=true;
+                            }//if
+                            else {
+                                $scope.regName=false;
+                            }
+
+                        };//RegName
+
+                        $scope.RegEmail=function  (){
+
+                            //let regEmail = /^[a-z0-9A-Z_]+@[a-z0-9A-Z_.]{0,20}$/;
+
+                            let regEmail = /^[a-z0-9A-Z_.@]{5,20}$/;
+
+                            if(regEmail.test($scope.userEmail)) {
+                                $scope.regMail=true;
+                            }//if
+                            else {
+                                $scope.regMail=false;
+                            }
+
+                        };///RegEmail
+
+                        /*
+                        $scope.RegPhone = function () {
+
+                            let regPhone = /^[0-9()-]{8,18}$/i;
+
+                            if(regPhone.test($scope.userContactNumberPhone)) {
+
+                                $scope.regPhone=true;
+                            }//if
+                            else {
+                                $scope.regPhone=false;
+                            }
+
+                        };///RegPhone
+                         */
+
+                        $scope.RegAddress = function  (){
+
+                            let regAddress = /^[A-ZА-Яа-яa-z-/..,,:;:()№ёЁ\s]{5,220}$/i;
+
+                            if(regAddress.test($scope.deliveryAddressOrder)) {
+                                $scope.regAddress=true;
+                            }//if
+                            else {
+                                $scope.regAddress=false;
+                            }
+
+                        };///RegAddress
+
+
+                        $scope.RegComment = function  (){
+
+                            let regComment = /^[a-zA-Z0-9\sа-яА-ЯЁё_.,.,()-;::;!?№+*$&@]{5,895}$/i;
+
+                            if(regComment.test($scope.commentToTheOrder)) {
+                                $scope.regComment=true;
+                            }//if
+                            else {
+                                $scope.regComment=false;
+                            }
+
+                        };///RegComment
+
+
 
                     }],
+
+                    'params' : {
+
+                        'userFirstAndLastName': 'some default',
+                        'userEmail': 'some default',
+                        'userContactNumberPhone': 'some default',
+                        'deliveryAddressOrder': 'some default',
+                        'commentToTheOrder': 'some default'
+
+                    }
+
+
                 },
-                "footer": {
-                    'templateUrl':"templates/footer.html",
-                }
             },
             'resolve':{
 
@@ -695,15 +866,14 @@ app.config([
                     return NewsService.getNews();
                 } ],
 
-                'cart':['CartService', '$stateParams' , 'localStorageService', function (CartService, $stateParams, localStorageService) {
-                    return CartService.registrationNewOrder($stateParams.userFirstAndLastName, $stateParams.userEmail, $stateParams.userContactNumberPhone, $stateParams.deliveryAddressOrder, $stateParams.commentToTheOrder, localStorageService);
+                'cart':['CartService', '$stateParams' , function (CartService, $stateParams) {
+
+                    return CartService.registrationNewOrder($stateParams.userFirstAndLastName, $stateParams.userEmail, $stateParams.userContactNumberPhone, $stateParams.deliveryAddressOrder, $stateParams.commentToTheOrder);
                 }]
 
             }
 
         });// stateProvider.state('cart')
-
-
 
 
 
@@ -714,8 +884,6 @@ app.config([
 app.run( [
     '$rootScope', '$state', '$stateParams', 'localStorageService',
      function ($rootScope, $state, $stateParams, localStorageService) {
-
-        // $rootScope.cart = [];
 
      }
    ]);  // app.run
@@ -740,7 +908,25 @@ __webpack_require__.r(__webpack_exports__);
 class  CartController {
 
 
-    constructor( $scope, CartService , SearchService, $state  ) {
+    constructor( $scope, NewsService, SearchService, CartService , $state, localStorageService  ) {
+
+        this._$scope = $scope;
+
+        this._$scope.isActive = false;
+
+        $scope.localStorageService = localStorageService;
+
+
+
+        ///  Оформить заказ ///
+
+        $scope.ConfirmOrder = function() {
+
+            console.log( 'infoOrder - ', $scope.userFirstAndLastName,  $scope.userEmail, $scope.userContactNumberPhone, $scope.deliveryAddressOrder , $scope.commentToTheOrder);
+
+            $state.go( 'cart', {'userFirstAndLastName': $scope.userFirstAndLastName, 'userEmail': $scope.userEmail, 'userContactNumberPhone': $scope.userContactNumberPhone,  'deliveryAddressOrder': $scope.deliveryAddressOrder, 'commentToTheOrder': $scope.commentToTheOrder} );
+
+        };
 
         /*
         this._$scope = $scope;
@@ -888,7 +1074,31 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/*
+         ///  Оформить заказ ///
+
+         $scope.ConfirmOrder = function() {
+
+             console.log( 'infoOrder', $scope.userFirstAndLastName,  $scope.userEmail, $scope.userContactNumberPhone, $scope.deliveryAddressOrder , $scope.commentToTheOrder);
+
+             $state.go( 'cart', {'userFirstAndLastName': $scope.userFirstAndLastName, 'userEmail': $scope.userEmail, 'userContactNumberPhone': $scope.userContactNumberPhone,  'deliveryAddressOrder': $scope.deliveryAddressOrder, 'commentToTheOrder': $scope.commentToTheOrder} );
+
+         };
+
+
+*/
+
+
          $scope.cart = CartService.getCart();
+
+
+         $scope.changeAmount = function ( newAmount ){
+
+             $scope.product.amount = newAmount;
+
+
+         };
+
 
 
          $scope.ChangeAmount = function (product) {
@@ -913,7 +1123,7 @@ __webpack_require__.r(__webpack_exports__);
 
              for(let i=0; i<$scope.cart.length; i++){
 
-                 if($scope.cart[i].productID===product.productID){
+                 if($scope.cart[i].productID === product.productID){
                      count++;
                  }//if
 
@@ -923,7 +1133,9 @@ __webpack_require__.r(__webpack_exports__);
 
                  let newProduct = CartService._getSimpleProduct(product);
 
-                 newProduct.isInCart=true;
+                 newProduct.isInCart = true;
+
+                 newProduct.amountProduct = 1;
 
                  CartService.addProduct(newProduct);
 
@@ -949,28 +1161,19 @@ __webpack_require__.r(__webpack_exports__);
          };
 
 
+
          $scope.ChangeProductAmount = function (product){
 
              if(product.amount == 0){
                  $scope.RemoveProduct(product);
              }
 
-             $scope.$parent.$parent.Total = CartService.total();
+             $scope.$parent.Total = CartService.total();   // ????   $scope.$parent.$parent.Total
 
              CartService.changeStorageService($scope.cart);
          };
 
 
-
-            ///  Оформить заказ ///
-
-         $scope.ConfirmOrder = function() {
-
-             console.log( 'infoOrder:', $scope.userFirstAndLastName,  $scope.userEmail, $scope.userContactNumberPhone);
-
-             $state.go( 'cart', {'userFirstAndLastName': $scope.userFirstAndLastName, 'userEmail': $scope.userEmail, 'userContactNumberPhone': $scope.userContactNumberPhone,  'deliveryAddressOrder': $scope.deliveryAddressOrder, 'commentToTheOrder': $scope.commentToTheOrder} );
-
-         };
 
 
 
@@ -1316,6 +1519,7 @@ class CartService {
             Total.totalPrice+=this.cart[i].amountProduct*this.cart[i].productPrice;
 
         }
+
         return Total;
 
     } // total
@@ -1323,20 +1527,44 @@ class CartService {
 
 
 
-        async registrationNewOrder (userFirstAndLastName, userEmail, userContactNumberPhone, deliveryAddressOrder, commentToTheOrder, localStorageService){
+        async registrationNewOrder (userFirstAndLastName, userEmail, userContactNumberPhone, deliveryAddressOrder, commentToTheOrder){
 
             try {
 
+
+                debugger;
+
                 let orderDetails = new FormData();
 
-                orderDetails.append('orderDetails', localStorageService.get('cartProduct'));
+                orderDetails.append('orderDetails', this.localStorageService.get('cartProduct'));
 
 
-                let response = await  this._$http.post(
+                let response = await  this._$http.get(
                     `${this._PARAMS.SERVER_URL}${this._PARAMS.POST_REGISTRATION_NEW_ORDER_URL}&userFirstAndLastName=${userFirstAndLastName}&userEmail=${userEmail}&userContactNumberPhone=${userContactNumberPhone}&deliveryAddressOrder=${deliveryAddressOrder}&commentToTheOrder=${commentToTheOrder}&orderDetails=${orderDetails}`
                 );
 
+
+                   /*
+                let response = await  this._$http(
+                    {
+                        method: 'POST',
+                        url:  `${this._PARAMS.SERVER_URL}${this._PARAMS.POST_REGISTRATION_NEW_ORDER_URL}`,
+
+                        data:    $.param({
+                            userFirstAndLastName: userFirstAndLastName,
+                            userEmail: userEmail,
+                            userContactNumberPhone: userContactNumberPhone,
+                            deliveryAddressOrder:  deliveryAddressOrder,
+                            commentToTheOrder: commentToTheOrder,
+                            orderDetails: orderDetails
+
+                        }),
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            });
+                  */
+
                 return response.data;
+
 
 
             }// try
