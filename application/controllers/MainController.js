@@ -31,7 +31,31 @@
 
 
 
+/*
+         ///  Оформить заказ ///
+
+         $scope.ConfirmOrder = function() {
+
+             console.log( 'infoOrder', $scope.userFirstAndLastName,  $scope.userEmail, $scope.userContactNumberPhone, $scope.deliveryAddressOrder , $scope.commentToTheOrder);
+
+             $state.go( 'cart', {'userFirstAndLastName': $scope.userFirstAndLastName, 'userEmail': $scope.userEmail, 'userContactNumberPhone': $scope.userContactNumberPhone,  'deliveryAddressOrder': $scope.deliveryAddressOrder, 'commentToTheOrder': $scope.commentToTheOrder} );
+
+         };
+
+
+*/
+
+
          $scope.cart = CartService.getCart();
+
+
+         $scope.changeAmount = function ( newAmount ){
+
+             $scope.product.amount = newAmount;
+
+
+         };
+
 
 
          $scope.ChangeAmount = function (product) {
@@ -56,7 +80,7 @@
 
              for(let i=0; i<$scope.cart.length; i++){
 
-                 if($scope.cart[i].productID===product.productID){
+                 if($scope.cart[i].productID === product.productID){
                      count++;
                  }//if
 
@@ -66,7 +90,9 @@
 
                  let newProduct = CartService._getSimpleProduct(product);
 
-                 newProduct.isInCart=true;
+                 newProduct.isInCart = true;
+
+                 newProduct.amountProduct = 1;
 
                  CartService.addProduct(newProduct);
 
@@ -93,82 +119,18 @@
 
 
 
-         //// из примера   изменение кол-ва товара в корзине    ////
          $scope.ChangeProductAmount = function (product){
 
              if(product.amount == 0){
                  $scope.RemoveProduct(product);
              }
 
-             $scope.$parent.$parent.Total = CartService.total();   // ????   $scope.$parent.$parent.Total
+             $scope.$parent.Total = CartService.total();   // ????   $scope.$parent.$parent.Total
 
              CartService.changeStorageService($scope.cart);
          };
 
 
-
-
-         /////////////////   изменение кол-ва товара в корзине
-
-         $scope.ChangeAmountProductInCart = function (index, flag) {
-
-             let product =  $scope.cart[index];
-
-             if (flag === true) { // добавить (+ 1 ед.)
-
-                 product.amountProduct++;
-             }//if
-             else if ($scope.cart[index].amountProduct > 0 ) {  // убрать  (- 1 ед.)
-
-                 product.amountProduct--;
-
-                 if( product.amountProduct === 0){
-
-                    // $scope.RemoveProductFromCart(index);
-
-                     $scope.RemoveProduct(product);
-
-                 }
-
-             }//else if
-
-             event.stopPropagation();
-
-             $scope.UpdateCartTotal();
-
-         }; // ChangeAmount
-
-
-
-         $scope.totalPrice = 0;
-
-
-         $scope.UpdateCartTotal = function ( ) {
-
-             if ( $scope.cart.length !== 0){
-
-                 $scope.totalPrice = $scope.cart.reduce( ( previousValue, productItem) =>{
-                     return previousValue + productItem.productPrice *  productItem.amountProduct;
-                 }, 0 );
-
-             }//if
-
-
-         };// UpdateCartTotal
-
-        ////////////////////////////////////////////////////
-
-
-
-            ///  Оформить заказ ///
-
-         $scope.ConfirmOrder = function() {
-
-             console.log( 'infoOrder:', $scope.userFirstAndLastName,  $scope.userEmail, $scope.userContactNumberPhone);
-
-             $state.go( 'cart', {'userFirstAndLastName': $scope.userFirstAndLastName, 'userEmail': $scope.userEmail, 'userContactNumberPhone': $scope.userContactNumberPhone,  'deliveryAddressOrder': $scope.deliveryAddressOrder, 'commentToTheOrder': $scope.commentToTheOrder} );
-
-         };
 
 
 

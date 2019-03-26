@@ -93,6 +93,7 @@ export  default  class CartService {
             Total.totalPrice+=this.cart[i].amountProduct*this.cart[i].productPrice;
 
         }
+
         return Total;
 
     } // total
@@ -100,20 +101,45 @@ export  default  class CartService {
 
 
 
-        async registrationNewOrder (userFirstAndLastName, userEmail, userContactNumberPhone, deliveryAddressOrder, commentToTheOrder, localStorageService){
+        async registrationNewOrder (userFirstAndLastName, userEmail, userContactNumberPhone, deliveryAddressOrder, commentToTheOrder){
 
             try {
 
+
+                debugger;
+
                 let orderDetails = new FormData();
 
-                orderDetails.append('orderDetails', localStorageService.get('cartProduct'));
+                orderDetails.append('orderDetails', this.localStorageService.get('cartProduct'));
 
 
-                let response = await  this._$http.post(
+                /*
+                let response = await  this._$http.get(
                     `${this._PARAMS.SERVER_URL}${this._PARAMS.POST_REGISTRATION_NEW_ORDER_URL}&userFirstAndLastName=${userFirstAndLastName}&userEmail=${userEmail}&userContactNumberPhone=${userContactNumberPhone}&deliveryAddressOrder=${deliveryAddressOrder}&commentToTheOrder=${commentToTheOrder}&orderDetails=${orderDetails}`
                 );
+                 */
+
+
+                let response = await  this._$http(
+                    {
+                        method: 'POST',
+                        url:  `${this._PARAMS.SERVER_URL}${this._PARAMS.POST_REGISTRATION_NEW_ORDER_URL}`,
+
+                        data:    $.param({
+                            userFirstAndLastName: userFirstAndLastName,
+                            userEmail: userEmail,
+                            userContactNumberPhone: userContactNumberPhone,
+                            deliveryAddressOrder:  deliveryAddressOrder,
+                            commentToTheOrder: commentToTheOrder,
+                            orderDetails: orderDetails
+
+                        }),
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            });
+
 
                 return response.data;
+
 
 
             }// try

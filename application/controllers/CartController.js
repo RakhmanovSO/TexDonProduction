@@ -3,7 +3,25 @@
 export default class  CartController {
 
 
-    constructor( $scope, CartService , SearchService, $state  ) {
+    constructor( $scope, NewsService, SearchService, CartService , $state, localStorageService  ) {
+
+        this._$scope = $scope;
+
+        this._$scope.isActive = false;
+
+        $scope.localStorageService = localStorageService;
+
+
+
+        ///  Оформить заказ ///
+
+        $scope.ConfirmOrder = function() {
+
+            console.log( 'infoOrder - ', $scope.userFirstAndLastName,  $scope.userEmail, $scope.userContactNumberPhone, $scope.deliveryAddressOrder , $scope.commentToTheOrder);
+
+            $state.go( 'cart', {'userFirstAndLastName': $scope.userFirstAndLastName, 'userEmail': $scope.userEmail, 'userContactNumberPhone': $scope.userContactNumberPhone,  'deliveryAddressOrder': $scope.deliveryAddressOrder, 'commentToTheOrder': $scope.commentToTheOrder} );
+
+        };
 
         /*
         this._$scope = $scope;
