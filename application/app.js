@@ -93,7 +93,7 @@ angular.module('TexDon.controllers')
 
 
 angular.module('TexDon.controllers')
-    .controller('CartController' , [ '$scope' , 'NewsService' , 'CartService', CartController ]);
+    .controller('CartController' , [ '$scope' , 'NewsService' , 'SearchService', 'CartService', '$state' , 'localStorageService' , CartController ]);
 
 
 /*
@@ -117,7 +117,6 @@ angular.module('TexDon.services')
         GET_FIRM_INFO_URL:`ctrl=InfoFirmApi&act=GetFirmInfo`,
         GET_MORE_ABOUT_PRODUCT_URL:`ctrl=ProductApi&act=GetAboutProduct`,
         SEARCH_PRODUCTS_URL:`ctrl=SearchApi&act=GetSearchProduct`,
-
         POST_REGISTRATION_NEW_ORDER_URL:`ctrl=OrderApi&act=AddOrder`,
 
 });
@@ -201,7 +200,7 @@ app.config([
             'views':{
                 "content": {
                     "templateUrl":"templates/search/search.html",
-                    'controller': ['$scope', '$state', 'SearchService','search', 'localStorageService', 'CartService', function ($scope,  $state, SearchService, search, ocalStorageService, CartService) {
+                    'controller': ['$scope', '$state', 'SearchService','search', 'localStorageService', 'CartService', function ($scope,  $state, SearchService, search, localStorageService, CartService) {
 
 
                        let cart = $scope.cart = CartService.getCart();
@@ -209,8 +208,7 @@ app.config([
 
                         $scope.productsList = search.data.products;
 
-                        console.log($scope.productsList)
-
+                        console.log($scope.productsList);
 
                         if( cart ){
 
@@ -409,8 +407,24 @@ app.config([
                             let moreProducts = await ProductService.getProductsBySubcategoryId($stateParams.id, $scope.limit , $scope.offset);
 
 
+
                             moreProducts.data.products.forEach( (p) => {
+
+                                let pchek = cart.find( pr => +pr.productID  === +p.productID );
+
+                                if( pchek ){
+
+                                    p.isInCart = true;
+
+                                }//if
+                                else{
+
+                                   p.isInCart = false;
+
+                                }//else
+
                                 $scope.products.push( p );
+
                             } );
 
 
@@ -537,29 +551,19 @@ app.config([
 
                         if( cart ){
 
-                                    /*
+                            let pchek = cart.find( pr => +pr.productID  === +$scope.singleProduct.product.productID );
 
-                          $scope.singleProduct = function ( product ) {
+                            if( pchek ){
 
-                                let p = cart.find( pr => +pr.productID  === +product.productID );
+                                $scope.singleProduct.isInCart = true;
 
-                                if( p ){
+                            }//if
+                            else{
 
-                                    product.isInCart = true;
+                                $scope.singleProduct.isInCart = false;
 
-                                }//if
-                                else{
-
-                                    product.isInCart = false;
-
-                                }//else
-
-                            }
-
-
-                                  */
+                            }//else
                         }//if
-
 
 
                     }],
@@ -622,12 +626,12 @@ app.config([
             'views':{
                 "content": {
                     "templateUrl":"templates/cart/cart.html",
-                    'controller': ['$scope',  'CartService', 'localStorageService', function ($scope, CartService, localStorageService) {
+                    'controller': ['$scope', '$state', 'CartService', 'localStorageService', function ($scope, $state , CartService, localStorageService) {
+
 
                         $scope.cart = CartService.getCart();
 
-
-                        $scope.Total=CartService.total();
+                        $scope.Total = CartService.total();
 
                         $scope.$watch( 'cart.length' , function (){
 
@@ -635,27 +639,101 @@ app.config([
 
                         } );
 
+
                         console.log('cart' ,  $scope.cart);
 
 
+                        $scope.ChangeProductAmount = function  (){
 
+                            $scope.Total = CartService.total();
 
-                     // let orderDetailsNew = cart;
-
-                       // console.log('orderDetailsNew' , orderDetailsNew);
-
-                       // ?????? как передать корзину в CartService.registrationNewOrder() и остальные данные из input  по нажатию на кнопку ОФОРМИТЬ ЗАКАЗ
-
-                        /*
-                        $scope.orderInfo = {
-
-                            userFirstAndLastName: '',
-                            userEmail: '',
+                            CartService.changeStorageService($scope.cart);
 
                         };
-                        console.log($scope.orderInfo);
 
-                        */
+
+                        $scope.regName=true;
+                        $scope.regMail=true;
+                        $scope.regPhone=true;
+                        $scope.regAddress=true;
+                        $scope.regComment=true;
+
+
+                        $scope.RegName = function  (){
+
+                            let regEng =  /^[a-z\s]{2,145}$/i;
+
+                            let regRus =  /^[а-я\s]{2,145}$/i;
+
+
+                            if(regEng.test($scope.userFirstAndLastName) || regRus.test($scope.userFirstAndLastName)) {
+                                $scope.regName=true;
+                            }//if
+                            else {
+                                $scope.regName=false;
+                            }
+
+                        };//RegName
+
+                        $scope.RegEmail=function  (){
+
+                            //let regEmail = /^[a-z0-9A-Z_]+@[a-z0-9A-Z_.]{0,20}$/;
+
+                            let regEmail = /^[a-z0-9A-Z_.@]{0,20}$/i;
+
+                            if(regEmail.test($scope.userEmail)) {
+                                $scope.regMail=true;
+                            }//if
+                            else {
+                                $scope.regMail=false;
+                            }
+
+                        };///RegEmail
+
+                        /*
+                        $scope.RegPhone = function () {
+
+                            let regPhone = /^[0-9()-]{8,18}$/i;
+
+                            if(regPhone.test($scope.userContactNumberPhone)) {
+
+                                $scope.regPhone=true;
+                            }//if
+                            else {
+                                $scope.regPhone=false;
+                            }
+
+                        };///RegPhone
+                         */
+
+                        $scope.RegAddress = function  (){
+
+                            let regAddress = /^[A-ZА-Яа-яa-z-/..,,:;:()№ёЁ\s]{5,220}$/i;
+
+                            if(regAddress.test($scope.deliveryAddressOrder)) {
+                                $scope.regAddress=true;
+                            }//if
+                            else {
+                                $scope.regAddress=false;
+                            }
+
+                        };///RegAddress
+
+
+                        $scope.RegComment = function  (){
+
+                            let regComment = /^[a-zA-Z0-9\sа-яА-ЯЁё_.,.,()-;::;!?№+*$&@]{5,895}$/i;
+
+                            if(regComment.test($scope.commentToTheOrder)) {
+                                $scope.regComment=true;
+                            }//if
+                            else {
+                                $scope.regComment=false;
+                            }
+
+                        };///RegComment
+
+
 
                     }],
 
@@ -670,7 +748,6 @@ app.config([
                     }
 
 
-
                 },
             },
             'resolve':{
@@ -679,15 +756,14 @@ app.config([
                     return NewsService.getNews();
                 } ],
 
-                'cart':['CartService', '$stateParams' , 'localStorageService', function (CartService, $stateParams, localStorageService) {
-                    return CartService.registrationNewOrder($stateParams.userFirstAndLastName, $stateParams.userEmail, $stateParams.userContactNumberPhone, $stateParams.deliveryAddressOrder, $stateParams.commentToTheOrder, localStorageService);
+                'cart':['CartService', '$stateParams' , function (CartService, $stateParams) {
+
+                    return CartService.registrationNewOrder($stateParams.userFirstAndLastName, $stateParams.userEmail, $stateParams.userContactNumberPhone, $stateParams.deliveryAddressOrder, $stateParams.commentToTheOrder);
                 }]
 
             }
 
         });// stateProvider.state('cart')
-
-
 
 
 
@@ -698,8 +774,6 @@ app.config([
 app.run( [
     '$rootScope', '$state', '$stateParams', 'localStorageService',
      function ($rootScope, $state, $stateParams, localStorageService) {
-
-        // $rootScope.cart = [];
 
      }
    ]);  // app.run
