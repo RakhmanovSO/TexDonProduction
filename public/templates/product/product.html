@@ -3,78 +3,6 @@
 
 
 
-    <div id="filters" class="filters">
-
-
-
-        <div id="filter1" class="filter">
-            <section class="sectionBrand" data-name="Brand">
-                <h6>Бренд:</h6>
-                <div class="filter_controls section1_controls">
-
-                    <input type="checkbox" name="option1" value="1">Intel<Br>
-                    <input type="checkbox" name="option1" value="2">AMD<Br>
-
-                </div>
-            </section>
-        </div>
-
-
-
-        <div id="filter2" class="filter">
-            <section class="sectionBrand" data-name="Brand">
-                <h6>Сокет:</h6>
-                <div class="section2">
-
-                    <input type="checkbox" name="option1" value="1">LGA 1151<Br>
-                    <input type="checkbox" name="option1" value="2">AM4<Br>
-
-                </div>
-            </section>
-        </div>
-
-
-
-        <div id="filter3" class="filter">
-            <section class="sectionPrice" data-name="Price">
-                <h6>Цена:</h6>
-                <div class="section3">
-                    <div class="slider short" data-params="">
-                        <div class="slider_content rangeFilter" data-name="price">
-                            <input type="text" class="min min-input" value="" name="price_min" placeholder ="От">
-
-                            <div class="inner ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"> <div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 0%; width: 100%;"></div></div>
-
-                            <input type="text" class="max max-input" value="" name="price_max" placeholder ="До">
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-
-        <div id="filter4" class="filter">
-            <section class="sectionYear" data-name="Year">
-                <h6>Год выпуска:</h6>
-                <div class="section4">
-                    <div class="slider short" data-params="">
-                        <div class="slider_content rangeFilter" data-name="price">
-                            <input type="text" class="min min-input" value="" name="year_min" placeholder ="От">
-
-                            <div class="inner ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"> <div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 0%; width: 100%;"></div></div>
-
-                            <input type="text" class="max max-input" value="" name="year_max" placeholder ="До">
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-
-
-    </div>
-
-
     <div id="sidebar">
 
 
@@ -124,7 +52,7 @@
     <div class="d-flex justify-content-center bd-highlight mb-3" style="margin-top: 30px;" >
 
         <div ng-if="offset <= products.length" class="p-2 bd-highlight">
-            <button ng-click="getMoreProducts()"  class="btn btn-primary"> Показать ещё 40 товаров</button>
+            <button ng-click="getMoreProducts()"  class="btn btn-primary"> Показать ещё </button>
         </div>
     </div>
 

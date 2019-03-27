@@ -8,6 +8,7 @@
     </div>
 
 
+
     <div id="EmptyCart" class="EmptyCart" ng-if="cart.length === 0">
 
         <div class="d-flex justify-content-center bd-highlight mb-3">
@@ -26,11 +27,13 @@
 
     </div>
 
+
+
     <div id="CartTable" class="CartTable" ng-if="cart.length !== 0">
 
     <div class="d-flex justify-content-center bd-highlight mb-3">
 
-        <div class="p-2 bd-highlight">
+            <div class="p-2 bd-highlight">
 
             <h4  class="text-center" style="font-weight:bold; margin-top: -21px !important; margin-bottom: 45px !important;">Список товаров находящихся в корзине:</h4>
 
@@ -72,7 +75,7 @@
 
 
                     <tr id="summa">
-                        <td></td>
+                        <td> </td>
                         <td style="font-weight:bold; font-size: 14pt;">Итого: </td>
                         <td></td>
                         <td id="totalPrice" style="font-weight:bold; font-size: 14pt;"  class="totalPrice" align="center" ng-bind-template="{{ Total.totalPrice }} руб."><b> </b></td>
@@ -156,5 +159,7 @@
 
      </div>
 
+</div>
 
-   </div>
+
+

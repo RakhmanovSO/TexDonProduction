@@ -106,8 +106,6 @@ export  default  class CartService {
             try {
 
 
-                debugger;
-
                 let orderDetails = new FormData();
 
                 orderDetails.append('orderDetails', this.localStorageService.get('cartProduct'));

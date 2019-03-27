@@ -227,7 +227,7 @@ angular.module('TexDon.services')
         GET_FIRM_INFO_URL:`ctrl=InfoFirmApi&act=GetFirmInfo`,
         GET_MORE_ABOUT_PRODUCT_URL:`ctrl=ProductApi&act=GetAboutProduct`,
         SEARCH_PRODUCTS_URL:`ctrl=SearchApi&act=GetSearchProduct`,
-        POST_REGISTRATION_NEW_ORDER_URL:`ctrl=OrderApi&act=AddOrder&XDEBUG_SESSION_START=13821`,
+        POST_REGISTRATION_NEW_ORDER_URL:`ctrl=OrderApi&act=AddOrder`,
 
 });
 
@@ -789,7 +789,7 @@ app.config([
 
                             //let regEmail = /^[a-z0-9A-Z_]+@[a-z0-9A-Z_.]{0,20}$/;
 
-                            let regEmail = /^[a-z0-9A-Z_.@]{5,20}$/;
+                            let regEmail = /^[a-z0-9A-Z_.@]{0,20}$/i;
 
                             if(regEmail.test($scope.userEmail)) {
                                 $scope.regMail=true;
@@ -1073,7 +1073,6 @@ __webpack_require__.r(__webpack_exports__);
          };
 
 
-
 /*
          ///  Оформить заказ ///
 
@@ -1085,9 +1084,7 @@ __webpack_require__.r(__webpack_exports__);
 
          };
 
-
 */
-
 
          $scope.cart = CartService.getCart();
 
@@ -1096,9 +1093,7 @@ __webpack_require__.r(__webpack_exports__);
 
              $scope.product.amount = newAmount;
 
-
          };
-
 
 
          $scope.ChangeAmount = function (product) {
@@ -1141,7 +1136,6 @@ __webpack_require__.r(__webpack_exports__);
 
              }//if
 
-
          }; //AddProductToCart
 
 
@@ -1168,111 +1162,10 @@ __webpack_require__.r(__webpack_exports__);
                  $scope.RemoveProduct(product);
              }
 
-             $scope.$parent.Total = CartService.total();   // ????   $scope.$parent.$parent.Total
+             $scope.$parent.Total = CartService.total();
 
              CartService.changeStorageService($scope.cart);
          };
-
-
-
-
-
-         /////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-             /*
-
-         $scope.cart = [];
-
-         $scope.totalPrice = 0;
-
-
-         $scope.UpdateCartTotal = function ( ) {
-
-             if ( $scope.cart.length !== 0){
-
-                 $scope.totalPrice = $scope.cart.reduce( ( previousValue, productItem) =>{
-                     return previousValue + productItem.productPrice *  productItem.amountProduct;
-                 }, 0 );
-
-             }//if
-
-
-         };// UpdateCartTotal
-
-
-         $scope.AddProductToCart = function (product) {
-
-             let productExist = $scope.cart.some ( (pr) => {
-
-                 return pr.productID === product.productID;
-
-             } );
-
-
-             if (!productExist){
-
-                 // $scope.cart.push(product);
-
-                 $scope.cart.push({
-                     'productID': product.productID,
-                     'productTitle': product.productTitle,
-                     'productPrice': product.productPrice,
-                     'amountProduct': 1,
-                     'isInCart': true
-
-                 });
-
-                 $scope.UpdateCartTotal();
-
-                 console.log('CART in CartController:', $scope.cart);
-
-             }//if
-
-         }; // AddProductToCart
-
-
-
-         $scope.RemoveProductFromCart = function (index) {
-
-             event.stopPropagation();
-
-             $scope.cart.splice(index , 1);
-
-             $scope.UpdateCartTotal();
-
-         }; // RemoveProductFromCart
-
-
-
-         $scope.ChangeAmount = function (index, flag) {
-
-             let product =  $scope.cart[index];
-
-             if (flag === true) { // добавить (+ 1 ед.)
-
-                 product.amountProduct++;
-             }//if
-             else if ($scope.cart[index].amountProduct > 0 ) {  // убрать  (- 1 ед.)
-
-                 product.amountProduct--;
-
-                 if( product.amountProduct === 0){
-
-                     $scope.RemoveProductFromCart(index);
-                 }
-
-             }//else if
-
-             event.stopPropagation();
-
-             $scope.UpdateCartTotal();
-
-         }; // ChangeAmount
-
-
-
-*/
 
 
      }//constructor
@@ -1532,19 +1425,18 @@ class CartService {
             try {
 
 
-                debugger;
-
                 let orderDetails = new FormData();
 
                 orderDetails.append('orderDetails', this.localStorageService.get('cartProduct'));
 
 
+                /*
                 let response = await  this._$http.get(
                     `${this._PARAMS.SERVER_URL}${this._PARAMS.POST_REGISTRATION_NEW_ORDER_URL}&userFirstAndLastName=${userFirstAndLastName}&userEmail=${userEmail}&userContactNumberPhone=${userContactNumberPhone}&deliveryAddressOrder=${deliveryAddressOrder}&commentToTheOrder=${commentToTheOrder}&orderDetails=${orderDetails}`
                 );
+                 */
 
 
-                   /*
                 let response = await  this._$http(
                     {
                         method: 'POST',
@@ -1561,7 +1453,7 @@ class CartService {
                         }),
                         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             });
-                  */
+
 
                 return response.data;
 

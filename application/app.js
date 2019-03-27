@@ -117,7 +117,7 @@ angular.module('TexDon.services')
         GET_FIRM_INFO_URL:`ctrl=InfoFirmApi&act=GetFirmInfo`,
         GET_MORE_ABOUT_PRODUCT_URL:`ctrl=ProductApi&act=GetAboutProduct`,
         SEARCH_PRODUCTS_URL:`ctrl=SearchApi&act=GetSearchProduct`,
-        POST_REGISTRATION_NEW_ORDER_URL:`ctrl=OrderApi&act=AddOrder&XDEBUG_SESSION_START=13821`,
+        POST_REGISTRATION_NEW_ORDER_URL:`ctrl=OrderApi&act=AddOrder`,
 
 });
 
@@ -679,7 +679,7 @@ app.config([
 
                             //let regEmail = /^[a-z0-9A-Z_]+@[a-z0-9A-Z_.]{0,20}$/;
 
-                            let regEmail = /^[a-z0-9A-Z_.@]{5,20}$/;
+                            let regEmail = /^[a-z0-9A-Z_.@]{0,20}$/i;
 
                             if(regEmail.test($scope.userEmail)) {
                                 $scope.regMail=true;
