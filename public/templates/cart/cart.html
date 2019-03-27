@@ -1,0 +1,153 @@
+<div class="container-fluid"  ng-controller="CartController">
+
+    <div class="d-flex justify-content-center bd-highlight mb-3" >
+
+        <div class="p-2 bd-highlight">
+            <p style="font-size: 17pt; font-weight:bold; margin-top: 30px; margin-bottom: 40px;" >КОРЗИНА</p>
+        </div>
+    </div>
+
+
+    <div id="EmptyCart" class="EmptyCart" ng-if="cart.length === 0">
+
+        <div class="d-flex justify-content-center bd-highlight mb-3">
+
+            <div class="p-2 bd-highlight">
+
+                    <h3 style="margin-left: 380px;">Корзина пуста !</h3>
+
+                <h4 style="margin-left: 380px;">Добавте товар для оформления заказа ! </h4>
+
+                    <a id="buttonProduct" class="img-responsive center-block"  ui-sref="category" >
+                        <img class="img-responsive center-block"   alt="Перейти в каталог товаров" ng-src="http://localhost:5012/TexDon/assets/images/othersImages/01final.png" >
+                    </a>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="CartTable" class="CartTable" ng-if="cart.length !== 0">
+
+    <div class="d-flex justify-content-center bd-highlight mb-3">
+
+        <div class="p-2 bd-highlight">
+
+            <h4>Список товаров находящихся в корзине:</h4>
+
+
+                <table cellspacing="0" >
+
+                    <thead>
+
+                    <tr align="center" text-align="center" >
+                        <th align="center" text-align="center" >Наименование товара</th>
+                        <th align="center" text-align="center">Кол-во</th>
+                        <th align="center" text-align="center" >Цена за 1 ед.</th>
+                        <th align="center" text-align="center">Сумма</th>
+                        <th align="center" text-align="center"> </th>
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody id="productsTable">
+
+                     <tr  ng-repeat="pr in cart track by pr.productID ">
+
+
+                        <td id="productTitle" class="{{ pr.productID }}" align="center" text-align="center"> <p ng-bind-template="pr.productTitle"></p> </td>
+
+                        <td align="center" text-align="center" >
+
+
+                            <span id="amountMinus" class="amountMinus" title="Уменьшить на 1"  style="font-size: 14pt;" ng-click="ChangeAmountProductInCart($index, false)"> &mdash; </span>
+
+                            <span id="amount" class="amount" style="font-size: 14pt; margin-left: 15px; margin-right: 15px;" ng-bind="pr.amountProduct" > </span>
+
+                            <span id="amountPlus" class="amountPlus" title="Увеличить на 1" style="font-size: 14pt" ng-click="ChangeAmountProductInCart($index, true)"> &#10010; </span>
+                        </td>
+                        <td id="productPrice" align="center" text-align="center" ><p  ng-bind-template="pr.productPrice +' руб.'"></p> </td>
+
+                        <td align="center" text-align="center" ><p id="total"  ng-bind-template="Total.totalPrice +' руб.'"></p> </td>
+
+                        <td align="center" text-align="center" ng-click="RemoveProduct(pr)"> <div class="btn btn-danger deleteProduct">Х</div>  </td>
+
+
+                    </tr>
+
+
+                    <tr id="summa">
+                        <td></td>
+                        <td style="font-size: 12pt"> <strong>Итого: </strong></td>
+                        <td></td>
+                        <td></td>
+                        <td id="totalPrice" style="font-size: 12pt"  class="totalPrice" align="center" ng-bind-template="Total.totalPrice +' руб.'"><b> </b></td>
+                    </tr>
+
+                    </tbody>
+
+
+                </table>
+
+        </div>
+    </div>
+
+
+
+    <div class="d-flex justify-content-center bd-highlight mb-3">
+
+        <div class="p-2 bd-highlight">
+
+
+        <form  class="col-12">
+
+        <div class="form-group">
+            <label for="userName" style="font-size: 12pt" ><b>Введите фамилию и имя </b></label>
+            <input class="form-control" id="userName"  placeholder="Ф.И.О." ng-model="userFirstAndLastName">
+        </div>
+
+        <div class="form-group">
+            <label for="Email" style="font-size: 12pt"><b>Введите Ваш Email (не обязательное поле для ввода)</b></label>
+            <input class="form-control" id="Email" placeholder="Email" ng-model="userEmail" >
+        </div>
+
+
+        <div class="form-group">
+            <label for="userPhone" style="font-size: 12pt"><b>Введите контактный номер телефона для связи с Вами</b></label>
+            <input class="form-control" id="userPhone" placeholder="Номер телефона"  ng-model="userContactNumberPhone" >
+        </div>
+
+
+        <div class="form-group">
+            <label for="deliveryAddress" style="font-size: 12pt"><b>Введите адрес куда необходимо произвести доставку товара</b></label>
+            <input class="form-control" id="deliveryAddress" placeholder="Адрес" ng-model="deliveryAddressOrder">
+        </div>
+
+
+        <div class="form-group">
+            <label for="commentToTheOrder" style="font-size: 12pt" ><b>Комментарий к заказу</b></label>
+            <textarea type="password" class="form-control" id="commentToTheOrder" placeholder="Сюда можете внести дополнительную информацию" ng-model="commentToTheOrder"></textarea>
+        </div>
+
+
+            <div class="d-flex justify-content-center bd-highlight mb-3" >
+
+                <div class="p-2 bd-highlight">
+                    <button  class="btn btn-success" ng-click="ConfirmOrder(userFirstAndLastName, userEmail, userContactNumberPhone, deliveryAddressOrder, commentToTheOrder)">Оформить заказ</button>
+                </div>
+
+
+            </div>
+
+    </form>
+
+
+        </div>
+
+    </div>
+
+
+
+     </div>
+
+   </div>

@@ -1,0 +1,97 @@
+
+<div class="container-fluid"  ng-controller="CartController" >
+
+
+    <div class="d-flex justify-content-center bd-highlight mb-3" >
+
+        <div class="p-2 bd-highlight">
+            <h5 style="text-align: center; font-size: 14pt; font-weight:bold; margin-top: 30px;" ng-bind="singleProduct.product.productTitle"></h5>
+        </div>
+
+    </div>
+
+
+
+    <div class="d-flex justify-content-center bd-highlight mb-3" >
+
+        <div class="p-2 bd-highlight">
+            <h5 style="text-align: center; font-size: 16pt; font-weight:bold" ng-bind="'Цена  ' + singleProduct.product.productPrice +'  руб.'"></h5>
+        </div>
+
+    </div>
+
+
+
+
+    <div class="d-flex justify-content-center bd-highlight mb-3" >
+
+        <div class="p-2 bd-highlight">
+            <a  class="btn btn-success " ng-click="AddProductToCart(singleProduct.product)" ng-if="singleProduct.isInCart === false" >Добавить в корзину</a>
+        </div>
+
+        <div class="p-2 bd-highlight">
+            <a  class="btn btn-success"  ng-if="singleProduct.isInCart === true">Товар в корзине!</a>
+        </div>
+
+
+    </div>
+
+
+
+    <div class="d-flex justify-content-center bd-highlight mb-3" >
+
+        <div class="p-2 bd-highlight">
+            <h5 style="font-size: 14pt; font-weight:bold; margin-top: 10px;">ОПИСАНИЕ ТОВАРА</h5>
+        </div>
+
+    </div>
+
+
+        <p ng-bind="singleProduct.product.productDescription"></p>
+
+
+
+    <div class="d-flex justify-content-center bd-highlight mb-3" ng-repeat="item in singleProduct.images">
+
+
+        <div class="p-2 bd-highlight">
+
+                    <img  ng-src="{{ item.productImagePath }}"  style="width:300px; height:300px"   >
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <div class="d-flex justify-content-center bd-highlight mb-3" >
+
+        <div class="p-2 bd-highlight">
+            <h5 style="font-size: 14pt; font-weight:bold; margin-top: 10px;">ХАРАКТЕРИСТИКИ</h5>
+        </div>
+
+    </div>
+
+
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+
+                <tbody>
+
+                <tr ng-repeat="item in singleProduct.attributes" >
+
+                    <td ng-bind="item.attributeTitle"> </td>
+                    <td ng-bind="item.value"> </td>
+
+
+                </tr>
+
+                </tbody>
+            </table>
+
+
+    </div>
+
+</div>

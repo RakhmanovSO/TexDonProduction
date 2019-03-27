@@ -1,0 +1,33 @@
+<div class="container-fluid">
+
+
+
+
+    <div class="d-flex justify-content-center bd-highlight mb-3" >
+
+        <div class="p-2 bd-highlight">
+            <p style="font-size: 17pt; font-weight:bold; margin-top: 30px; margin-bottom: 40px;">НОВОСТИ И АКЦИИ</p>
+        </div>
+    </div>
+
+
+
+
+        <div class="d-flex justify-content-center bd-highlight mb-3" ng-repeat=" single in  news" >
+
+            <div class="p-2 bd-highlight">
+
+                        <a class="btn" ui-sref="moreAboutNews({id: single.newsID})" id="{{single.newsID}}" >
+
+                            <img ng-src="{{single.imagePath1}}" alt="{{single.titleNews}}" class="img-fluid" style="width:900px;height:300px" >
+
+                            <h6 style="text-align: center; font-size: 14pt; font-weight:bold" ng-bind="single.titleNews"></h6>
+                            <p style="font-size: 10pt; " ng-bind="'Дата опубликования:  ' + single.dateNews"></p>
+                        </a>
+
+
+            </div>
+
+        </div>
+
+</div>
