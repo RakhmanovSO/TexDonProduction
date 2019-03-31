@@ -82,18 +82,9 @@ table td {
 
 #productsRow{
 
-  margin-left: 105px;
+  margin-left: 19px;
 }
 
-
-#sidebar{
-
-  /*http://htmlbook.ru/css/box-sizing
-  https://webdesign-master.ru/blog/html-css/2018-02-04-bootstrap-4.html
-
-  */
-
-}
 
 .btn-success{
   color: #fff !important;

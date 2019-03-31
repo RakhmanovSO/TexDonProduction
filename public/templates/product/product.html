@@ -1,9 +1,5 @@
 
-<div class="container-fluid" >
-
-
-
-    <div id="sidebar">
+<div class="container-fluid" style="margin-bottom: 40px !important;" >
 
 
     <div class="d-flex justify-content-center bd-highlight mb-3" >
@@ -22,10 +18,11 @@
 
                 <a class="btn" ui-sref="moreAboutProduct({id: pr.productID})" id="{{ pr.productID }}" >
                     <img ng-src="{{pr.images[0].productImagePath}}" alt="{{pr.productTitle}}" class="img-fluid" style="width:200px; height:200px" >
-                     <h6 ng-bind="pr.productTitle"></h6>
+
+                     <h6  style="text-align: center; font-size: 12pt; font-weight:bold; margin-top: 5px;" ng-bind="pr.productTitle"></h6>
 
 
-                 <p style="text-align: center; font-size: 16pt; font-weight:bold" ng-bind="pr.productPrice +' руб.'"> </p>
+                 <p style="text-align: center; font-size: 17pt; font-weight:bold" ng-bind="pr.productPrice +' руб.'"> </p>
                  </a>
 
 
@@ -34,8 +31,8 @@
                     <div class="p-2 bd-highlight">
 
 
-                        <a  ng-click="AddProductToCart(pr)"  style="margin-top: 2px;  margin-bottom: 15px; width: 160px;" ng-if="pr.isInCart === false" class="btn btn-success">В корзину</a>
-                        <a style="margin-top: 2px; margin-bottom: 15px; width: 180px;" ng-if="pr.isInCart " class="btn btn-success" ui-sref=" ">Товар в корзине!</a>
+                        <a  ng-click="AddProductToCart(pr)"  style=" margin-left: -36px; margin-top: 0px;  margin-bottom: 15px; width: 160px;" ng-if="pr.isInCart === false" class="btn btn-success">В корзину</a>
+                        <a style="margin-left: -36px; margin-top: 2px; margin-bottom: 15px; width: 180px;" ng-if="pr.isInCart" class="btn btn-success" ui-sref=" ">Товар в корзине!</a>
 
 
 
@@ -52,11 +49,10 @@
     <div class="d-flex justify-content-center bd-highlight mb-3" style="margin-top: 30px;" >
 
         <div ng-if="offset <= products.length" class="p-2 bd-highlight">
-            <button ng-click="getMoreProducts()"  class="btn btn-primary"> Показать ещё </button>
+            <button ng-click="getMoreProducts()"  class="btn btn-primary" ng-if="products.length > 0 "> Показать ещё </button>
         </div>
     </div>
 
 
-    </div>
 
 </div>

@@ -3,7 +3,7 @@
 export default class  CartController {
 
 
-    constructor( $scope, NewsService, SearchService, CartService , $state, localStorageService  ) {
+    constructor( $scope, NewsService, SearchService, CartService , $state, localStorageService ) {
 
         this._$scope = $scope;
 
@@ -13,15 +13,85 @@ export default class  CartController {
 
 
 
-        ///  Оформить заказ ///
+        ///  Оформление заказ ///
 
         $scope.ConfirmOrder = function() {
 
-            console.log( 'infoOrder - ', $scope.userFirstAndLastName,  $scope.userEmail, $scope.userContactNumberPhone, $scope.deliveryAddressOrder , $scope.commentToTheOrder);
 
-            $state.go( 'cart', {'userFirstAndLastName': $scope.userFirstAndLastName, 'userEmail': $scope.userEmail, 'userContactNumberPhone': $scope.userContactNumberPhone,  'deliveryAddressOrder': $scope.deliveryAddressOrder, 'commentToTheOrder': $scope.commentToTheOrder} );
+            console.log( 'infoOrder - ', $scope.userFirstAndLastName,  $scope.userEmail, $scope.userContactNumberPhone, $scope.deliveryAddressOrder, $scope.commentToTheOrder);
+
+            let result =  CartService.registrationNewOrder( $scope.userFirstAndLastName,  $scope.userEmail, $scope.userContactNumberPhone, $scope.deliveryAddressOrder, $scope.commentToTheOrder);
+
+
+            console.log( 'OrderResult - ', result);
+
+
+                       /// ???????
+
+            let text;
+
+            if (result) {
+
+                // code === 200;
+
+                // вывести текст что Заказ оформлен удачно,
+                // Очистить корзину от товаров и вернуть пользователя на HOME page.
+
+                $scope.showPopUpDialog = true;
+
+                text = "Заказ оформлен и принят на выполнение ! Спасибо за то, что выбрали наш магазин. ";
+
+                $scope.text = text;
+
+
+               // localStorageService.clearAll();
+
+
+                $scope.clickOK = function ( ) {
+
+                    $scope.showPopUpDialog = false;
+
+
+                };//clickOK
+
+
+            }//if
+            else{
+
+                // вывести ошибку оформления заказа и вернуть пользователя на страницу корзины
+
+                // code === 401 || code === 404 || code === 400;
+
+                text = "Заказ Не оформлен ! Пожалуйста попробуйте оформить заказ через 5 минут. Спасибо за понимание и за то, что выбрали наш магазин. ";
+
+                $scope.text = text;
+
+                $scope.showPopUpDialog = true;
+
+
+                $scope.clickOK = function ( ) {
+
+                    $scope.showPopUpDialog = false;
+
+
+                };//clickOK
+
+
+            }//else
+
+
+
+
+            //$state.go( 'cart', {'userFirstAndLastName': $scope.userFirstAndLastName, 'userEmail': $scope.userEmail, 'userContactNumberPhone': $scope.userContactNumberPhone,  'deliveryAddressOrder': $scope.deliveryAddressOrder, 'commentToTheOrder': $scope.commentToTheOrder} );
 
         };
+
+
+
+
+
+
+
 
         /*
         this._$scope = $scope;

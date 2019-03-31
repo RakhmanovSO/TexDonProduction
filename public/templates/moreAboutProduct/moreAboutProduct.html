@@ -22,29 +22,15 @@
 
 
 
-
     <div class="d-flex justify-content-center bd-highlight mb-3" >
 
         <div class="p-2 bd-highlight">
-            <a  class="btn btn-success " ng-click="AddProductToCart(singleProduct.product)" ng-if="singleProduct.isInCart === false" >В корзину</a>
-        </div>
 
-        <div class="p-2 bd-highlight">
+            <a  class="btn btn-success" ng-if="singleProduct.isInCart === false" ng-click="AddProductToCart(singleProduct.product)" >В корзину</a>
+
             <a  class="btn btn-success"  ng-if="singleProduct.isInCart ">Товар в корзине!</a>
+
         </div>
-
-          <!--
-        <div class="p-2 bd-highlight" ng-show="!singleProduct.isInCart">
-            <div  class="btn btn-success " ng-click="AddProductToCart(singleProduct.product)" >В корзину</div>
-        </div>
-
-
-        <div class="p-2 bd-highlight" ng-show="singleProduct.isInCart">
-            <div  class="btn btn-success" >Товар в корзине!</div>
-        </div>
-
-       -->
-
 
     </div>
 
@@ -65,7 +51,7 @@
 
         <p class="lead mt-4 mb-2 text-center" style="font-size: 14pt; font-weight:bold; margin-top: 10px;">ХАРАКТЕРИСТИКИ</p>
 
-        <div class="table-responsive">
+        <div class="table-responsive" style="margin-bottom: 40px;">
             <table class="table table-striped table-sm">
 
                 <tbody>
@@ -87,11 +73,10 @@
 
 
             <div ng-repeat="item in singleProduct.images">
-
-                <img class="img-thumbnail float-left"  ng-src="{{ item.productImagePath }}" alt=""  style="width:300px; margin-left: 5px; margin-top: 5px; margin-bottom: 15px">
-
+                <a class="img-thumbnail float-left" ng-href="{{item.productImagePath}}" style="border: none;">
+                <img class="img-thumbnail float-left"  ng-src="{{ item.productImagePath }}" alt=""  style="border: none; width:300px; margin-left: 5px; margin-top: 5px; margin-bottom: 15px">
+                </a>
             </div>
-
 
 
 

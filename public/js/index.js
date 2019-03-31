@@ -131,9 +131,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
 // ===================== FILTERS ===================== //
 
 
@@ -147,7 +144,7 @@ angular.module( 'TexDon.services' , []);
 angular.module( 'TexDon.directives' , []);
 angular.module('TexDon.constants' , []);
 
-angular.module('TexDon.controllers').controller('MainController' ,_controllers_CartController__WEBPACK_IMPORTED_MODULE_1__["default"], [
+angular.module('TexDon.controllers').controller('MainController', 'CartController', [
     '$scope' ,
     'CategoryService',
     'SubcategoryService',
@@ -207,6 +204,16 @@ angular.module('TexDon.controllers')
 
 
 /*
+
+angular.module('TexDon.controllers', ['ngAnimate', 'ui.bootstrap'])
+    .controller('CartController' , [ '$scope' , 'NewsService' , 'SearchService', 'CartService', '$state' , 'localStorageService' , CartController ]);
+
+ */
+
+
+
+
+/*
 angular.module( 'TexDon.filrers')
     .filter('ProductFilter', ProductFilter);
 */
@@ -242,7 +249,7 @@ let app = angular.module('TexDon', [
     'TexDon.directives',
     'TexDon.constants',
     'ngRoute',
-    'ui.router'
+    'ui.router',
 ]);
 
 
@@ -506,7 +513,6 @@ app.config([
                         console.log( $scope.cart);
 
 
-
                         $scope.products = product.data.products;
 
                         console.log($scope.products);
@@ -540,21 +546,6 @@ app.config([
 
                         };
 
-/*
-                        $scope.products.forEach( p=>{
-
-                            for(let i=0; i<$scope.cart.length; i++){
-
-                                if(p.productID === $scope.cart[i].productID){
-
-                                    p.isInCart=true;
-                                    p.amountProduct=$scope.cart[i].amountProduct;
-
-                                }//if
-                            }
-                        });
-
-                          */
 
 
                         if( cart ){
@@ -581,47 +572,6 @@ app.config([
 
 
 
-
-
-
-                        /*
-                        localStorageService.set('cart' , [
-                            {
-                                productID: 1,
-                                amount: 2
-                            }
-                        ]);
-                        */
-
-                       // localStorage.clear();
-                        /*
-                        let cart = localStorageService.get('cart');
-
-                        console.log('cart' , cart);
-
-                         if( cart ){
-
-                           $scope.products.forEach( function ( product ) {
-
-                                let p = cart.find( pr => +pr.productID  === +product.productID );
-
-                                 if( p ){
-
-                                     product.isInCart = true;
-
-                                 }//if
-                                 else{
-
-                                     product.isInCart = false;
-
-                                 }//else
-
-                             } );
-
-
-                         }//if
-
-                        */
 
                     }],
                 }
@@ -752,8 +702,13 @@ app.config([
 
                         console.log('cart' ,  $scope.cart);
 
+                        $scope.ChangeProductAmount = function  (product){
 
-                        $scope.ChangeProductAmount = function  (){
+                            if (isNaN(+product.amountProduct)){
+
+                                product.amountProduct = 1;
+
+                            }//if
 
                             $scope.Total = CartService.total();
 
@@ -761,13 +716,12 @@ app.config([
 
                         };
 
-
-                        $scope.regName=true;
-                        $scope.regMail=true;
+/*
+                        $scope.regName=false;
+                        $scope.regMail=false;
                         $scope.regPhone=true;
-                        $scope.regAddress=true;
+                        $scope.regAddress=false;
                         $scope.regComment=true;
-
 
                         $scope.RegName = function  (){
 
@@ -800,10 +754,10 @@ app.config([
 
                         };///RegEmail
 
-                        /*
+
                         $scope.RegPhone = function () {
 
-                            let regPhone = /^[0-9()-]{8,18}$/i;
+                            let regPhone = /^[()-+0-9\s]{6,18}$/i;
 
                             if(regPhone.test($scope.userContactNumberPhone)) {
 
@@ -814,11 +768,11 @@ app.config([
                             }
 
                         };///RegPhone
-                         */
+
 
                         $scope.RegAddress = function  (){
 
-                            let regAddress = /^[A-ZА-Яа-яa-z-/..,,:;:()№ёЁ\s]{5,220}$/i;
+                            let regAddress = /^[A-ZА-Я0-9а-яa-z-/..,,:;:()№ёЁ\s]{5,220}$/i;
 
                             if(regAddress.test($scope.deliveryAddressOrder)) {
                                 $scope.regAddress=true;
@@ -832,7 +786,7 @@ app.config([
 
                         $scope.RegComment = function  (){
 
-                            let regComment = /^[a-zA-Z0-9\sа-яА-ЯЁё_.,.,()-;::;!?№+*$&@]{5,895}$/i;
+                            let regComment = /^[a-zA-Z0-9а-яА-ЯЁё_.,.,()-;::;!?№+*$&@\s]{0,895}$/i;
 
                             if(regComment.test($scope.commentToTheOrder)) {
                                 $scope.regComment=true;
@@ -843,10 +797,11 @@ app.config([
 
                         };///RegComment
 
-
+                        */
 
                     }],
 
+                    /*
                     'params' : {
 
                         'userFirstAndLastName': 'some default',
@@ -856,6 +811,7 @@ app.config([
                         'commentToTheOrder': 'some default'
 
                     }
+                    */
 
 
                 },
@@ -866,10 +822,12 @@ app.config([
                     return NewsService.getNews();
                 } ],
 
+                /*
                 'cart':['CartService', '$stateParams' , function (CartService, $stateParams) {
 
                     return CartService.registrationNewOrder($stateParams.userFirstAndLastName, $stateParams.userEmail, $stateParams.userContactNumberPhone, $stateParams.deliveryAddressOrder, $stateParams.commentToTheOrder);
                 }]
+                */
 
             }
 
@@ -908,7 +866,7 @@ __webpack_require__.r(__webpack_exports__);
 class  CartController {
 
 
-    constructor( $scope, NewsService, SearchService, CartService , $state, localStorageService  ) {
+    constructor( $scope, NewsService, SearchService, CartService , $state, localStorageService ) {
 
         this._$scope = $scope;
 
@@ -918,15 +876,85 @@ class  CartController {
 
 
 
-        ///  Оформить заказ ///
+        ///  Оформление заказ ///
 
         $scope.ConfirmOrder = function() {
 
-            console.log( 'infoOrder - ', $scope.userFirstAndLastName,  $scope.userEmail, $scope.userContactNumberPhone, $scope.deliveryAddressOrder , $scope.commentToTheOrder);
 
-            $state.go( 'cart', {'userFirstAndLastName': $scope.userFirstAndLastName, 'userEmail': $scope.userEmail, 'userContactNumberPhone': $scope.userContactNumberPhone,  'deliveryAddressOrder': $scope.deliveryAddressOrder, 'commentToTheOrder': $scope.commentToTheOrder} );
+            console.log( 'infoOrder - ', $scope.userFirstAndLastName,  $scope.userEmail, $scope.userContactNumberPhone, $scope.deliveryAddressOrder, $scope.commentToTheOrder);
+
+            let result =  CartService.registrationNewOrder( $scope.userFirstAndLastName,  $scope.userEmail, $scope.userContactNumberPhone, $scope.deliveryAddressOrder, $scope.commentToTheOrder);
+
+
+            console.log( 'OrderResult - ', result);
+
+
+                       /// ???????
+
+            let text;
+
+            if (result) {
+
+                // code === 200;
+
+                // вывести текст что Заказ оформлен удачно,
+                // Очистить корзину от товаров и вернуть пользователя на HOME page.
+
+                $scope.showPopUpDialog = true;
+
+                text = "Заказ оформлен и принят на выполнение ! Спасибо за то, что выбрали наш магазин. ";
+
+                $scope.text = text;
+
+
+               // localStorageService.clearAll();
+
+
+                $scope.clickOK = function ( ) {
+
+                    $scope.showPopUpDialog = false;
+
+
+                };//clickOK
+
+
+            }//if
+            else{
+
+                // вывести ошибку оформления заказа и вернуть пользователя на страницу корзины
+
+                // code === 401 || code === 404 || code === 400;
+
+                text = "Заказ Не оформлен ! Пожалуйста попробуйте оформить заказ через 5 минут. Спасибо за понимание и за то, что выбрали наш магазин. ";
+
+                $scope.text = text;
+
+                $scope.showPopUpDialog = true;
+
+
+                $scope.clickOK = function ( ) {
+
+                    $scope.showPopUpDialog = false;
+
+
+                };//clickOK
+
+
+            }//else
+
+
+
+
+            //$state.go( 'cart', {'userFirstAndLastName': $scope.userFirstAndLastName, 'userEmail': $scope.userEmail, 'userContactNumberPhone': $scope.userContactNumberPhone,  'deliveryAddressOrder': $scope.deliveryAddressOrder, 'commentToTheOrder': $scope.commentToTheOrder} );
 
         };
+
+
+
+
+
+
+
 
         /*
         this._$scope = $scope;
@@ -1073,18 +1101,6 @@ __webpack_require__.r(__webpack_exports__);
          };
 
 
-/*
-         ///  Оформить заказ ///
-
-         $scope.ConfirmOrder = function() {
-
-             console.log( 'infoOrder', $scope.userFirstAndLastName,  $scope.userEmail, $scope.userContactNumberPhone, $scope.deliveryAddressOrder , $scope.commentToTheOrder);
-
-             $state.go( 'cart', {'userFirstAndLastName': $scope.userFirstAndLastName, 'userEmail': $scope.userEmail, 'userContactNumberPhone': $scope.userContactNumberPhone,  'deliveryAddressOrder': $scope.deliveryAddressOrder, 'commentToTheOrder': $scope.commentToTheOrder} );
-
-         };
-
-*/
 
          $scope.cart = CartService.getCart();
 
@@ -1125,6 +1141,8 @@ __webpack_require__.r(__webpack_exports__);
              }//for
 
              if(count === 0){
+
+                 product.isInCart = true;
 
                  let newProduct = CartService._getSimpleProduct(product);
 
@@ -1424,38 +1442,36 @@ class CartService {
 
             try {
 
-
                 let orderDetails = new FormData();
 
-                orderDetails.append('orderDetails', this.localStorageService.get('cartProduct'));
+                orderDetails.append('orderDetails', JSON.stringify(this.localStorageService.get('cartProduct')));
+
+                orderDetails.append('userFirstAndLastName', userFirstAndLastName);
+                orderDetails.append('userEmail', userEmail);
+                orderDetails.append('userContactNumberPhone', userContactNumberPhone);
+                orderDetails.append('deliveryAddressOrder', deliveryAddressOrder);
+                orderDetails.append('commentToTheOrder', commentToTheOrder);
+
+
+                let response = await  this._$http({
+
+                        method: 'POST',
+
+                        url:  `${this._PARAMS.SERVER_URL}${this._PARAMS.POST_REGISTRATION_NEW_ORDER_URL}`,
+
+                        data:  orderDetails,
+
+                        headers: {'Content-Type': undefined }
+            });
+
+                return response.data;
 
 
                 /*
-                let response = await  this._$http.get(
-                    `${this._PARAMS.SERVER_URL}${this._PARAMS.POST_REGISTRATION_NEW_ORDER_URL}&userFirstAndLastName=${userFirstAndLastName}&userEmail=${userEmail}&userContactNumberPhone=${userContactNumberPhone}&deliveryAddressOrder=${deliveryAddressOrder}&commentToTheOrder=${commentToTheOrder}&orderDetails=${orderDetails}`
-                );
-                 */
-
-
-                let response = await  this._$http(
-                    {
-                        method: 'POST',
-                        url:  `${this._PARAMS.SERVER_URL}${this._PARAMS.POST_REGISTRATION_NEW_ORDER_URL}`,
-
-                        data:    $.param({
-                            userFirstAndLastName: userFirstAndLastName,
-                            userEmail: userEmail,
-                            userContactNumberPhone: userContactNumberPhone,
-                            deliveryAddressOrder:  deliveryAddressOrder,
-                            commentToTheOrder: commentToTheOrder,
-                            orderDetails: orderDetails
-
-                        }),
-                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            });
-
-
-                return response.data;
+           let response = await  this._$http.get(
+               `${this._PARAMS.SERVER_URL}${this._PARAMS.POST_REGISTRATION_NEW_ORDER_URL}&userFirstAndLastName=${userFirstAndLastName}&userEmail=${userEmail}&userContactNumberPhone=${userContactNumberPhone}&deliveryAddressOrder=${deliveryAddressOrder}&commentToTheOrder=${commentToTheOrder}&orderDetails=${orderDetails}`
+           );
+            */
 
 
 

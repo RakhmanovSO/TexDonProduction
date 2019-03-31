@@ -1,5 +1,5 @@
 
-<div class="container-fluid">
+<div class="container-fluid" style="margin-bottom: 50px !important;">
 
 
     <div class="d-flex justify-content-center bd-highlight mb-3" >
@@ -26,9 +26,10 @@
                 <p style="text-align: center; font-size: 16pt; font-weight:bold" ng-bind="pr.productPrice +' руб.'"> </p>
             </a>
 
-            <a style="margin-top: 2px" ng-if="pr.isInCart === false" class="btn btn-success col-12" ui-sref=" ">В корзину</a>
-            <a style="margin-top: 2px" ng-if="pr.isInCart === true" class="btn btn-success col-12" ui-sref=" ">Товар в корзине!</a>
-
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+            <a  ng-click="AddProductToCart(pr)"  style="margin-top: 2px" ng-if="pr.isInCart === false" class="btn btn-success col-12" >В корзину</a>
+            <a style="margin-top: 2px" ng-if="pr.isInCart" class="btn btn-success col-12" >Товар в корзине!</a>
+            </div>
 
         </div>
 

@@ -105,38 +105,36 @@ export  default  class CartService {
 
             try {
 
-
                 let orderDetails = new FormData();
 
-                orderDetails.append('orderDetails', this.localStorageService.get('cartProduct'));
+                orderDetails.append('orderDetails', JSON.stringify(this.localStorageService.get('cartProduct')));
+
+                orderDetails.append('userFirstAndLastName', userFirstAndLastName);
+                orderDetails.append('userEmail', userEmail);
+                orderDetails.append('userContactNumberPhone', userContactNumberPhone);
+                orderDetails.append('deliveryAddressOrder', deliveryAddressOrder);
+                orderDetails.append('commentToTheOrder', commentToTheOrder);
+
+
+                let response = await  this._$http({
+
+                        method: 'POST',
+
+                        url:  `${this._PARAMS.SERVER_URL}${this._PARAMS.POST_REGISTRATION_NEW_ORDER_URL}`,
+
+                        data:  orderDetails,
+
+                        headers: {'Content-Type': undefined }
+            });
+
+                return response.data;
 
 
                 /*
-                let response = await  this._$http.get(
-                    `${this._PARAMS.SERVER_URL}${this._PARAMS.POST_REGISTRATION_NEW_ORDER_URL}&userFirstAndLastName=${userFirstAndLastName}&userEmail=${userEmail}&userContactNumberPhone=${userContactNumberPhone}&deliveryAddressOrder=${deliveryAddressOrder}&commentToTheOrder=${commentToTheOrder}&orderDetails=${orderDetails}`
-                );
-                 */
-
-
-                let response = await  this._$http(
-                    {
-                        method: 'POST',
-                        url:  `${this._PARAMS.SERVER_URL}${this._PARAMS.POST_REGISTRATION_NEW_ORDER_URL}`,
-
-                        data:    $.param({
-                            userFirstAndLastName: userFirstAndLastName,
-                            userEmail: userEmail,
-                            userContactNumberPhone: userContactNumberPhone,
-                            deliveryAddressOrder:  deliveryAddressOrder,
-                            commentToTheOrder: commentToTheOrder,
-                            orderDetails: orderDetails
-
-                        }),
-                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            });
-
-
-                return response.data;
+           let response = await  this._$http.get(
+               `${this._PARAMS.SERVER_URL}${this._PARAMS.POST_REGISTRATION_NEW_ORDER_URL}&userFirstAndLastName=${userFirstAndLastName}&userEmail=${userEmail}&userContactNumberPhone=${userContactNumberPhone}&deliveryAddressOrder=${deliveryAddressOrder}&commentToTheOrder=${commentToTheOrder}&orderDetails=${orderDetails}`
+           );
+            */
 
 
 

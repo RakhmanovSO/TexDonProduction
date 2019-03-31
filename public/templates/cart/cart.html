@@ -1,4 +1,4 @@
-<div class="container-fluid"  ng-controller="CartController">
+<div class="container-fluid"  ng-controller="CartController" style="margin-bottom: 45px;">
 
     <div class="d-flex justify-content-center bd-highlight mb-3" >
 
@@ -99,61 +99,84 @@
 
         <div  class="col-12">
 
-        <div >
-            <label  style="font-size: 12pt" ><b>Введите фамилию и имя </b></label>
-            <input class="form-control" type="text"   name="userName" placeholder="Ф.И.О." ng-blur="RegName()"  ng-model="userFirstAndLastName">
-
-            <label ng-if="!regName" style="color: red;" >Вы ввели некорректные данные</label>
-
-        </div>
-
-        <div >
-            <label  style="font-size: 12pt"><b>Введите Ваш Email (не обязательное поле для ввода)</b></label>
-            <input class="form-control" type="text"  name="Email" placeholder="Email" ng-blur="RegEmail()" ng-model="userEmail" >
-
-            <label ng-if="!regMail" style="color: red;" >Вы ввели некорректные данные</label>
-
-        </div>
-
+            <form name="answerForm" class="form-horizontal ng-pristine ng-invalid ng-invalid-required" novalidate>
 
         <div>
+            <label  style="font-size: 12pt" ><b>Введите фамилию и имя </b></label>
+            <div ng-class="{'has-error':answerForm.userFirstAndLastName.$error.required && answerForm.userFirstAndLastName.$dirty}">
+            <input class="form-control ng-pristine ng-untouched ng-valid ng-empty" type="text"   name="userFirstAndLastName" required placeholder="Ф.И.О." ng-pattern="/^[A-Za-zА-Яа-я\s]{3,145}$/" ng-model="userFirstAndLastName">
+            <span ng-show="answerForm.userFirstAndLastName.$dirty && answerForm.userFirstAndLastName.$error.required" style="color: red;" >Введите Ваше имя и отчество </span>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <label  style="font-size: 12pt"><b>Введите Ваш Email (не обязательное поле для ввода)</b></label>
+            <input class="form-control ng-pristine ng-untouched ng-valid ng-empty" type="text"  name="userEmail" placeholder="Email в формате myEmail@mail.ru"  ng-pattern="/^[a-z0-9A-Z_.@]{0,20}$/" ng-model="userEmail" >
+            <span ng-show="answerForm.userEmail.$dirty && answerForm.userEmail.$error.required" style="color: red;" >Вы ввели некорректные данные </span>
+        </div>
+
+
+        <div style="margin-top: 20px;">
             <label for="userPhone" style="font-size: 12pt"><b>Введите контактный номер телефона для связи с Вами</b></label>
-            <input class="form-control" type="text" id="userPhone" name="userPhone" placeholder="Номер телефона"  ng-model="userContactNumberPhone" >
+            <div ng-class="{'has-error':answerForm.userContactNumberPhone.$error.required && answerForm.userContactNumberPhone.$dirty}">
+            <input class="form-control ng-pristine ng-untouched ng-valid ng-empty" type="text" id="userPhone" name="userContactNumberPhone" required  placeholder="Номер телефона в формате (071)-000-00-00" ng-pattern="/^[\(\)\-\+0-9\s]{9,18}$/" ng-model="userContactNumberPhone" >
+                <span ng-show="answerForm.userContactNumberPhone.$dirty && answerForm.userContactNumberPhone.$error.required" style="color: red;" >Введите Ваш контактный телефон </span>
+            </div>
         </div>
 
 
-        <div >
+        <div style="margin-top: 20px;">
             <label for="deliveryAddress" style="font-size: 12pt"><b>Введите адрес куда необходимо произвести доставку товара</b></label>
-            <input class="form-control" type="text" id="deliveryAddress"  name="deliveryAddress" placeholder="Адрес"  ng-blur="RegAddress()"  ng-model="deliveryAddressOrder">
-
-            <label ng-if="!regAddress" style="color: red;" >Вы ввели слишком большой адрес или некорректный адрес</label>
+            <div ng-class="{'has-error':answerForm.deliveryAddressOrder.$error.required && answerForm.deliveryAddressOrder.$dirty}">
+            <input class="form-control ng-pristine ng-untouched ng-valid ng-empty" type="text" id="deliveryAddress"  name="deliveryAddressOrder" required placeholder="Адрес в формате Город, Улица, Номер дома, Квартира" ng-pattern="/^[A-ZА-Я0-9а-яa-z-/..,,:;:\(\)№ёЁ\s]{5,220}$/"  ng-model="deliveryAddressOrder">
+                <span ng-show="answerForm.deliveryAddressOrder.$dirty && answerForm.deliveryAddressOrder.$error.required" style="color: red;" >Вы ввели некорректные данные </span>
+            </div>
         </div>
 
 
-        <div >
+        <div style="margin-top: 20px;">
             <label for="commentToTheOrder" style="font-size: 12pt" ><b>Комментарий к заказу (не обязательное поле для ввода)</b></label>
-            <textarea  type="text" class="form-control" name="commentToTheOrder" id="commentToTheOrder" placeholder="Сюда можете внести дополнительную информацию" ng-blur="RegComment()" ng-model="commentToTheOrder"></textarea>
-
-            <label ng-if="!regComment" style="color: red;" >Вы ввели слишком большой комментарий или некорректные данные</label>
-
+            <textarea  type="text" class="form-control ng-pristine ng-untouched ng-valid ng-empty" name="commentToTheOrder" id="commentToTheOrder" placeholder="Сюда можете внести дополнительную информацию (Например указать что нужна - Срочная доставка товара)"  ng-pattern="/^[a-zA-Z0-9а-яА-ЯЁё_.,.,\(\)-;::;!?№\+*$&@\s]{0,895}$/"  ng-model="commentToTheOrder"></textarea>
+            <span ng-show="answerForm.commentToTheOrder.$dirty && answerForm.commentToTheOrder.$error.required" style="color: red;" >Вы ввели некорректные данные </span>
         </div>
 
 
-            <div class="d-flex justify-content-center bd-highlight mb-3" >
+            <div class="d-flex justify-content-center bd-highlight mb-3" style="margin-top: 20px;">
 
                 <div class="p-2 bd-highlight">
-                    <button  class="btn btn-success" ng-click="ConfirmOrder(userFirstAndLastName, userEmail, userContactNumberPhone, deliveryAddressOrder, commentToTheOrder)">Оформить заказ</button>
+                    <button ng-disabled="answerForm.userFirstAndLastName.$invalid || answerForm.userContactNumberPhone.$invalid || answerForm.deliveryAddressOrder.$invalid" class="btn btn-success" ng-click="ConfirmOrder(userFirstAndLastName, userEmail, userContactNumberPhone, deliveryAddressOrder, commentToTheOrder)">Оформить заказ</button>
                 </div>
 
+              </div>
 
-            </div>
+
+            </form>
 
     </div>
 
+
+
+            <div id="popUpDialog"  ng-show="showPopUpDialog" class="modal" tabindex="-1" role="dialog" style="margin-top: 120px;">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        </div>
+                        <div class="modal-body">
+                            <h3 id="text"  ng-bind="text"> </h3>  <!-- вывести text из CartController -  -->
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" type="button" ng-click="clickOK()">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
     </div>
+
+
+
 
 
 
