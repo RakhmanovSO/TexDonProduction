@@ -1,5 +1,5 @@
 
-<div class="container-fluid" >
+<div class="container-fluid" ng-controller="MainController" >
 
 
     <div class="d-flex justify-content-center bd-highlight mb-3" >
@@ -24,11 +24,11 @@
 
     <div class="d-flex justify-content-center bd-highlight mb-3" >
 
-        <div class="p-2 bd-highlight">
+        <div id="elAdd" class="p-2 bd-highlight">
 
-            <a  class="btn btn-success" ng-if="singleProduct.isInCart === false" ng-click="AddProductToCart(singleProduct.product)" >В корзину</a>
+            <a id="buttonAdd" class="btn btn-success newbtn" data-del-id="1" ng-if="singleProduct.isInCart === false" ng-click="AddProductToCart(singleProduct.product)" >В корзину</a>
 
-            <a  class="btn btn-success"  ng-if="singleProduct.isInCart ">Товар в корзине!</a>
+            <a id="buttonNew" class="btn btn-success old"  ng-if="singleProduct.isInCart">Товар в корзине!</a>
 
         </div>
 
@@ -80,7 +80,21 @@
 
 
 
-
         </div>
 
 </div>
+
+
+<script>
+
+    var add = document.querySelector('#elAdd');
+
+    $('section').on('click', '.btn-success.newbtn', function () {
+
+        $(`a[data-del-id='1']`).remove();
+
+        add.innerHTML += ` <a id="buttonNew" class="btn btn-success old"  ng-if="singleProduct.isInCart">Товар в корзине!</a> `;
+
+    });
+
+</script>

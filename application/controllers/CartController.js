@@ -12,7 +12,6 @@ export default class  CartController {
         $scope.localStorageService = localStorageService;
 
 
-
         ///  Оформление заказ ///
 
         $scope.ConfirmOrder = function() {
@@ -26,7 +25,25 @@ export default class  CartController {
             console.log( 'OrderResult - ', result);
 
 
-                       /// ???????
+
+            if (result) {
+
+                let text;
+
+                text = "Заказ оформлен и принят на выполнение ! Спасибо за то, что выбрали наш магазин.";
+
+                $scope.text = text;
+
+                localStorageService.clearAll();
+
+
+                $state.go('successfulOrder', {'text': $scope.text});
+
+
+            }//if
+
+            /// ???????
+              /*
 
             let text;
 
@@ -79,7 +96,7 @@ export default class  CartController {
 
             }//else
 
-
+              */
 
 
             //$state.go( 'cart', {'userFirstAndLastName': $scope.userFirstAndLastName, 'userEmail': $scope.userEmail, 'userContactNumberPhone': $scope.userContactNumberPhone,  'deliveryAddressOrder': $scope.deliveryAddressOrder, 'commentToTheOrder': $scope.commentToTheOrder} );

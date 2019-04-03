@@ -626,6 +626,8 @@ app.config([
                         }//if
 
 
+
+
                     }],
                 },
                 "footer": {
@@ -836,6 +838,65 @@ app.config([
 
 
 
+
+        $stateProvider.state('successfulOrder' , {
+
+            'url': '/successfulOrder/:text',
+            'views':{
+                "content": {
+                    "templateUrl":"templates/successfulOrder/successfulOrder.html",
+                    'controller': ['$scope', '$state', 'CartService', 'localStorageService', 'successfulOrder', '$route',  function ($scope, $state , CartService, localStorageService, successfulOrder, $route) {
+
+
+                        $scope.localStorageService = localStorageService;
+
+                        $scope.cart = CartService.getCart();
+
+                        $scope.cart.length = 0;
+
+                        // localStorageService.clearAll();
+
+
+                        // '$route',
+                       // $route.reload();
+
+                         // $window.location.reload();
+
+                        /// $state.reload();
+
+
+
+                        $scope.text = successfulOrder;
+
+                        console.log('text :' ,   $scope.text);
+
+
+                    }],
+                    'params' : {
+                        'text': 'some default'
+                    }
+
+                },
+            },
+            'resolve':{
+
+                'news': [ 'NewsService' , '$stateParams' , function( NewsService , $stateParams){
+                    return NewsService.getNews();
+                } ],
+
+                'successfulOrder': [ 'CartService' , '$stateParams' , function( CartService , $stateParams){
+                return CartService.returnText($stateParams.text);
+    } ],
+
+            }
+
+        });// stateProvider.state('successfulOrder')
+
+
+
+
+
+
     } ] );  // app.config
 
 
@@ -875,7 +936,6 @@ class  CartController {
         $scope.localStorageService = localStorageService;
 
 
-
         ///  Оформление заказ ///
 
         $scope.ConfirmOrder = function() {
@@ -889,7 +949,25 @@ class  CartController {
             console.log( 'OrderResult - ', result);
 
 
-                       /// ???????
+
+            if (result) {
+
+                let text;
+
+                text = "Заказ оформлен и принят на выполнение ! Спасибо за то, что выбрали наш магазин.";
+
+                $scope.text = text;
+
+                localStorageService.clearAll();
+
+
+                $state.go('successfulOrder', {'text': $scope.text});
+
+
+            }//if
+
+            /// ???????
+              /*
 
             let text;
 
@@ -942,7 +1020,7 @@ class  CartController {
 
             }//else
 
-
+              */
 
 
             //$state.go( 'cart', {'userFirstAndLastName': $scope.userFirstAndLastName, 'userEmail': $scope.userEmail, 'userContactNumberPhone': $scope.userContactNumberPhone,  'deliveryAddressOrder': $scope.deliveryAddressOrder, 'commentToTheOrder': $scope.commentToTheOrder} );
@@ -1484,6 +1562,23 @@ class CartService {
             }//catch
 
         }//registrationNewOrder
+
+
+    async returnText (text){
+        try {
+            let response = text;
+
+            return response;
+
+        }
+        catch (ex) {
+
+            console.log("Exception", ex);
+            return null;
+
+        }//catch
+    }//returnText
+
 
 
 }//CartService

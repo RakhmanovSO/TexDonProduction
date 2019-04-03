@@ -149,4 +149,21 @@ export  default  class CartService {
         }//registrationNewOrder
 
 
+    async returnText (text){
+        try {
+            let response = text;
+
+            return response;
+
+        }
+        catch (ex) {
+
+            console.log("Exception", ex);
+            return null;
+
+        }//catch
+    }//returnText
+
+
+
 }//CartService

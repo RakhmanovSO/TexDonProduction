@@ -516,6 +516,8 @@ app.config([
                         }//if
 
 
+
+
                     }],
                 },
                 "footer": {
@@ -722,6 +724,65 @@ app.config([
             }
 
         });// stateProvider.state('cart')
+
+
+
+
+
+        $stateProvider.state('successfulOrder' , {
+
+            'url': '/successfulOrder/:text',
+            'views':{
+                "content": {
+                    "templateUrl":"templates/successfulOrder/successfulOrder.html",
+                    'controller': ['$scope', '$state', 'CartService', 'localStorageService', 'successfulOrder', '$route',  function ($scope, $state , CartService, localStorageService, successfulOrder, $route) {
+
+
+                        $scope.localStorageService = localStorageService;
+
+                        $scope.cart = CartService.getCart();
+
+                        $scope.cart.length = 0;
+
+                        // localStorageService.clearAll();
+
+
+                        // '$route',
+                       // $route.reload();
+
+                         // $window.location.reload();
+
+                        /// $state.reload();
+
+
+
+                        $scope.text = successfulOrder;
+
+                        console.log('text :' ,   $scope.text);
+
+
+                    }],
+                    'params' : {
+                        'text': 'some default'
+                    }
+
+                },
+            },
+            'resolve':{
+
+                'news': [ 'NewsService' , '$stateParams' , function( NewsService , $stateParams){
+                    return NewsService.getNews();
+                } ],
+
+                'successfulOrder': [ 'CartService' , '$stateParams' , function( CartService , $stateParams){
+                return CartService.returnText($stateParams.text);
+    } ],
+
+            }
+
+        });// stateProvider.state('successfulOrder')
+
+
 
 
 
